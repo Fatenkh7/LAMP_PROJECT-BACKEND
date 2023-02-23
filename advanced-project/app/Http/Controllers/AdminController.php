@@ -8,6 +8,7 @@ use App\Models\Admin;
 
 class AdminController extends Controller
 {
+    // Add Admin
     public function addAdmin(Request $request) {
         $admin = new Admin;
         $firstname = $request->input('firstname');
@@ -28,13 +29,23 @@ class AdminController extends Controller
         ]);
     }
 
-    public function getAdmin(Request $request, $id) {
-        $admin = Admin::find($id)->get();
+    // Get Admin By ID
+    public function getAdminById(Request $request, $id) {
+        $admin = Admin::find($id);
         return response()->json([
             'message' => $admin
         ]);
     }
 
+    // Get all Admins
+    public function getAllAdmins(Request $request) {
+        $admin = Admin::all();
+        return response()->json([
+            'message' => $admin
+        ]);
+    }
+
+    // Update Admin By ID
     public function editAdmin(Request $request, $id) {
         $admin = Admin::find($id);
         $inputs = $request->except('_method');
@@ -46,6 +57,7 @@ class AdminController extends Controller
         ]);
     }
 
+    // Delete Admin By ID
     public function deleteAdmin(Request $request, $id) {
         $admin = Admin::find($id);
         $admin->delete();
