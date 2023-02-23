@@ -18,7 +18,7 @@ class ReportController extends Controller
 
     public function getById(Request $request, $id)
     {
-        $report = Report::find($id)->get();
+        $report = Report::find($id);
         return response()->json([
             'message' => $report
         ]);
@@ -26,7 +26,7 @@ class ReportController extends Controller
 
     public function getByType(Request $request, $type)
     {
-        $report = Report::find($type)->get();
+        $report = Report::find($type);
         return response()->json([
             'message' => $report
         ]);
