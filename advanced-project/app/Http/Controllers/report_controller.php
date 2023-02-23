@@ -10,9 +10,9 @@ class report_controller extends Controller
 
     public function getAll(Request $request)
     {
-        $reports = Report::all();
+        $report = Report::all();
         return response()->json([
-            'message' => $reports
+            'message' => $report
         ]);
     }
 
