@@ -50,4 +50,35 @@ class report_controller extends Controller
             'message' => 'Report created successfully'
         ]);
     }
+
+    public function editReport(Request $request, $id)
+    {
+        $report = Report::find($id);
+        $inputs = $request->except('_method');
+        $report->update($inputs);
+
+        return response()->json([
+            'message' => 'Report updated successfully',
+            'report' => $report,
+        ]);
+    }
+
+
+    public function deleteById(Request $request, $id)
+    {
+        $report = Report::find($id);
+        $report->delete();
+        return response()->json([
+            'message' => 'Report deleted successfully',
+        ]);
+    }
+
+    public function deleteByType(Request $request, $type)
+    {
+        $report = Report::find($type);
+        $report->delete();
+        return response()->json([
+            'message' => 'Report deleted successfully',
+        ]);
+    }
 }
