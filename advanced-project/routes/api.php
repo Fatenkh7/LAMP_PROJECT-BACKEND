@@ -3,8 +3,7 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AdminController;
-use App\Http\Controllers\report_controller;
-
+use App\Http\Controllers\ReportController;
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -27,10 +26,10 @@ Route::Delete('/admin/{id}', [AdminController::class, 'deleteAdmin']);
 
 
 //report routes
-Route::Get('/report', [report_controller::class, 'getAll']);
-Route::Get('/report/{id}', [report_controller::class, 'getById']);
-Route::Get('/report/{type}', [report_controller::class, 'getByType']);
-Route::Post('/report', [report_controller::class, 'addReport']);
-Route::Put('/report/{id}', [report_controller::class, 'editReport']);
-Route::Delete('/report/{id}', [report_controller::class, 'deleteById']);
-Route::Delete('/report/{type}', [report_controller::class, 'deleteByType']);
+Route::Get('/report', [reportController::class, 'getAll']);
+Route::Get('/report/{id}', [reportController::class, 'getById']);
+Route::Get('/report/{type}', [reportController::class, 'getByType']);
+Route::Post('/report', [reportController::class, 'addReport']);
+Route::Put('/report/{id}', [reportController::class, 'editReport']);
+Route::Delete('/report/{id}', [reportController::class, 'deleteById']);
+Route::Delete('/report/{type}', [reportController::class, 'deleteByType']);
