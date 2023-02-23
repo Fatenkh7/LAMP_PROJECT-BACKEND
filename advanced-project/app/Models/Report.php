@@ -10,7 +10,7 @@ class Report extends Model
     use HasFactory;
     protected $fillable = [
         'report',
-        'type_Report',
+        'type_report',
         'start_date',
         'end_date',
     ];

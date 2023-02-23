@@ -19,11 +19,14 @@ use App\Http\Controllers\report_controller;
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
+//admin routes
 Route::Get('/admin/{id}', [AdminController::class, 'getAdmin']);
 Route::Post('/admin', [AdminController::class, 'addAdmin']);
 Route::Put('/admin/{id}', [AdminController::class, 'editAdmin']);
 Route::Delete('/admin/{id}', [AdminController::class, 'deleteAdmin']);
 
+
+//report routes
 Route::Get('/report', [report_controller::class, 'getAll']);
 Route::Get('/report/{id}', [report_controller::class, 'getById']);
 Route::Get('/report/{type}', [report_controller::class, 'getByType']);
