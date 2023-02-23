@@ -33,6 +33,13 @@ class Recurringexpensescontroller extends Controller
             'message'=>$recurringexpenses
         ]);
     }
+    public function getByIDRecurringexpenses($id){
+        $recurringexpenses = Recurringexpense::find($id);
+        
+        return response()->json([
+            'message'=>$recurringexpenses
+        ]);
+    }
     public function editRecurringexpenses(Request $request , $id){
         $recurringexpenses = Recurringexpense::find($id);
         $inputs = $request->except('_method');

@@ -40,6 +40,12 @@ class FixedExpensesController extends Controller
                 'message' => $fixedExpenses
             ]);
     }
+    public function getByIdFixedexpenses($id){
+        $fixedExpenses = FixedExpenses::find($id);
+        return response()->json([
+            'message' => $fixedExpenses
+        ]);
+    }
     public function editFixedexpenses (Request $request ,$id){
         $fixedExpenses = FixedExpenses::find($id);
         $inputs = $request->except('_method');
