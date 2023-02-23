@@ -25,13 +25,14 @@ Route::Post('/admin', [AdminController::class, 'addAdmin']);
 Route::Put('/admin/{id}', [AdminController::class, 'editAdmin']);
 Route::Delete('/admin/{id}', [AdminController::class, 'deleteAdmin']);
 
-
+//fixed expenses
 Route::Post('/fixedexpenses', [FixedExpensesController::class, 'addfixedexpenses']);
 Route::Get('/fixedexpenses', [FixedExpensesController::class, 'getallFixedexpenses']);
 Route::Get('/fixedexpenses/{id}', [FixedExpensesController::class, 'getByIDFixedexpenses']);
 Route::Put('/fixedexpenses/{id}', [FixedExpensesController::class, 'editFixedexpenses']);
 Route::Delete('/fixedexpenses/{id}',[FixedExpensesController::class , 'deleteFixedexpenses']);
 
+//recurring expenses
 Route::Post('/recurringexpenses', [Recurringexpensescontroller::class, 'addRecurringexpenses']);
 Route::Get('/recurringexpenses', [Recurringexpensescontroller::class, 'getallRecurringexpenses']);
 Route::Get('/recurringexpenses/{id}', [Recurringexpensescontroller::class, 'getByIDRecurringexpenses']);
