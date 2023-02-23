@@ -26,11 +26,19 @@ class ReportController extends Controller
 
     public function getByType(Request $request, $type)
     {
-        $report = Report::find($type);
-        return response()->json([
-            'message' => $report
-        ]);
-    }
+        $report = Report::where('type_report', $type)->get();
+        if ($report) {
+            return response()->json([
+                'success' => true,
+                'data' => $report
+            ]);
+        } else {
+            return response()->json([
+                'success' => false,
+                'message' => 'Report not found'
+            ]);
+        }
+    }    
 
     public function addReport(Request $request)
     {
@@ -75,10 +83,10 @@ class ReportController extends Controller
 
     public function deleteByType(Request $request, $type)
     {
-        $report = Report::find($type);
-        $report->delete();
+        $reports = Report::where('type_report', $type)->delete();
         return response()->json([
-            'message' => 'Report deleted successfully',
+            'message' => $reports . ' report(s) deleted successfully',
         ]);
     }
+    
 }

@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('reports', function (Blueprint $table) {
             $table->id();
             $table->string('report');
-            $table->enum('type_report', ['Yearly', 'Monthly', 'Weekly']);
+            $table->enum('type_report', ['yearly', 'monthly', 'weekly']);
             $table->dateTime('start_date');
             $table->dateTime('end_date');
         });

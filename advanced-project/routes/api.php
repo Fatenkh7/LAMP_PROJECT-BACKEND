@@ -28,8 +28,8 @@ Route::Delete('/admin/{id}', [AdminController::class, 'deleteAdmin']);
 //report routes
 Route::Get('/report', [ReportController::class, 'getAll']);
 Route::Get('/report/{id}', [ReportController::class, 'getById']);
-Route::Get('/report/{type}', [ReportController::class, 'getByType']);
+Route::Get('/report/type/{type}', [ReportController::class, 'getByType']);
 Route::Post('/report', [ReportController::class, 'addReport']);
 Route::Put('/report/{id}', [ReportController::class, 'editReport']);
 Route::Delete('/report/{id}', [ReportController::class, 'deleteById']);
-Route::Delete('/report/{type}', [ReportController::class, 'deleteByType']);
+Route::Delete('/report/type/{type}', [ReportController::class, 'deleteByType']);
