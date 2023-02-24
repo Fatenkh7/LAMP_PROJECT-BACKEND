@@ -14,7 +14,7 @@ class CurrenciesController extends Controller
     }
 
     public function getCurrencyById(Request $Request, $id){
-        $currencies = Currencies::find($id)->get();
+        $currencies = Currencies::find($id);
         if ($currencies) {
             return response()->json([
                 'success' => true,
@@ -39,4 +39,24 @@ class CurrenciesController extends Controller
         ]);
     }
 
+    public function editCurrencyById(Request $request, $id)
+    {
+        $currencies = Currencies::find($id);
+        $inputs = $request->except('_method');
+        $currencies->update($inputs);
+
+        return response()->json([
+            'message' => 'Currency updated successfully',
+            'report' => $currencies,
+        ]);
+    }
+
+    public function deleteCurrency(Request $request, $id)
+    {
+        $currencies = Currencies::find($id);
+        $currencies->delete();
+        return response()->json([
+            'message' => 'Currency deleted successfully',
+        ]);
+    }
 }
