@@ -3,35 +3,35 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Models\Profit_goals;
+use App\Models\ProfitGoal;
 use Carbon\Carbon;
 
-class ProfitGoalsController extends Controller
+class ProfitGoalController extends Controller
 {
     public function getAll(Request $request)
     {
-        $profitGoals = Profit_goals::all();
+        $ProfitGoal = ProfitGoal::all();
         return response()->json([
-            'message' => $profitGoals
+            'message' => $ProfitGoal
         ]);
     }
 
 
     public function getById(Request $request, $id)
     {
-        $profitGoals = Profit_goals::find($id);
+        $ProfitGoal = ProfitGoal::find($id);
         return response()->json([
-            'message' => $profitGoals
+            'message' => $ProfitGoal
         ]);
     }
 
     public function getByTitle(Request $request, $title)
     {
-        $profitGoals = Profit_goals::where('goal_title', $title)->get();
-        if ($profitGoals) {
+        $ProfitGoal = ProfitGoal::where('goal_title', $title)->get();
+        if ($ProfitGoal) {
             return response()->json([
                 'success' => true,
-                'data' => $profitGoals
+                'data' => $ProfitGoal
             ]);
         } else {
             return response()->json([
@@ -41,28 +41,28 @@ class ProfitGoalsController extends Controller
         }
     }
 
-    public function addprofitGoals(Request $request)
+    public function addProfitGoal(Request $request)
     {
-        $newprofitGoals = new Profit_goals();
+        $newProfitGoal = new ProfitGoal();
         $goal_title = $request->input('goal_title');
         $goal_amount = $request->input('goal_amount');
         $goal_description = $request->input('goal_description');
         $start_date = $request->input('start_date');
         $end_date = $request->input('end_date');
 
-        $newprofitGoals->goal_title = $goal_title;
-        $newprofitGoals->goal_amount = $goal_amount;
-        $newprofitGoals->goal_description = $goal_description;
-        $newprofitGoals->start_date = $start_date;
-        $newprofitGoals->end_date = $end_date;
+        $newProfitGoal->goal_title = $goal_title;
+        $newProfitGoal->goal_amount = $goal_amount;
+        $newProfitGoal->goal_description = $goal_description;
+        $newProfitGoal->start_date = $start_date;
+        $newProfitGoal->end_date = $end_date;
 
         $carbonDate = Carbon::parse($start_date);
         $carbonDate = Carbon::parse($end_date);
 
-        $newprofitGoals->start_date = $carbonDate->format('Y-m-d H:i:s');
-        $newprofitGoals->end_date = $carbonDate->format('Y-m-d H:i:s');
+        $newProfitGoal->start_date = $carbonDate->format('Y-m-d H:i:s');
+        $newProfitGoal->end_date = $carbonDate->format('Y-m-d H:i:s');
 
-        $newprofitGoals->save();
+        $newProfitGoal->save();
         return response()->json([
             'message' => 'profit Goals created successfully'
         ]);
@@ -70,45 +70,45 @@ class ProfitGoalsController extends Controller
 
     public function editprofitById(Request $request, $id)
     {
-        $profitGoals = Profit_goals::find($id);
-        if ($profitGoals) {
+        $ProfitGoal = ProfitGoal::find($id);
+        if ($ProfitGoal) {
             $inputs = $request->except('_method');
-            $profitGoals->update($inputs);
-    
+            $ProfitGoal->update($inputs);
+
             return response()->json([
                 'message' => 'profit Goals updated successfully',
-                'profitGoals' => $profitGoals,
+                'ProfitGoal' => $ProfitGoal,
             ]);
         } else {
             return response()->json([
                 'message' => 'profit Goals not found',
             ], 404);
         }
-    }    
+    }
 
     public function editprofitByTitle(Request $request, $title)
     {
-        $profitGoals = Profit_goals::where('goal_title', $title)->first();
-        if ($profitGoals) {
+        $ProfitGoal = ProfitGoal::where('goal_title', $title)->first();
+        if ($ProfitGoal) {
             $inputs = $request->except('_method');
-            $profitGoals->update($inputs);
-    
+            $ProfitGoal->update($inputs);
+
             return response()->json([
                 'message' => 'profit Goals updated successfully',
-                'profitGoals' => $profitGoals,
+                'ProfitGoal' => $ProfitGoal,
             ]);
         } else {
             return response()->json([
                 'message' => 'profit Goals not found',
             ], 404);
         }
-    }    
+    }
 
 
     public function deleteById(Request $request, $id)
     {
-        $profitGoals = Profit_goals::find($id);
-        $profitGoals->delete();
+        $ProfitGoal = ProfitGoal::find($id);
+        $ProfitGoal->delete();
         return response()->json([
             'message' => 'profit Goal deleted successfully',
         ]);
@@ -116,9 +116,9 @@ class ProfitGoalsController extends Controller
 
     public function deleteByTitle(Request $request, $title)
     {
-        $profitGoals = Profit_goals::where('goal_title', $title)->first();
-        if ($profitGoals) {
-            $profitGoals->delete();
+        $ProfitGoal = ProfitGoal::where('goal_title', $title)->first();
+        if ($ProfitGoal) {
+            $ProfitGoal->delete();
             return response()->json([
                 'message' => 'Profit Goal deleted successfully',
             ]);
@@ -127,6 +127,5 @@ class ProfitGoalsController extends Controller
                 'message' => 'Profit Goal not found',
             ], 404);
         }
-    }    
-    
+    }
 }
