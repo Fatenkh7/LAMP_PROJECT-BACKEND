@@ -16,4 +16,8 @@ class Admin extends Model
         'email',
         'password',
     ];
+    public function reports()
+{
+    return $this->hasMany(Report::class);
+}
 }

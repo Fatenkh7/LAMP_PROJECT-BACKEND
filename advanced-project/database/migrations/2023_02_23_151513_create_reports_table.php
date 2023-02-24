@@ -11,14 +11,14 @@ return new class extends Migration
      */
     public function up(): void
     {
-
         Schema::create('reports', function (Blueprint $table) {
             $table->id();
             $table->string('report');
             $table->enum('type_report', ['yearly', 'monthly', 'weekly']);
+            $table->unsignedBigInteger('admins_id');
+            $table->foreign('admins_id')->references('id')->on('admins')->onDelete('cascade');
             $table->dateTime('start_date');
             $table->dateTime('end_date');
-
         });
     }
 
@@ -27,8 +27,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-
         Schema::dropIfExists('reports');
-
     }
 };
