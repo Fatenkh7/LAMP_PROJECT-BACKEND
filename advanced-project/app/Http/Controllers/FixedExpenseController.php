@@ -3,12 +3,13 @@
 namespace App\Http\Controllers;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
-use App\Models\FixedExpenses;
-class FixedExpensesController extends Controller
-{   
-    // add fixedexpenses
-    public function addfixedexpenses(Request $request){
-            $fixedExpenses = new FixedExpenses;
+use App\Models\FixedExpense;
+
+class FixedExpenseController extends Controller
+{
+        // add fixedexpenses
+        public function addfixedexpenses(Request $request){
+            $fixedExpenses = new FixedExpense;
             $title = $request->input('title');
             $description = $request->input('description');
             $amount = $request->input('amount');
@@ -37,21 +38,21 @@ class FixedExpensesController extends Controller
     }
         // get all fixedexpenses
         public function getallFixedexpenses(Request $request){
-            $fixedExpenses = FixedExpenses::all();
+            $fixedExpenses = FixedExpense::all();
             return response()->json([
                 'message' => $fixedExpenses
             ]);
     }   
         // get by id fixedexpenses
     public function getByIdFixedexpenses($id){
-        $fixedExpenses = FixedExpenses::find($id);
+        $fixedExpenses = FixedExpense::find($id);
         return response()->json([
             'message' => $fixedExpenses
         ]);
     } 
         // edit fixedexpenses
     public function editFixedexpenses (Request $request ,$id){
-        $fixedExpenses = FixedExpenses::find($id);
+        $fixedExpenses = FixedExpense::find($id);
         $inputs = $request->except('_method');
         $fixedExpenses -> update($inputs);
         return response()->json([
@@ -61,7 +62,7 @@ class FixedExpensesController extends Controller
     } 
         // delete fixedexpenses
     public function deleteFixedexpenses (Request $request , $id){
-        $fixedExpenses = FixedExpenses::find($id);
+        $fixedExpenses = FixedExpense::find($id);
         $fixedExpenses -> delete();
         return response()->json([
             'messege'=>'delete fixed expenses successfully',
@@ -69,4 +70,3 @@ class FixedExpensesController extends Controller
         ]);
     }
 }
-

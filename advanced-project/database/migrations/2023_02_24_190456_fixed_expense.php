@@ -11,15 +11,12 @@ return new class extends Migration
      */
     public function up(): void
     {
-
-
         Schema::create('fixed_expenses', function (Blueprint $table) {
 
             $table->id();
             $table->string('title');
             $table->string('description');
             $table->integer('amount');
-            $table->integer('currency');
             $table->date('date');
 
         });
@@ -30,8 +27,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-
-        Schema::dropIfExists('fixed_expenses');
-
+        //
     }
 };
