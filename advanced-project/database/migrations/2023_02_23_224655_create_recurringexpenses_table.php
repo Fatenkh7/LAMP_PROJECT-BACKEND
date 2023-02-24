@@ -11,18 +11,14 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('recurring_incomes', function (Blueprint $table) {
 
-
+        Schema::create('recurringexpenses', function (Blueprint $table) {
             $table->id();
             $table->string('title');
             $table->string('description');
             $table->integer('amount');
-            $table->integer('currency');
-            $table->date('start_date');
-            $table->date('end_date');
-            $table->timestamps();
- 
+            $table->date('startDate');
+            $table->date('endDate');
 
         });
     }
@@ -33,7 +29,7 @@ return new class extends Migration
     public function down(): void
     {
 
-        Schema::dropIfExists('recurring_incomes');
+        Schema::dropIfExists('recurringexpenses');
 
     }
 };

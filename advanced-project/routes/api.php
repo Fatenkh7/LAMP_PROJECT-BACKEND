@@ -5,7 +5,10 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\RecurringIncomeController;
 use App\Http\Controllers\ReportController;
+use App\Http\Controllers\FixedExpensesController;
+use App\Http\Controllers\Recurringexpensescontroller;
 use App\Http\Controllers\ProfitGoalsController;
+
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -29,6 +32,12 @@ Route::Post('/admin', [AdminController::class, 'addAdmin']);
 Route::Put('/admin/{id}', [AdminController::class, 'editAdmin']);
 Route::Delete('/admin/{id}', [AdminController::class, 'deleteAdmin']);
 
+//fixed expenses
+Route::Post('/fixedexpenses', [FixedExpensesController::class, 'addfixedexpenses']);
+Route::Get('/fixedexpenses', [FixedExpensesController::class, 'getallFixedexpenses']);
+Route::Get('/fixedexpenses/{id}', [FixedExpensesController::class, 'getByIDFixedexpenses']);
+Route::Put('/fixedexpenses/{id}', [FixedExpensesController::class, 'editFixedexpenses']);
+Route::Delete('/fixedexpenses/{id}',[FixedExpensesController::class , 'deleteFixedexpenses']);
 
 // Recurring Income routes
 Route::Post('/recurringincome', [RecurringIncomeController::class, 'addRecurringIncome']);
@@ -55,3 +64,11 @@ Route::Put('/profit/id/{id}', [ProfitGoalsController::class, 'editprofitById']);
 Route::Put('/profit/title/{title}', [ProfitGoalsController::class, 'editprofitByTitle']);
 Route::Delete('/profit/{id}', [ProfitGoalsController::class, 'deleteById']);
 Route::Delete('/profit/title/{title}', [ProfitGoalsController::class, 'deleteByTitle']);
+
+//recurring expenses
+Route::Post('/recurringexpenses', [Recurringexpensescontroller::class, 'addRecurringexpenses']);
+Route::Get('/recurringexpenses', [Recurringexpensescontroller::class, 'getallRecurringexpenses']);
+Route::Get('/recurringexpenses/{id}', [Recurringexpensescontroller::class, 'getByIDRecurringexpenses']);
+Route::Put('/recurringexpenses/{id}', [Recurringexpensescontroller::class, 'editRecurringexpenses']);
+Route::Delete('/recurringexpenses/{id}', [Recurringexpensescontroller::class, 'deleteRecurringexpenses']);
+
