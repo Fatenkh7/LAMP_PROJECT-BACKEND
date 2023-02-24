@@ -3,22 +3,25 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Models\Currencies;
-class CurrenciesController extends Controller
+use App\Models\Currency;
+
+class CurrencyController extends Controller
 {
-    public function getAll(){
-        $currencies = Currencies::all();
+    public function getAll()
+    {
+        $Currency = Currency::all();
         return response()->json([
-            'message' => $currencies
+            'message' => $Currency
         ]);
     }
 
-    public function getCurrencyById(Request $Request, $id){
-        $currencies = Currencies::find($id);
-        if ($currencies) {
+    public function getCurrencyById(Request $Request, $id)
+    {
+        $Currency = Currency::find($id);
+        if ($Currency) {
             return response()->json([
                 'success' => true,
-                'data' => $currencies
+                'data' => $Currency
             ]);
         } else {
             return response()->json([
@@ -30,7 +33,7 @@ class CurrenciesController extends Controller
 
     public function addCurrency(Request $request)
     {
-        $newCurrency = new Currencies();
+        $newCurrency = new Currency();
         $currency = $request->input('currency');
         $newCurrency->currency = $currency;
         $newCurrency->save();
@@ -41,20 +44,20 @@ class CurrenciesController extends Controller
 
     public function editCurrencyById(Request $request, $id)
     {
-        $currencies = Currencies::find($id);
+        $Currency = Currency::find($id);
         $inputs = $request->except('_method');
-        $currencies->update($inputs);
+        $Currency->update($inputs);
 
         return response()->json([
             'message' => 'Currency updated successfully',
-            'report' => $currencies,
+            'report' => $Currency,
         ]);
     }
 
     public function deleteCurrency(Request $request, $id)
     {
-        $currencies = Currencies::find($id);
-        $currencies->delete();
+        $Currency = Currency::find($id);
+        $Currency->delete();
         return response()->json([
             'message' => 'Currency deleted successfully',
         ]);
