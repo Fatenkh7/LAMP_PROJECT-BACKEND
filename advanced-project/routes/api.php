@@ -8,6 +8,7 @@ use App\Http\Controllers\ReportController;
 use App\Http\Controllers\FixedExpensesController;
 use App\Http\Controllers\Recurringexpensescontroller;
 use App\Http\Controllers\ProfitGoalsController;
+use App\Http\Controllers\CurrenciesController;
 
 /*
 |--------------------------------------------------------------------------
@@ -72,3 +73,9 @@ Route::Get('/recurringexpenses/{id}', [Recurringexpensescontroller::class, 'getB
 Route::Put('/recurringexpenses/{id}', [Recurringexpensescontroller::class, 'editRecurringexpenses']);
 Route::Delete('/recurringexpenses/{id}', [Recurringexpensescontroller::class, 'deleteRecurringexpenses']);
 
+//currencies
+Route::Post('/currency', [CurrenciesController::class, 'addCurrency']);
+Route::Get('/currency', [CurrenciesController::class, 'getAll']);
+Route::Get('/currency/{id}', [CurrenciesController::class, 'getCurrencyById']);
+Route::Put('/currency/{id}', [CurrenciesController::class, 'editCurrencyById']);
+Route::Delete('/currency/{id}', [CurrenciesController::class, 'deleteCurrency']);
