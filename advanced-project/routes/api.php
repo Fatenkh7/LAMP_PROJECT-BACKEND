@@ -7,6 +7,7 @@ use App\Http\Controllers\RecurringIncomeController;
 use App\Http\Controllers\ReportController;
 use App\Http\Controllers\FixedExpensesController;
 use App\Http\Controllers\Recurringexpensescontroller;
+use App\Http\Controllers\ProfitGoalsController;
 
 /*
 |--------------------------------------------------------------------------
@@ -53,9 +54,21 @@ Route::Post('/report', [ReportController::class, 'addReport']);
 Route::Put('/report/{id}', [ReportController::class, 'editReport']);
 Route::Delete('/report/{id}', [ReportController::class, 'deleteById']);
 Route::Delete('/report/type/{type}', [ReportController::class, 'deleteByType']);
+
+//profit goals routes
+Route::Get('/profit', [ProfitGoalsController::class, 'getAll']);
+Route::Get('/profit/{id}', [ProfitGoalsController::class, 'getById']);
+Route::Get('/profit/title/{title}', [ProfitGoalsController::class, 'getByTitle']);
+Route::Post('/profit', [ProfitGoalsController::class, 'addprofitGoals']);
+Route::Put('/profit/id/{id}', [ProfitGoalsController::class, 'editprofitById']);
+Route::Put('/profit/title/{title}', [ProfitGoalsController::class, 'editprofitByTitle']);
+Route::Delete('/profit/{id}', [ProfitGoalsController::class, 'deleteById']);
+Route::Delete('/profit/title/{title}', [ProfitGoalsController::class, 'deleteByTitle']);
+
 //recurring expenses
 Route::Post('/recurringexpenses', [Recurringexpensescontroller::class, 'addRecurringexpenses']);
 Route::Get('/recurringexpenses', [Recurringexpensescontroller::class, 'getallRecurringexpenses']);
 Route::Get('/recurringexpenses/{id}', [Recurringexpensescontroller::class, 'getByIDRecurringexpenses']);
 Route::Put('/recurringexpenses/{id}', [Recurringexpensescontroller::class, 'editRecurringexpenses']);
 Route::Delete('/recurringexpenses/{id}', [Recurringexpensescontroller::class, 'deleteRecurringexpenses']);
+

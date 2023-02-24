@@ -16,6 +16,7 @@ class ReportController extends Controller
         ]);
     }
 
+    
     public function getById(Request $request, $id)
     {
         $report = Report::find($id);
