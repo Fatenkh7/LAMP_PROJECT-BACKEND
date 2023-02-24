@@ -5,7 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class recurring_income extends Model
+class RecurringIncome extends Model
 {
     use HasFactory;
 
