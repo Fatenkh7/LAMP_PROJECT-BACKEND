@@ -6,8 +6,6 @@ use App\Http\Controllers\AdminController;
 use App\Http\Controllers\FixedExpensesController;
 use App\Http\Controllers\Recurringexpensescontroller;
 
-use App\Http\Controllers\RecurringIncomeController;
-use App\Http\Controllers\ReportController;
 /*
 |--------------------------------------------------------------------------
 | API Routes

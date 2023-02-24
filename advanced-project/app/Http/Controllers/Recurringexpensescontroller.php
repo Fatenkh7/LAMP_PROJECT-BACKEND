@@ -7,7 +7,9 @@ use Illuminate\Http\Request;
 use App\Models\Recurringexpense;
 
 class Recurringexpensescontroller extends Controller
-{
+{   
+    // add Recurringexpenses
+
     public function addRecurringexpenses(Request $request){
             $recurringexpenses = new Recurringexpense;
             $title = $request->input('title');
@@ -26,6 +28,7 @@ class Recurringexpensescontroller extends Controller
                 'message'=>'create recurringexpenses succes'
             ]);
     }
+    // get all Recurringexpenses
     public function getallRecurringexpenses(Request $request){
         $recurringexpenses = Recurringexpense::all();
         
@@ -33,6 +36,7 @@ class Recurringexpensescontroller extends Controller
             'message'=>$recurringexpenses
         ]);
     }
+    // get by id Recurringexpenses
     public function getByIDRecurringexpenses($id){
         $recurringexpenses = Recurringexpense::find($id);
         
@@ -40,6 +44,7 @@ class Recurringexpensescontroller extends Controller
             'message'=>$recurringexpenses
         ]);
     }
+    // edit Recurringexpenses
     public function editRecurringexpenses(Request $request , $id){
         $recurringexpenses = Recurringexpense::find($id);
         $inputs = $request->except('_method');
@@ -49,6 +54,7 @@ class Recurringexpensescontroller extends Controller
             'message'=> 'update recurringexpenses succes'
         ]);
     }
+    // delete Recurringexpenses
     public function deleteRecurringexpenses(Request $request ,$id){
     $recurringexpenses = Recurringexpense::find($id);
 

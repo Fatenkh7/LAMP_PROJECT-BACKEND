@@ -5,7 +5,8 @@ use Carbon\Carbon;
 use Illuminate\Http\Request;
 use App\Models\FixedExpenses;
 class FixedExpensesController extends Controller
-{
+{   
+    // add fixedexpenses
     public function addfixedexpenses(Request $request){
             $fixedExpenses = new FixedExpenses;
             $title = $request->input('title');
@@ -34,18 +35,21 @@ class FixedExpensesController extends Controller
                 'message'=> "fixedexpeses created"
             ]);
     }
+        // get all fixedexpenses
         public function getallFixedexpenses(Request $request){
             $fixedExpenses = FixedExpenses::all();
             return response()->json([
                 'message' => $fixedExpenses
             ]);
-    }
+    }   
+        // get by id fixedexpenses
     public function getByIdFixedexpenses($id){
         $fixedExpenses = FixedExpenses::find($id);
         return response()->json([
             'message' => $fixedExpenses
         ]);
-    }
+    } 
+        // edit fixedexpenses
     public function editFixedexpenses (Request $request ,$id){
         $fixedExpenses = FixedExpenses::find($id);
         $inputs = $request->except('_method');
@@ -54,7 +58,8 @@ class FixedExpensesController extends Controller
             'message' => 'fixed expenses updated successfully',
             'fixedExpenses' => $fixedExpenses,
         ]);
-    }
+    } 
+        // delete fixedexpenses
     public function deleteFixedexpenses (Request $request , $id){
         $fixedExpenses = FixedExpenses::find($id);
         $fixedExpenses -> delete();
