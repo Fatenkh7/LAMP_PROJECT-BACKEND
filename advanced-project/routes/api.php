@@ -6,6 +6,8 @@ use App\Http\Controllers\AdminController;
 use App\Http\Controllers\FixedExpensesController;
 use App\Http\Controllers\Recurringexpensescontroller;
 
+use App\Http\Controllers\RecurringIncomeController;
+use App\Http\Controllers\ReportController;
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -20,7 +22,11 @@ use App\Http\Controllers\Recurringexpensescontroller;
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
-Route::Get('/admin/{id}', [AdminController::class, 'getAdmin']);
+
+
+// Admin routes
+Route::Get('/admin/{id}', [AdminController::class, 'getAdminById']);
+Route::Get('/admin', [AdminController::class, 'getAllAdmins']);
 Route::Post('/admin', [AdminController::class, 'addAdmin']);
 Route::Put('/admin/{id}', [AdminController::class, 'editAdmin']);
 Route::Delete('/admin/{id}', [AdminController::class, 'deleteAdmin']);
