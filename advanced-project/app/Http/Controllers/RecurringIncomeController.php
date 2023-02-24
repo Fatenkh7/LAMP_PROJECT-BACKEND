@@ -3,13 +3,13 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Models\recurring_income;
+use App\Models\RecurringIncome;
 
 class RecurringIncomeController extends Controller
 {
     // Add a Recurring Income
     public function addRecurringIncome(Request $request) {
-        $recurringIncome = new recurring_income;
+        $recurringIncome = new RecurringIncome;
         $title = $request->input('title');
         $description = $request->input('description');
         $amount = $request->input('amount');
@@ -30,7 +30,7 @@ class RecurringIncomeController extends Controller
 
     // Get a Recurring Income By ID
     public function getRecurringIncomeById(Request $request, $id) {
-        $recurringIncome = recurring_income::find($id);
+        $recurringIncome = RecurringIncome::find($id);
         return response()->json([
             'message' => $recurringIncome
         ]);
@@ -38,7 +38,7 @@ class RecurringIncomeController extends Controller
 
     // Get all Recurring Incomes
     public function getAllRecurringIncomes(Request $request) {
-        $recurringIncome = recurring_income::all();
+        $recurringIncome = RecurringIncome::all();
         return response()->json([
             'message' => $recurringIncome
         ]);
@@ -46,7 +46,7 @@ class RecurringIncomeController extends Controller
 
     // Update a Recurring Income By ID
     public function editRecurringIncome(Request $request, $id) {
-        $recurringIncome = recurring_income::find($id);
+        $recurringIncome = RecurringIncome::find($id);
         $inputs = $request->except('_method');
         $recurringIncome->update($inputs);
         
@@ -58,7 +58,7 @@ class RecurringIncomeController extends Controller
 
     // Delete a Recurring Income By ID
     public function deleteRecurringIncome(Request $request, $id) {
-        $recurringIncome = recurring_income::find($id);
+        $recurringIncome = RecurringIncome::find($id);
         $recurringIncome->delete();
         return response()->json([
             'message' => 'Recurring Income deleted successfully',

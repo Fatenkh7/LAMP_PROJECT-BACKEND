@@ -42,6 +42,7 @@ Route::get('/fixedincomes/{id}', [fixed_incomescontroller::class,'getfixedincome
 Route::Put('/fixedincomes/{id}', [fixed_incomescontroller::class, 'editfixedincomes']);
 Route::Delete('/fixedincomes/{id}', [fixed_incomescontroller::class, 'deletefixedincomes']);
 
+//Categories
 Route::post('/category',[CategoryController::class, 'addcategory']);
 Route::get('/category', [CategoryController::class,'index']);
 Route::get('/category/{id}', [CategoryController::class,'getcategory']);
