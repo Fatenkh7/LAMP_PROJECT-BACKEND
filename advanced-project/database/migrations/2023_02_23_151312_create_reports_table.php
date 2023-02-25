@@ -11,14 +11,12 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('recurring_incomes', function (Blueprint $table) {
+        Schema::create('reports', function (Blueprint $table) {
             $table->id();
-            $table->string('title');
-            $table->string('description');
-            $table->integer('amount');
-            $table->integer('currency');
-            $table->date('start_date');
-            $table->date('end_date');
+            $table->string('report');
+            $table->enum('type_report', ['yearly', 'monthly', 'weekly']);
+            $table->dateTime('start_date');
+            $table->dateTime('end_date');
             $table->timestamps();
         });
     }
@@ -28,6 +26,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('recurring_incomes');
+        Schema::dropIfExists('reports');
     }
 };
