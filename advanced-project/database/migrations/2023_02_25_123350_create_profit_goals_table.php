@@ -16,8 +16,8 @@ return new class extends Migration
             $table->string('goal_title')->unique();
             $table->integer('goal_amount');
             $table->string('goal_description');
-            $table->unsignedBigInteger('currency_id');
-            $table->foreign('currency_id')->references('id')->on('currency');
+            $table->unsignedBigInteger('currencies_id');
+            $table->foreign('currencies_id')->references('id')->on('currencies');
             $table->dateTime('start_date');
             $table->dateTime('end_date');
         });

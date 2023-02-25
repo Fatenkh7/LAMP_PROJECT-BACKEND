@@ -17,10 +17,10 @@ return new class extends Migration
             $table->string('title');
             $table->string('description');
             $table->integer('amount');
-            $table->unsignedBigInteger('currency_id');
-            $table->foreign('currency_id')->references('id')->on('currency');
-            $table->unsignedBigInteger('category_id');
-            $table->foreign('category_id')->references('id')->on('categories');
+            $table->unsignedBigInteger('currencies_id');
+            $table->foreign('currencies_id')->references('id')->on('currencies');
+            $table->unsignedBigInteger('categories_id');
+            $table->foreign('categories_id')->references('id')->on('categories');
             $table->date('date');
 
         });

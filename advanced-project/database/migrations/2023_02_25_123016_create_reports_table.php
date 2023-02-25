@@ -17,8 +17,8 @@ return new class extends Migration
             $table->enum('type_report', ['yearly', 'monthly', 'weekly']);
             $table->unsignedBigInteger('admins_id');
             $table->foreign('admins_id')->references('id')->on('admins')->onDelete('cascade');
-            $table->unsignedBigInteger('category_id');
-            $table->foreign('category_id')->references('id')->on('categories');
+            $table->unsignedBigInteger('categories_id');
+            $table->foreign('categories_id')->references('id')->on('categories');
             $table->dateTime('start_date');
             $table->dateTime('end_date');
         });
