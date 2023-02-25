@@ -52,18 +52,28 @@ class RecurringIncomeController extends Controller
 
     // Get a Recurring Income By ID
     public function getRecurringIncomeById(Request $request, $id) {
-        $recurringIncome = RecurringIncome::find($id);
-        return response()->json([
-            'message' => $recurringIncome
-        ]);
+        try {
+            $recurringIncome = RecurringIncome::find($id);
+            return response()->json([
+                'message' => $recurringIncome
+            ]);
+        }
+        catch (\Exception $e) {
+            return $e->getMessage();
+        }
     }
 
     // Get all Recurring Incomes
     public function getAllRecurringIncomes(Request $request) {
-        $recurringIncome = RecurringIncome::all();
-        return response()->json([
-            'message' => $recurringIncome
-        ]);
+        try {
+            $recurringIncome = RecurringIncome::all();
+            return response()->json([
+                'message' => $recurringIncome
+            ]);
+        }
+        catch (\Exception $e) {
+            return $e->getMessage();
+        }
     }
 
     // Update a Recurring Income By ID
@@ -111,10 +121,15 @@ class RecurringIncomeController extends Controller
 
     // Delete a Recurring Income By ID
     public function deleteRecurringIncome(Request $request, $id) {
-        $recurringIncome = RecurringIncome::find($id);
-        $recurringIncome->delete();
-        return response()->json([
-            'message' => 'Recurring Income deleted successfully',
-        ]);
+        try {
+            $recurringIncome = RecurringIncome::find($id);
+            $recurringIncome->delete();
+            return response()->json([
+                'message' => 'Recurring Income deleted successfully',
+            ]);
+        }
+        catch (\Exception $e) {
+            return $e->getMessage();
+        }
     }
 }
