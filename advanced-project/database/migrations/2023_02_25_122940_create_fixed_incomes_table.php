@@ -18,6 +18,10 @@ return new class extends Migration
             $table->integer('amount');
             $table->integer('currency');
             $table->date('date_time');
+            $table->unsignedBigInteger('currency_id');
+            $table->foreign('currency_id')->references('id')->on('currency');
+            $table->unsignedBigInteger('category_id');
+            $table->foreign('category_id')->references('id')->on('categories');
             $table->timestamps();
         });
     }

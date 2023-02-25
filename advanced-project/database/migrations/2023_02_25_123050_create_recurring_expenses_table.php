@@ -11,15 +11,18 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('fixed_expenses', function (Blueprint $table) {
+        Schema::create('recurring_expenses', function (Blueprint $table) {
 
             $table->id();
             $table->string('title');
             $table->string('description');
             $table->integer('amount');
+            $table->date('startDate');
+            $table->date('endDate');
             $table->unsignedBigInteger('currency_id');
             $table->foreign('currency_id')->references('id')->on('currency');
-            $table->date('date');
+            $table->unsignedBigInteger('category_id');
+            $table->foreign('category_id')->references('id')->on('categories');
 
         });
     }

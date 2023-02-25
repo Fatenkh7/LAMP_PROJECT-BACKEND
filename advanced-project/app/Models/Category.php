@@ -13,4 +13,28 @@ class Category extends Model
         'name', 
         
     ];
+    public function admin()
+    {
+        return $this->belongsTo(Admin::class);
+    }
+    public function reports()
+    {
+        return $this->hasMany(Report::class);
+    }
+    public function fixedIncomes()
+    {
+        return $this->hasMany(FixedIncome::class);
+    }
+    public function fixedExpenses()
+    {
+        return $this->hasMany(FixedExpense::class);
+    }
+    public function recurringIncome()
+    {
+        return $this->hasMany(RecurringIncome::class);
+    }
+    public function recurringExpense()
+    {
+        return $this->hasMany(RecurringExpense::class);
+    }
 }
