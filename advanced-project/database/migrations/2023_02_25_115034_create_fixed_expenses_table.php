@@ -17,6 +17,8 @@ return new class extends Migration
             $table->string('title');
             $table->string('description');
             $table->integer('amount');
+            $table->unsignedBigInteger('currency_id');
+            $table->foreign('currency_id')->references('id')->on('currency');
             $table->date('date');
 
         });

@@ -12,4 +12,8 @@ class Currency extends Model
         'currency',
     ];
     public $timestamps = false;
+    public function fixedExpense()
+    {
+        return $this->hasOne(FixedExpense::class);
+    }
 }

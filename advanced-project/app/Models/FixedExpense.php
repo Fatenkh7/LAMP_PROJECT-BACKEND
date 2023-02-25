@@ -16,4 +16,8 @@ class FixedExpense extends Model
         'date',
     ];
     public $timestamps = false;
+    public function currency()
+    {
+        return $this->belongsTo(Currency::class);
+    }
 }
