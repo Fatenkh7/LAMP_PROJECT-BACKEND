@@ -3,10 +3,10 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Models\fixed_incomes;
+use App\Models\FixedIncome;
 use Illuminate\Support\Facades\Validator;
 
-class fixed_incomescontroller extends Controller
+class FixedIncomeController extends Controller
 {
     public function addfixedincomes(Request $request){
         try {
@@ -22,7 +22,7 @@ class fixed_incomescontroller extends Controller
             $errors = $validator->errors()->toArray();
             return $errors;
         }
-        $fixed_incomes = new fixed_incomes();
+        $FixedIncome = new FixedIncome();
         $title = $request->input('title');
         $description = $request->input('description');
         $amount = $request->input('amount');
@@ -30,13 +30,13 @@ class fixed_incomescontroller extends Controller
         $datetime = $request->input('datetime');
 
         // return "test";
-        $fixed_incomes->title = $title;
-        $fixed_incomes->description = $description;
-        $fixed_incomes->amount = $amount;
-        $fixed_incomes->currency = $currency;
-        $fixed_incomes->date_time = $datetime;
+        $FixedIncome->title = $title;
+        $FixedIncome->description = $description;
+        $FixedIncome->amount = $amount;
+        $FixedIncome->currency = $currency;
+        $FixedIncome->date_time = $datetime;
 
-        $fixed_incomes->save();
+        $FixedIncome->save();
         return response()->json([
             'message' => 'Fixed Incomes created successfully'
         ]);
@@ -61,7 +61,7 @@ class fixed_incomescontroller extends Controller
             $errors = $validator->errors()->toArray();
             return $errors;
         }
-        $fixedincomes = fixed_incomes::all();
+        $fixedincomes = FixedIncome::all();
         return response()->json(([
             'message' => $fixedincomes,
         ]));
@@ -86,7 +86,7 @@ class fixed_incomescontroller extends Controller
                 $errors = $validator->errors()->toArray();
                 return $errors;
             }
-            $fixedincomes = fixed_incomes::find($id)->get();
+            $fixedincomes = FixedIncome::find($id)->get();
             return response()->json([
                 'message' => $fixedincomes,
             ]);
@@ -112,7 +112,7 @@ class fixed_incomescontroller extends Controller
                 $errors = $validator->errors()->toArray();
                 return $errors;
             }
-            $fixedincomes = fixed_incomes::find($id);
+            $fixedincomes = FixedIncome::find($id);
         $inputs = $request->except('_method');
         $fixedincomes->update($inputs);
 
@@ -142,7 +142,7 @@ class fixed_incomescontroller extends Controller
                 $errors = $validator->errors()->toArray();
                 return $errors;
             }
-            $fixedincomes = fixed_incomes::find($id);
+            $fixedincomes = FixedIncome::find($id);
         $fixedincomes->delete();
         return response()->json([
             'message' => 'fixed incomes deleted successfully',
