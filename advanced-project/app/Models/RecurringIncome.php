@@ -13,7 +13,6 @@ class RecurringIncome extends Model
         'title',
         'description',
         'amount',
-        'currency',
         'start_date',
         'end_date',
     ];

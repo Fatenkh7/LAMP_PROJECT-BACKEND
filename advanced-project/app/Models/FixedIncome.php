@@ -13,7 +13,6 @@ class FixedIncome extends Model
         'title',
         'description',
         'amount',
-        'currency',
         'date_time',
     ];
     public function currency()

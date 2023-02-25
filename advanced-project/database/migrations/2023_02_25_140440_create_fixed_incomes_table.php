@@ -11,18 +11,18 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('recurring_incomes', function (Blueprint $table) {
+        Schema::create('fixed_incomes', function (Blueprint $table) {
             $table->id();
             $table->string('title');
             $table->string('description');
             $table->integer('amount');
-            $table->integer('currency');
-            $table->date('start_date');
-            $table->date('end_date');
+            $table->date('date_time');
             $table->unsignedBigInteger('currencies_id');
             $table->foreign('currencies_id')->references('id')->on('currencies');
             $table->unsignedBigInteger('categories_id');
             $table->foreign('categories_id')->references('id')->on('categories');
+            $table->unsignedBigInteger('admins_id');
+            $table->foreign('admins_id')->references('id')->on('admins')->onDelete('cascade');
             $table->timestamps();
         });
     }
@@ -32,6 +32,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('recurring_incomes');
+        Schema::dropIfExists('fixed_incomes');
     }
 };

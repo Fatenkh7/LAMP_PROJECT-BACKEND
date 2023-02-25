@@ -18,6 +18,8 @@ return new class extends Migration
             $table->string('goal_description');
             $table->unsignedBigInteger('currencies_id');
             $table->foreign('currencies_id')->references('id')->on('currencies');
+            $table->unsignedBigInteger('admins_id');
+            $table->foreign('admins_id')->references('id')->on('admins')->onDelete('cascade');
             $table->dateTime('start_date');
             $table->dateTime('end_date');
         });
