@@ -13,7 +13,19 @@ class FixedIncome extends Model
         'title',
         'description',
         'amount',
-        'currency',
         'date_time',
     ];
+    public function currency()
+    {
+        return $this->belongsTo(Currency::class);
+    }
+    public function admin()
+    {
+        return $this->belongsTo(Admin::class);
+    }
+    public function category()
+    {
+        return $this->belongsTo(Category::class);
+    }
+
 }

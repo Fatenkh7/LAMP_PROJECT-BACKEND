@@ -11,10 +11,13 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('reports', function (Blueprint $table) {
+        Schema::create('profit_goals', function (Blueprint $table) {
             $table->id();
-            $table->string('report');
-            $table->enum('type_report', ['yearly', 'monthly', 'weekly']);
+            $table->string('goal_title')->unique();
+            $table->integer('goal_amount');
+            $table->string('goal_description');
+            $table->unsignedBigInteger('currencies_id');
+            $table->foreign('currencies_id')->references('id')->on('currencies');
             $table->unsignedBigInteger('admins_id');
             $table->foreign('admins_id')->references('id')->on('admins')->onDelete('cascade');
             $table->dateTime('start_date');
@@ -27,6 +30,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('reports');
+        Schema::dropIfExists('profit_goals');
     }
 };
