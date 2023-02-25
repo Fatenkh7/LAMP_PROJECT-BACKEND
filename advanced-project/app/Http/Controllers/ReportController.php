@@ -66,8 +66,8 @@ class ReportController extends Controller
     {
         try {
             $this->validate($request, [
-                'report' => 'required|string',
-                'type_report' => 'required|in:yearly,monthly,weekly',
+                'report' => 'required|string|min:100|max:255',
+                'type_report' => 'required|in:yearly,monthly,weekly|min:6|max:7',
                 'admins_id' => 'required|exists:admins,id',
                 'categories_id' => 'required|exists:categories,id',
                 'start_date' => 'required|date',
