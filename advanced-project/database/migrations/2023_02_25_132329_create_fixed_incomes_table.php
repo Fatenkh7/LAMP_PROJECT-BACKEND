@@ -16,13 +16,8 @@ return new class extends Migration
             $table->string('title');
             $table->string('description');
             $table->integer('amount');
+            $table->integer('currency');
             $table->date('date_time');
-            $table->unsignedBigInteger('currencies_id');
-            $table->foreign('currencies_id')->references('id')->on('currencies');
-            $table->unsignedBigInteger('categories_id');
-            $table->foreign('categories_id')->references('id')->on('categories');
-            $table->unsignedBigInteger('admins_id');
-            $table->foreign('admins_id')->references('id')->on('admins')->onDelete('cascade');
             $table->timestamps();
         });
     }
