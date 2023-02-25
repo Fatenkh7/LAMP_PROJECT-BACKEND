@@ -52,9 +52,10 @@ class CategoryController extends Controller
     }
     public function getcategory(Request $request, $id) {
         try {
-            $data = $request->only('name');
+            $data = $request->only('category','category_description');
             $validator = Validator::make($data, [
-                'name'=>'required|string|min:3|max:255',
+                'category'=>'required|string|min:3|max:27',
+                'category_description'=>'required|string|min:3|max:350',
             ]);
             if($validator->fails()){
                 $errors = $validator->errors()->toArray();
@@ -73,9 +74,10 @@ class CategoryController extends Controller
     }
     public function editcategory(Request $request, $id) {
         try {
-            $data = $request->only('name');
+            $data = $request->only('category','category_description');
             $validator = Validator::make($data, [
-                'name'=>'required|string|min:3|max:255',
+                'category'=>'required|string|min:3|max:27',
+                'category_description'=>'required|string|min:3|max:350',
             ]);
             if($validator->fails()){
                 $errors = $validator->errors()->toArray();
@@ -97,9 +99,10 @@ class CategoryController extends Controller
     }
     public function deletecategory(Request $request, $id) {
         try {
-            $data = $request->only('name');
+            $data = $request->only('category','category_description');
             $validator = Validator::make($data, [
-                'name'=>'required|string|min:3|max:255',
+                'category'=>'required|string|min:3|max:27',
+                'category_description'=>'required|string|min:3|max:350',
             ]);
             if($validator->fails()){
                 $errors = $validator->errors()->toArray();
