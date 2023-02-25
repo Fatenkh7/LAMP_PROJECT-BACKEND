@@ -18,4 +18,8 @@ class Report extends Model
     {
         return $this->belongsTo(Admin::class);
     }
+    public function category()
+    {
+        return $this->belongsTo(Category::class);
+    }
 }
