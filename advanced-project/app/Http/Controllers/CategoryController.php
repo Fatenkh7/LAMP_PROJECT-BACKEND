@@ -4,23 +4,31 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Category;
+use App\Models\Admin;
 use Illuminate\Support\Facades\Validator;
 
 class CategoryController extends Controller
 {
     public function addcategory(Request $request){
         try {
-            $data = $request->only('name');
+            $data = $request->only('category','category_description');
             $validator = Validator::make($data, [
-                'name'=>'required|string|min:3|max:255',
+                'category'=>'required|string|min:3|max:25',
+                'category_description'=>'required|string|min:3|max:350',
             ]);
             if($validator->fails()){
                 $errors = $validator->errors()->toArray();
                 return $errors;
             }
             $category = new Category();
-            $name = $request->input('name');
-            $category->name = $name;
+            $admins_id = $request->input('admins_id');
+            $admins = Admin::find($admins_id);
+            $category->admins()->associate($admins);
+            $category = $request->input('category');
+            $category->category = $category;
+            $category_description = $request->input('category_description');
+            $category->category_description = $category_description;
+           
             $category->save();
             return response()->json([
                 'message' => 'Category created successfully'
@@ -33,9 +41,10 @@ class CategoryController extends Controller
     }
     public function index(Request $request){
         try {
-            $data = $request->only('name');
+            $data = $request->only('category','category_description');
             $validator = Validator::make($data, [
-                'name'=>'required|string|min:3|max:255',
+                'category'=>'required|string|min:3|max:25',
+                'category_description'=>'required|string|min:3|max:350',
             ]);
             if($validator->fails()){
                 $errors = $validator->errors()->toArray();
