@@ -80,7 +80,7 @@ class ReportController extends Controller
             $report = $request->input('report');
             $type_report = $request->input('type_report');
             $admins_id = $request->input('admins_id');
-            $admins= Admin::find($admins_id);
+            $admins = Admin::find($admins_id);
             $categories_id = $request->input('categories_id');
             $categories = Category::find($categories_id);
             $start_date = $request->input('start_date');
@@ -127,7 +127,7 @@ class ReportController extends Controller
 
         // Validate the request inputs
         $validator = Validator::make($request->all(), [
-            'report' => 'required|string|max:25',
+            'report' => 'required|string|max:255',
             'type_report' => 'required|required|in:yearly,monthly,weekly',
         ]);
         if ($validator->fails()) {
