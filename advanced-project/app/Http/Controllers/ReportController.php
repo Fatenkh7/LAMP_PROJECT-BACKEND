@@ -7,6 +7,7 @@ use App\Models\Report;
 use App\Models\Admin;
 use App\Models\Category;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Database\QueryException;
 
 class ReportController extends Controller
 {
@@ -17,6 +18,11 @@ class ReportController extends Controller
             $report = Report::all();
             return response()->json([
                 'message' => $report
+            ]);
+        } catch (QueryException $e) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Error getting report from database'
             ]);
         } catch (\Exception $e) {
             return response()->json([
@@ -32,6 +38,11 @@ class ReportController extends Controller
             $report = Report::findOrFail($id);
             return response()->json([
                 'message' => $report
+            ]);
+        } catch (QueryException $e) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Error retrieving getting report from database'
             ]);
         } catch (\Exception $e) {
             return response()->json([
@@ -56,6 +67,11 @@ class ReportController extends Controller
                     'data' => $report
                 ]);
             }
+        } catch (QueryException $e) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Error getting report from database'
+            ]);
         } catch (\Exception $e) {
             return response()->json([
                 'message' => 'Error retrieving reports',
@@ -97,6 +113,11 @@ class ReportController extends Controller
             return response()->json([
                 'message' => 'Report created successfully'
             ]);
+        } catch (QueryException $e) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Error adding report for database'
+            ]);
         } catch (\Exception $e) {
             return response()->json([
                 'error' => $e->getMessage()
@@ -106,56 +127,61 @@ class ReportController extends Controller
 
 
     public function editReport(Request $request, $id)
-{
-    try {
-        // Check if the $id correct
-        if (!is_numeric($id)) {
+    {
+        try {
+            // Check if the $id correct
+            if (!is_numeric($id)) {
+                return response()->json([
+                    'success' => false,
+                    'message' => 'Invalid report ID'
+                ], 400);
+            }
+
+            // Check if the report exists
+            $report = Report::find($id);
+            if (!$report) {
+                return response()->json([
+                    'success' => false,
+                    'message' => 'Report not found'
+                ], 404);
+            }
+
+            // Validate the request inputs
+            $validator = Validator::make($request->all(), [
+                'report' => 'required|string|max:255',
+                'type_report' => 'required|required|in:yearly,monthly,weekly',
+            ]);
+            if ($validator->fails()) {
+                return response()->json([
+                    'success' => false,
+                    'message' => 'Validation error',
+                    'errors' => $validator->errors()
+                ], 422);
+            }
+
+            // Update the report
+            $report->report = $request->input('report');
+            $report->type_report = $request->input('type_report');
+            $report->save();
+
+            return response()->json([
+                'success' => true,
+                'message' => 'Report updated successfully',
+                'report' => $report,
+            ]);
+        } catch (QueryException $e) {
             return response()->json([
                 'success' => false,
-                'message' => 'Invalid report ID'
-            ], 400);
-        }
-
-        // Check if the report exists
-        $report = Report::find($id);
-        if (!$report) {
+                'message' => 'Error updating report from database'
+            ]);
+        } catch (\Exception $e) {
             return response()->json([
                 'success' => false,
-                'message' => 'Report not found'
-            ], 404);
+                'message' => 'Error updating report',
+                'error' => $e->getMessage()
+            ], 500);
         }
-
-        // Validate the request inputs
-        $validator = Validator::make($request->all(), [
-            'report' => 'required|string|max:255',
-            'type_report' => 'required|required|in:yearly,monthly,weekly',
-        ]);
-        if ($validator->fails()) {
-            return response()->json([
-                'success' => false,
-                'message' => 'Validation error',
-                'errors' => $validator->errors()
-            ], 422);
-        }
-
-        // Update the report
-        $report->report = $request->input('report');
-        $report->type_report = $request->input('type_report');
-        $report->save();
-
-        return response()->json([
-            'success' => true,
-            'message' => 'Report updated successfully',
-            'report' => $report,
-        ]);
-    } catch (\Exception $e) {
-        return response()->json([
-            'success' => false,
-            'message' => 'Error updating report',
-            'error' => $e->getMessage()
-        ], 500);
     }
-}
 
     public function deleteById(Request $request, $id)
     {
@@ -171,6 +197,11 @@ class ReportController extends Controller
             return response()->json([
                 'success' => true,
                 'message' => 'Report deleted successfully',
+            ]);
+        } catch (QueryException $e) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Error deleting report from database'
             ]);
         } catch (\Exception $e) {
             return response()->json([
@@ -194,6 +225,11 @@ class ReportController extends Controller
             return response()->json([
                 'success' => true,
                 'message' => $reports . ' report(s) deleted successfully',
+            ]);
+        } catch (QueryException $e) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Error deleting report from database'
             ]);
         } catch (\Exception $e) {
             return response()->json([
