@@ -113,11 +113,6 @@ class ReportController extends Controller
             return response()->json([
                 'message' => 'Report created successfully'
             ]);
-        } catch (QueryException $e) {
-            return response()->json([
-                'success' => false,
-                'message' => 'Error adding report for database'
-            ]);
         } catch (\Exception $e) {
             return response()->json([
                 'error' => $e->getMessage()

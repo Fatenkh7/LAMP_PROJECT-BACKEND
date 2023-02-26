@@ -85,7 +85,7 @@ class ProfitGoalController extends Controller
     {
         try {
             $this->validate($request, [
-                'goal_title' => 'required|string|max:25',
+                'goal_title' => 'required|string|max:60',
                 'goal_amount' => 'required|integer',
                 'admins_id' => 'required|exists:admins,id',
                 'currencies_id' => 'required|exists:currencies,id',
