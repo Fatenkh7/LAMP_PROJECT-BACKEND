@@ -18,7 +18,6 @@ class RecurringIncomeController extends Controller
                 'title'=>'required|string|max:255',
                 'description'=>'required|string|max:255',
                 'amount'=>'required|integer',
-                'currency'=>'required|integer',
                 'start_date'=>'required|date_format:Y-m-d',
                 'end_date'=>'required|date_format:Y-m-d',
             ]);
