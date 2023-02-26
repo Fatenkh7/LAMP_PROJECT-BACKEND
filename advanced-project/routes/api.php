@@ -7,7 +7,7 @@ use App\Http\Controllers\FixedIncomeController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\RecurringIncomeController;
 use App\Http\Controllers\ReportController;
-use App\Http\Controllers\ProfitGoalsController;
+use App\Http\Controllers\ProfitGoalController;
 use App\Http\Controllers\CurrenciesController;
 use App\Http\Controllers\FixedExpenseController;
 use App\Http\Controllers\RecurringExpenseController;
@@ -73,14 +73,14 @@ Route::Delete('/report/{id}', [ReportController::class, 'deleteById']);
 Route::Delete('/report/type/{type}', [ReportController::class, 'deleteByType']);
 
 //profit goals routes
-Route::Get('/profit', [ProfitGoalsController::class, 'getAll']);
-Route::Get('/profit/{id}', [ProfitGoalsController::class, 'getById']);
-Route::Get('/profit/title/{title}', [ProfitGoalsController::class, 'getByTitle']);
-Route::Post('/profit', [ProfitGoalsController::class, 'addprofitGoals']);
-Route::Put('/profit/id/{id}', [ProfitGoalsController::class, 'editprofitById']);
-Route::Put('/profit/title/{title}', [ProfitGoalsController::class, 'editprofitByTitle']);
-Route::Delete('/profit/{id}', [ProfitGoalsController::class, 'deleteById']);
-Route::Delete('/profit/title/{title}', [ProfitGoalsController::class, 'deleteByTitle']);
+Route::Get('/profit', [ProfitGoalController::class, 'getAll']);
+Route::Get('/profit/{id}', [ProfitGoalController::class, 'getById']);
+Route::Get('/profit/title/{title}', [ProfitGoalController::class, 'getByTitle']);
+Route::Post('/profit', [ProfitGoalController::class, 'addProfitGoal']);
+Route::Put('/profit/id/{id}', [ProfitGoalController::class, 'editprofitById']);
+Route::Put('/profit/title/{title}', [ProfitGoalController::class, 'editprofitByTitle']);
+Route::Delete('/profit/{id}', [ProfitGoalController::class, 'deleteById']);
+Route::Delete('/profit/title/{title}', [ProfitGoalController::class, 'deleteByTitle']);
 
 
 //currencies

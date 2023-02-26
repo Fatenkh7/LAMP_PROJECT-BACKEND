@@ -56,7 +56,7 @@ class ProfitGoalController extends Controller
     public function getByTitle(Request $request, $title)
     {
         try {
-            $ProfitGoal = ProfitGoal::where('type_report', $title)->get();
+            $ProfitGoal = ProfitGoal::where('goal_title', $title)->get();
             if ($ProfitGoal->isEmpty()) {
                 return response()->json([
                     'success' => false,
@@ -85,8 +85,9 @@ class ProfitGoalController extends Controller
     {
         try {
             $this->validate($request, [
-                'goal_title' => 'required|string|max:60',
+                'goal_title' => 'required|string|max:35',
                 'goal_amount' => 'required|integer',
+                'goal_description' => 'required|string|min:70|max:255',
                 'admins_id' => 'required|exists:admins,id',
                 'currencies_id' => 'required|exists:currencies,id',
                 'start_date' => 'required|date',
@@ -125,7 +126,7 @@ class ProfitGoalController extends Controller
         } catch (QueryException $e) {
             return response()->json([
                 'success' => false,
-                'message' => 'Error adding profit goal on the database'
+                'message' => 'Error creating profit goal from database'
             ]);
         } catch (\Exception $e) {
             return response()->json([
@@ -156,7 +157,7 @@ class ProfitGoalController extends Controller
 
             // Validate the request inputs
             $validator = Validator::make($request->all(), [
-                'goal_title' => 'required|string|max:25',
+                'goal_title' => 'required|string|max:35',
                 'goal_amount' => 'required|integer',
                 'start_date' => 'required|date',
                 'end_date' => 'required|date|after_or_equal:start_date',
@@ -284,7 +285,7 @@ class ProfitGoalController extends Controller
             }
             return response()->json([
                 'success' => true,
-                'message' => $ProfitGoal . 'deleted successfully',
+                'message' => $ProfitGoal . ' deleted successfully',
             ]);
         } catch (QueryException $e) {
             return response()->json([
