@@ -4,6 +4,9 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\RecurringIncome;
+use App\Models\Admin;
+use App\Models\Currency;
+use App\Models\Category;
 use Illuminate\Support\Facades\Validator;
 
 
@@ -33,6 +36,15 @@ class RecurringIncomeController extends Controller
             $currency = $request->input('currency');
             $startDate = $request->input('start_date');
             $endDate = $request->input('end_date');
+            $currencies_id = $request->input('currencies_id');
+            $currencies = Currency::find($currencies_id);
+            $categories_id = $request->input('categories_id');
+            $categories = Category::find($categories_id);
+            $admins_id = $request->input('admins_id');
+            $admins = Admin::find($admins_id);
+            $recurringIncome->currencies()->associate($currencies);
+            $recurringIncome->categories()->associate($categories);
+            $recurringIncome->admins()->associate($admins);
             $recurringIncome->title = $title;
             $recurringIncome->description = $description;
             $recurringIncome->amount = $amount;
