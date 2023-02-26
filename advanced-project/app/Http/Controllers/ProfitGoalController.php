@@ -8,6 +8,7 @@ use Carbon\Carbon;
 use App\Models\Admin;
 use App\Models\Currency;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Database\QueryException;
 
 class ProfitGoalController extends Controller
 {
@@ -17,6 +18,11 @@ class ProfitGoalController extends Controller
             $ProfitGoal = ProfitGoal::all();
             return response()->json([
                 'message' => $ProfitGoal
+            ]);
+        } catch (QueryException $e) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Error retrieving profit goal from database'
             ]);
         } catch (\Exception $e) {
             return response()->json([
@@ -33,6 +39,11 @@ class ProfitGoalController extends Controller
             $ProfitGoal = ProfitGoal::findOrFail($id);
             return response()->json([
                 'message' => $ProfitGoal
+            ]);
+        } catch (QueryException $e) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Error retrieving profit goal from database'
             ]);
         } catch (\Exception $e) {
             return response()->json([
@@ -57,6 +68,11 @@ class ProfitGoalController extends Controller
                     'data' => $ProfitGoal
                 ]);
             }
+        } catch (QueryException $e) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Error retrieving profit goal from database'
+            ]);
         } catch (\Exception $e) {
             return response()->json([
                 'message' => 'Error retrieving ProfitGoal',
@@ -105,6 +121,11 @@ class ProfitGoalController extends Controller
             $newProfitGoal->save();
             return response()->json([
                 'message' => 'Profit goal created successfully'
+            ]);
+        } catch (QueryException $e) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Error adding profit goal on the database'
             ]);
         } catch (\Exception $e) {
             return response()->json([
@@ -160,6 +181,11 @@ class ProfitGoalController extends Controller
                 'message' => 'Profit goal updated successfully',
                 'profit_goal' => $profit_goal,
             ]);
+        } catch (QueryException $e) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Error editing profit goal from database'
+            ]);
         } catch (\Exception $e) {
             return response()->json([
                 'success' => false,
@@ -203,6 +229,11 @@ class ProfitGoalController extends Controller
                 'message' => 'profit Goals updated successfully',
                 'ProfitGoal' => $ProfitGoal,
             ]);
+        } catch (QueryException $e) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Error editing profit goal from database'
+            ]);
         } catch (\Exception $e) {
             return response()->json([
                 'success' => false,
@@ -227,6 +258,11 @@ class ProfitGoalController extends Controller
                 'success' => true,
                 'message' => 'Profit Goal deleted successfully',
             ]);
+        } catch (QueryException $e) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Error deleting profit goal from database'
+            ]);
         } catch (\Exception $e) {
             return response()->json([
                 'success' => false,
@@ -249,6 +285,11 @@ class ProfitGoalController extends Controller
             return response()->json([
                 'success' => true,
                 'message' => $ProfitGoal . 'deleted successfully',
+            ]);
+        } catch (QueryException $e) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Error deleting profit goal from database'
             ]);
         } catch (\Exception $e) {
             return response()->json([
