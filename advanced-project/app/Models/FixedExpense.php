@@ -16,15 +16,15 @@ class FixedExpense extends Model
         'date',
     ];
     public $timestamps = false;
-    public function currency()
+    public function currencies()
     {
         return $this->belongsTo(Currency::class);
     }
-    public function admin()
+    public function admins()
     {
         return $this->belongsTo(Admin::class);
     }
-    public function category()
+    public function categories()
     {
         return $this->belongsTo(Category::class);
     }

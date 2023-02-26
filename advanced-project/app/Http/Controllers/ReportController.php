@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Report;
+use App\Models\Admin;
+use App\Models\Category;
 use Illuminate\Support\Facades\Validator;
 
 class ReportController extends Controller
@@ -78,14 +80,16 @@ class ReportController extends Controller
             $report = $request->input('report');
             $type_report = $request->input('type_report');
             $admins_id = $request->input('admins_id');
+            $admins= Admin::find($admins_id);
             $categories_id = $request->input('categories_id');
+            $categories = Category::find($categories_id);
             $start_date = $request->input('start_date');
             $end_date = $request->input('end_date');
 
             $newreport->report = $report;
             $newreport->type_report = $type_report;
-            $newreport->admins_id = $admins_id;
-            $newreport->categories_id = $categories_id;
+            $newreport->admins()->associate($admins);
+            $newreport->categories()->associate($categories);
             $newreport->start_date = $start_date;
             $newreport->end_date = $end_date;
 
@@ -123,9 +127,8 @@ class ReportController extends Controller
 
         // Validate the request inputs
         $validator = Validator::make($request->all(), [
-            'title' => 'required|string|max:255',
-            'description' => 'required|string',
-            'category' => 'required|in:bug,feature request,other',
+            'report' => 'required|string|max:25',
+            'type_report' => 'required|required|in:yearly,monthly,weekly',
         ]);
         if ($validator->fails()) {
             return response()->json([
@@ -136,9 +139,8 @@ class ReportController extends Controller
         }
 
         // Update the report
-        $report->title = $request->input('title');
-        $report->description = $request->input('description');
-        $report->category = $request->input('category');
+        $report->report = $request->input('report');
+        $report->type_report = $request->input('type_report');
         $report->save();
 
         return response()->json([

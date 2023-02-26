@@ -14,11 +14,13 @@ class Report extends Model
         'start_date',
         'end_date',
     ];
-    public function admin()
+    public $timestamps = false;
+
+    public function admins()
     {
         return $this->belongsTo(Admin::class);
-    }
-    public function category()
+    }    
+    public function categories()
     {
         return $this->belongsTo(Category::class);
     }

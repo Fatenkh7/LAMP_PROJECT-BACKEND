@@ -14,7 +14,7 @@ class Category extends Model
         'category_description',
     ];
     
-    public function admin()
+    public function admins()
     {
         return $this->belongsTo(Admin::class);
     }
@@ -22,19 +22,19 @@ class Category extends Model
     {
         return $this->hasMany(Report::class);
     }
-    public function fixedIncomes()
+    public function fixed_incomes()
     {
         return $this->hasMany(FixedIncome::class);
     }
-    public function fixedExpenses()
+    public function fixed_expenses()
     {
         return $this->hasMany(FixedExpense::class);
     }
-    public function recurringIncome()
+    public function recurring_incomes()
     {
         return $this->hasMany(RecurringIncome::class);
     }
-    public function recurringExpense()
+    public function recurring_expenses()
     {
         return $this->hasMany(RecurringExpense::class);
     }

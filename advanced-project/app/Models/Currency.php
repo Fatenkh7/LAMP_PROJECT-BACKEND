@@ -12,23 +12,23 @@ class Currency extends Model
         'currency',
     ];
     public $timestamps = false;
-    public function fixedExpense()
+    public function fixed_expenses()
     {
         return $this->hasOne(FixedExpense::class);
     }
-    public function fixedIncome()
+    public function fixed_incomes()
     {
         return $this->hasOne(fixedIncome::class);
     }
-    public function recurringIncome()
+    public function recurring_incomes()
     {
         return $this->hasOne(RecurringIncome::class);
     }
-    public function recurringExpense()
+    public function recurring_expenses()
     {
         return $this->hasOne(RecurringExpense::class);
     }
-    public function profitGoal()
+    public function profit_goals()
     {
         return $this->hasOne(ProfitGoal::class);
     }
