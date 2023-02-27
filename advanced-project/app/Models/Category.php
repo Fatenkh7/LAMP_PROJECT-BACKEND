@@ -13,7 +13,8 @@ class Category extends Model
         'category',
         'category_description',
     ];
-    
+    public $timestamps = false;
+
     public function admins()
     {
         return $this->belongsTo(Admin::class);

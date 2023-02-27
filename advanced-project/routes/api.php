@@ -45,9 +45,12 @@ Route::Delete('/fixedincomes/{id}', [FixedIncomeController::class, 'deletefixedi
 //Categories
 Route::Post('/category',[CategoryController::class, 'addcategory']);
 Route::Get('/category', [CategoryController::class,'getAll']);
+Route::Get('/category/{name}', [CategoryController::class,'getByCategory']);
 Route::Get('/category/{id}', [CategoryController::class,'getById']);
-Route::Put('/category/{id}', [CategoryController::class, 'editcategory']);
-Route::Delete('/category/{id}', [CategoryController::class, 'deletecategory']);
+Route::Put('/category/{id}', [CategoryController::class, 'editById']);
+Route::Put('/category/{name}', [CategoryController::class, 'editByName']);
+Route::Delete('/category/{id}', [CategoryController::class, 'deleteCategoryById']);
+Route::Delete('/category/{name}', [CategoryController::class, 'deleteCategoryByName']);
 
 //fixed expenses
 Route::Post('/fixedexpenses', [FixedExpenseController::class, 'addfixedexpenses']);

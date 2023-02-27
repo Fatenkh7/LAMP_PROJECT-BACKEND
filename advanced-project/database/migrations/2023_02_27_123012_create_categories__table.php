@@ -15,6 +15,8 @@ return new class extends Migration
             $table->id();
             $table->string('category');
             $table->string('category_description');
+            $table->unsignedBigInteger('admins_id');
+            $table->foreign('admins_id')->references('id')->on('admins')->onDelete('cascade');
         });
     }
 
