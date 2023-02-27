@@ -19,7 +19,7 @@ class RecurringIncomeController extends Controller
                 'description'=>'required|string|max:255',
                 'amount'=>'required|integer',
                 'start_date'=>'required|date_format:Y-m-d',
-                'end_date'=>'required|date_format:Y-m-d',
+                'end_date'=>'required|date|date_format:Y-m-d|after_or_equal:start_date',
             ]);
             if($validator->fails()) {
                 $errors = $validator->errors()->toArray();
