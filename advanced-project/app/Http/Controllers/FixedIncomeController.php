@@ -19,11 +19,11 @@ class FixedIncomeController extends Controller
             $FixedIncome->admins()->associate($admins);
 
             $categories_id = $request->input('categories_id');
-            $categories = Category::find($admins_id);
+            $categories = Category::find($categories_id);
             $FixedIncome->admins()->associate($categories);
 
-            $currencies_id = $request->input('categories_id');
-            $currencies = Currency::find($admins_id);
+            $currencies_id = $request->input('currencies_id');
+            $currencies = Currency::find($currencies_id);
             $FixedIncome->admins()->associate($currencies);
 
             $data = $request->only('name','description','amount','currency','date');
@@ -63,20 +63,8 @@ class FixedIncomeController extends Controller
       }
         
     }
-    public function index(Request $request){
+    public function getAll(Request $request){
         try {
-            $data = $request->only('name','description','amount','currency','date');
-        $validator = Validator::make($data, [
-            'name'=>'required|string|min:3|max:255',
-            'description' => 'nullable|string',
-            'amount'=>'required|integer|min:1|max:6',
-            'currency'=>'required|integer|min:1|max:6',
-            'date' => 'required|date',
-        ]);
-        if($validator->fails()){
-            $errors = $validator->errors()->toArray();
-            return $errors;
-        }
         $fixedincomes = FixedIncome::all();
         return response()->json(([
             'message' => $fixedincomes,
@@ -88,20 +76,8 @@ class FixedIncomeController extends Controller
       }
        
     }
-    public function getfixedincomes(Request $request, $id) {
+    public function getById(Request $request, $id) {
         try {
-            $data = $request->only('name','description','amount','currency','date');
-            $validator = Validator::make($data, [
-                'name'=>'required|string|min:3|max:255',
-                'description' => 'nullable|string',
-                'amount'=>'required|integer|min:1|max:6',
-                'currency'=>'required|integer|min:1|max:6',
-                'date' => 'required|date',
-            ]);
-            if($validator->fails()){
-                $errors = $validator->errors()->toArray();
-                return $errors;
-            }
             $fixedincomes = FixedIncome::find($id)->get();
             return response()->json([
                 'message' => $fixedincomes,
@@ -146,18 +122,6 @@ class FixedIncomeController extends Controller
     }
     public function deletefixedincomes(Request $request, $id) {
         try {
-            $data = $request->only('name','description','amount','currency','date');
-            $validator = Validator::make($data, [
-                'name'=>'required|string|min:3|max:255',
-                'description' => 'nullable|string',
-                'amount'=>'required|integer|min:1|max:6',
-                'currency'=>'required|integer|min:1|max:6',
-                'date' => 'required|date',
-            ]);
-            if($validator->fails()){
-                $errors = $validator->errors()->toArray();
-                return $errors;
-            }
             $fixedincomes = FixedIncome::find($id);
         $fixedincomes->delete();
         return response()->json([

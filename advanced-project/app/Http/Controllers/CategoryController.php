@@ -53,18 +53,9 @@ class CategoryController extends Controller
             ], 500);
         }
     }
-    public function getcategory(Request $request, $id) {
+    public function getById(Request $request, $id) {
         try {
-            $data = $request->only('category','category_description');
-            $validator = Validator::make($data, [
-                'category'=>'required|string|min:3|max:27',
-                'category_description'=>'required|string|min:3|max:350',
-            ]);
-            if($validator->fails()){
-                $errors = $validator->errors()->toArray();
-                return $errors;
-            }
-            $category = Category::find($id)->get();
+            $category = Category::find($id);
         return response()->json([
             'message' => $category,
         ]);
@@ -102,15 +93,6 @@ class CategoryController extends Controller
     }
     public function deletecategory(Request $request, $id) {
         try {
-            $data = $request->only('category','category_description');
-            $validator = Validator::make($data, [
-                'category'=>'required|string|min:3|max:27',
-                'category_description'=>'required|string|min:3|max:350',
-            ]);
-            if($validator->fails()){
-                $errors = $validator->errors()->toArray();
-                return $errors;
-            }
             $category = Category::find($id);
             $category->delete();
             return response()->json([
