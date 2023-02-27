@@ -16,6 +16,7 @@ class Admin extends Model
         'email',
         'password',
     ];
+    public $timestamps = false;
     public function reports()
 {
     return $this->hasMany(Report::class);
