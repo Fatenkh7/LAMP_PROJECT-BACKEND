@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('currencies', function (Blueprint $table) {
             $table->id();
-            $table->string('currency');
+            $table->string('currency')->unique();
             $table->integer('rate');
 
         });
