@@ -53,6 +53,7 @@ class CurrencyController extends Controller
         try {
             $validatedData = $request->validate([
                 'currency' => ['required', Rule::unique('currencies', 'currency')],
+                'rate' => ['required|integer'],
             ]);
 
             $currency = new Currency($validatedData);
@@ -79,6 +80,7 @@ class CurrencyController extends Controller
         try {
             $validatedData = $request->validate([
                 'currency' => ['required', Rule::unique('currencies', 'currency')->ignore($id)],
+                'rate' => ['required|integer'],
             ]);
 
             $currency = Currency::find($id);

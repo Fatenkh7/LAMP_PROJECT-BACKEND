@@ -10,6 +10,7 @@ class Currency extends Model
     use HasFactory;
     protected $fillable = [
         'currency',
+        'rate'
     ];
     public $timestamps = false;
     public function fixed_expenses()

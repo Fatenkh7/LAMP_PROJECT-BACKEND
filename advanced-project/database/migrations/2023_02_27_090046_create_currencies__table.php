@@ -13,7 +13,9 @@ return new class extends Migration
     {
         Schema::create('currencies', function (Blueprint $table) {
             $table->id();
-            $table->integer('currencies');
+            $table->string('currency');
+            $table->integer('rate');
+
         });
     }
 
