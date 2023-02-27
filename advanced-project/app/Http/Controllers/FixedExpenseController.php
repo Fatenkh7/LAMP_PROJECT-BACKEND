@@ -18,12 +18,15 @@ class FixedExpenseController extends Controller
     {
         try {
 
-            $data = $request->only('title', 'description', 'amount', 'date');
+            $data = $request->only('title', 'description', 'amount', 'date','admins_id','categories_id','currencies_id');
             $validator = Validator::make($data, [
                 'title' => 'required|string|min:3|max:255',
                 'description' => 'required|string|min:3|max:255',
                 'amount' => 'required|integer',
                 'date' => 'required|date_format:Y-m-d',
+                'admins_id' => 'required|exists:admins,id',
+                'categories_id' => 'required|exists:categories,id',
+                'currencies_id'=> 'required|exists:currencies,id',
 
             ]);
             if ($validator->fails()) {

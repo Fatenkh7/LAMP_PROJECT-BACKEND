@@ -16,14 +16,16 @@ class RecurringExpenseController extends Controller
         try {
             //validate data
 
-            $data = $request->only('title', 'description', 'amount', 'startDate', 'endDate');
+            $data = $request->only('title', 'description', 'amount', 'startDate', 'endDate','admins_id','categories_id','currencies_id');
             $validator = Validator::make($data, [
                 'title' => 'required|string|min:3|max:255',
                 'description' => 'required|string|min:3|max:255',
                 'amount' => 'required|integer',
                 'startDate' => 'required|date_format:Y-m-d',
                 'endDate' => 'required|date_format:Y-m-d',
-
+                'admins_id' => 'required|exists:admins,id',
+                'categories_id' => 'required|exists:categories,id',
+                'currencies_id'=> 'required|exists:currencies,id',
             ]);
             if ($validator->fails()) {
                 $errors = $validator->errors()->toArray();
