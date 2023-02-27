@@ -36,28 +36,28 @@ Route::Put('/admin/{id}', [AdminController::class, 'editAdmin']);
 Route::Delete('/admin/{id}', [AdminController::class, 'deleteAdmin']);
 
 //fixed incomes
-Route::Post('/fixedincomes',[FixedIncomeController::class, 'addfixedincomes']);
-Route::Get('/fixedincomes', [FixedIncomeController::class,'getAll']);
-Route::Get('/fixedincomes/{id}', [FixedIncomeController::class,'getById']);
+Route::Post('/fixedincomes', [FixedIncomeController::class, 'addfixedincomes']);
+Route::Get('/fixedincomes', [FixedIncomeController::class, 'getAll']);
+Route::Get('/fixedincomes/{id}', [FixedIncomeController::class, 'getById']);
 Route::Put('/fixedincomes/{id}', [FixedIncomeController::class, 'editfixedincomes']);
 Route::Delete('/fixedincomes/{id}', [FixedIncomeController::class, 'deletefixedincomes']);
 
 //Categories
-Route::Post('/category',[CategoryController::class, 'addcategory']);
-Route::Get('/category', [CategoryController::class,'getAll']);
-Route::Get('/category/{name}', [CategoryController::class,'getByCategory']);
-Route::Get('/category/{id}', [CategoryController::class,'getById']);
-Route::Put('/category/{id}', [CategoryController::class, 'editById']);
-Route::Put('/category/{name}', [CategoryController::class, 'editByName']);
-Route::Delete('/category/{id}', [CategoryController::class, 'deleteCategoryById']);
-Route::Delete('/category/{name}', [CategoryController::class, 'deleteCategoryByName']);
+Route::Post('/category', [CategoryController::class, 'addcategory']);
+Route::Get('/category', [CategoryController::class, 'getAll']);
+Route::Get('/category/name/{name}', [CategoryController::class, 'getByCategory']);
+Route::Get('/category/id/{id}', [CategoryController::class, 'getById']);
+Route::Put('/category/id/{id}', [CategoryController::class, 'editById']);
+Route::Put('/category/name/{name}', [CategoryController::class, 'editByName']);
+Route::Delete('/category/id/{id}', [CategoryController::class, 'deleteCategoryById']);
+Route::Delete('/category/name/{name}', [CategoryController::class, 'deleteCategoryByName']);
 
 //fixed expenses
 Route::Post('/fixedexpenses', [FixedExpenseController::class, 'addfixedexpenses']);
 Route::Get('/fixedexpenses', [FixedExpenseController::class, 'getallFixedexpenses']);
 Route::Get('/fixedexpenses/{id}', [FixedExpenseController::class, 'getByIDFixedexpenses']);
 Route::Put('/fixedexpenses/{id}', [FixedExpenseController::class, 'editFixedexpenses']);
-Route::Delete('/fixedexpenses/{id}',[FixedExpenseController::class , 'deleteFixedexpenses']);
+Route::Delete('/fixedexpenses/{id}', [FixedExpenseController::class, 'deleteFixedexpenses']);
 
 // Recurring Income routes
 Route::Post('/recurringincome', [RecurringIncomeController::class, 'addRecurringIncome']);

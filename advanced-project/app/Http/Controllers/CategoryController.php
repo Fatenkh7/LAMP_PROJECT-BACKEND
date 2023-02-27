@@ -22,17 +22,17 @@ class CategoryController extends Controller
                 $errors = $validator->errors()->toArray();
                 return $errors;
             }
-    
+
             $admins_id = $request->input('admins_id');
             $admins = Admin::find($admins_id);
-    
+
             $category = new Category();
             $category->category = $request->input('category');
             $category->category_description = $request->input('category_description');
             $category->admins()->associate($admins);
-    
+
             $category->save();
-    
+
             return response()->json([
                 'message' => 'Category created successfully'
             ]);
@@ -40,7 +40,7 @@ class CategoryController extends Controller
             return $e->getMessage();
         }
     }
-    
+
     public function getAll(Request $request)
     {
         try {
@@ -70,12 +70,23 @@ class CategoryController extends Controller
     public function getByCategory(Request $request, $name)
     {
         try {
-            $category = Category::find($name);
-            return response()->json([
-                'message' => $category,
-            ]);
+            $report = Category::where('category', $name)->get();
+            if ($report->isEmpty()) {
+                return response()->json([
+                    'success' => false,
+                    'message' => 'Report not found'
+                ], 404);
+            } else {
+                return response()->json([
+                    'success' => true,
+                    'data' => $report
+                ]);
+            }
         } catch (\Exception $e) {
-            return $e->getMessage();
+            return response()->json([
+                'message' => 'Error retrieving reports',
+                'error' => $e->getMessage(),
+            ], 500);
         }
     }
 
@@ -97,7 +108,7 @@ class CategoryController extends Controller
 
             return response()->json([
                 'message' => 'Category updated successfully',
-                'category' => $category,
+                'category' => $inputs,
             ]);
         } catch (\Exception $e) {
             return $e->getMessage();
@@ -116,13 +127,13 @@ class CategoryController extends Controller
                 $errors = $validator->errors()->toArray();
                 return $errors;
             }
-            $category = Category::find($name);
+            $category = Category::where('category', $name);
             $inputs = $request->except('_method');
             $category->update($inputs);
 
             return response()->json([
                 'message' => 'Category updated successfully',
-                'category' => $category,
+                'category' => $inputs,
             ]);
         } catch (\Exception $e) {
             return $e->getMessage();
@@ -144,7 +155,7 @@ class CategoryController extends Controller
     public function deleteCategoryByName(Request $request, $name)
     {
         try {
-            $category = Category::find($name);
+            $category = Category::where('category', $name);
             $category->delete();
             return response()->json([
                 'message' => 'Category deleted successfully',
