@@ -15,6 +15,7 @@ class CategoryController extends Controller
             $validator = Validator::make($data, [
                 'category'=>'required|string|min:3|max:25',
                 'category_description'=>'required|string|min:3|max:350',
+                'admins_id' => 'required|exists:admins,id',
             ]);
             if($validator->fails()){
                 $errors = $validator->errors()->toArray();
@@ -39,25 +40,18 @@ class CategoryController extends Controller
           }
      
     }
-    public function index(Request $request){
+    public function getAll(Request $request){
         try {
-            $data = $request->only('category','category_description');
-            $validator = Validator::make($data, [
-                'category'=>'required|string|min:3|max:25',
-                'category_description'=>'required|string|min:3|max:350',
+            $category = Category::all();
+            return response()->json([
+                'message' => $category
             ]);
-            if($validator->fails()){
-                $errors = $validator->errors()->toArray();
-                return $errors;
-            }
-        $category = Category::all();
-        return response()->json(([
-            'message' => $category,
-        ]));
-    }
-    catch(\Exception $e) {
-        return $e->getMessage();
-      }
+        } catch (\Exception $e) {
+            return response()->json([
+                'message' => 'Error retrieving category',
+                'error' => $e->getMessage(),
+            ], 500);
+        }
     }
     public function getcategory(Request $request, $id) {
         try {
