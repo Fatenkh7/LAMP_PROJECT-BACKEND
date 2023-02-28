@@ -14,10 +14,10 @@ class AdminController extends Controller
 
         try {
             // Data validation 
-            $data = $request->only('firstname', 'lastname', 'username', 'email', 'password');
+            $data = $request->only('first_name', 'last_name', 'username', 'email', 'password');
             $validator = Validator::make($data, [
-                'firstname'=>'required|string|min:3|max:255',
-                'lastname'=>'required|string|min:3|max:255',
+                'first_name'=>'required|string|min:3|max:255',
+                'last_name'=>'required|string|min:3|max:255',
                 'username'=>'required|unique:admins|min:3|max:255',
                 'email'=>'required|string|email|max:255|unique:admins',
                 'password'=>'required|min:8',
@@ -28,8 +28,8 @@ class AdminController extends Controller
             }
 
             $admin = new Admin;
-            $firstname = $request->input('firstname');
-            $lastname = $request->input('lastname');
+            $firstname = $request->input('first_name');
+            $lastname = $request->input('last_name');
             $username = $request->input('username');
             $email = $request->input('email');
             $password = $request->input('password');

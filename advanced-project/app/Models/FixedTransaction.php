@@ -5,15 +5,17 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class RecurringExpense extends Model
+class FixedTransaction extends Model
 {
+    use HasFactory;
     use HasFactory;
     protected $fillable = [
         'title',
         'description',
+        'type',
         'amount',
-        'startDate',
-        'endDate',
+        'is_paid',
+        'date_time'
     ];
     public $timestamps = false;
     public function currencies()
@@ -27,5 +29,9 @@ class RecurringExpense extends Model
     public function categories()
     {
         return $this->belongsTo(Category::class);
+    }
+    public function fixed_keys()
+    {
+        return $this->belongsTo(FixedKey::class);
     }
 }

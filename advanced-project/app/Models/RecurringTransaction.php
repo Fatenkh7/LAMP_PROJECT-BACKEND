@@ -5,15 +5,17 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class FixedIncome extends Model
+class RecurringTransaction extends Model
 {
     use HasFactory;
-
     protected $fillable = [
         'title',
         'description',
+        'type',
         'amount',
-        'date_time',
+        'is_paid',
+        'start_date',
+        'end_date',
     ];
     public function currencies()
     {

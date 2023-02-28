@@ -11,11 +11,13 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('recurring_expenses', function (Blueprint $table) {
+        Schema::create('recurring_transactions', function (Blueprint $table) {
 
             $table->id();
-            $table->string('title');
+            $table->string('name');
             $table->string('description');
+            $table->enum('type', ['income', 'expense']);
+            $table->boolean('is_paid');
             $table->integer('amount');
             $table->date('startDate');
             $table->date('endDate');
@@ -25,7 +27,6 @@ return new class extends Migration
             $table->foreign('admins_id')->references('id')->on('admins')->onDelete('cascade');
             $table->unsignedBigInteger('categories_id');
             $table->foreign('categories_id')->references('id')->on('categories');
-
         });
     }
 

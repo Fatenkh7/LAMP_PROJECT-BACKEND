@@ -13,21 +13,13 @@ class Currency extends Model
         'rate'
     ];
     public $timestamps = false;
-    public function fixed_expenses()
+    public function fixed_transactions()
     {
-        return $this->hasOne(FixedExpense::class);
+        return $this->hasOne(FixedTransaction::class);
     }
-    public function fixed_incomes()
+    public function recurring_transactions()
     {
-        return $this->hasOne(fixedIncome::class);
-    }
-    public function recurring_incomes()
-    {
-        return $this->hasOne(RecurringIncome::class);
-    }
-    public function recurring_expenses()
-    {
-        return $this->hasOne(RecurringExpense::class);
+        return $this->hasOne(RecurringTransaction::class);
     }
     public function profit_goals()
     {

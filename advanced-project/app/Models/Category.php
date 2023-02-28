@@ -23,20 +23,12 @@ class Category extends Model
     {
         return $this->hasMany(Report::class);
     }
-    public function fixed_incomes()
+    public function fixed_transactions()
     {
-        return $this->hasMany(FixedIncome::class);
+        return $this->hasMany(FixedTransaction::class);
     }
-    public function fixed_expenses()
+    public function recurring_transactions()
     {
-        return $this->hasMany(FixedExpense::class);
-    }
-    public function recurring_incomes()
-    {
-        return $this->hasMany(RecurringIncome::class);
-    }
-    public function recurring_expenses()
-    {
-        return $this->hasMany(RecurringExpense::class);
+        return $this->hasMany(RecurringTransaction::class);
     }
 }

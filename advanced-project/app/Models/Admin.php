@@ -21,22 +21,15 @@ class Admin extends Model
 {
     return $this->hasMany(Report::class);
 }
-public function fixed_incomes()
+public function fixed_transactions()
 {
-    return $this->hasMany(FixedIncome::class);
+    return $this->hasMany(FixedTransaction::class);
 }
-public function fixed_expenses()
+public function recurring_transactions()
 {
-    return $this->hasMany(FixedExpense::class);
+    return $this->hasMany(RecurringTransaction::class);
 }
-public function recurring_expennses()
-{
-    return $this->hasMany(RecurringExpense::class);
-}
-public function recurring_incomes()
-{
-    return $this->hasMany(RecurringIncome::class);
-}
+
 public function profit_goals()
 {
     return $this->hasMany(ProfitGoal::class);

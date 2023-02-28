@@ -16,6 +16,7 @@ class ProfitGoal extends Model
         'end_date',
     ];
     public $timestamps = false;
+    
     public function currencies()
     {
         return $this->belongsTo(Currency::class);
