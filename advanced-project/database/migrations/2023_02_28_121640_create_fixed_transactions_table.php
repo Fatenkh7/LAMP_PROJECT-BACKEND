@@ -20,6 +20,7 @@ return new class extends Migration
             $table->dateTime('date_time');
             $table->enum('type', ['income', 'expense']);
             $table->boolean('is_paid');
+            $table->enum('schedule', ['yearly', 'monthly', 'weekly']);
             $table->unsignedBigInteger('fixed_keys_id');
             $table->foreign('fixed_keys_id')->references('id')->on('fixed_keys');
             $table->unsignedBigInteger('currencies_id');
