@@ -116,7 +116,7 @@ class FixedTransactionController extends Controller
     {
         try {
             $this->validate($request, [
-                'title' => 'required|string|max:255',
+                'title' => 'required|string|max:35',
                 'description' => 'required|string|max:255',
                 'amount' => 'required|integer',
                 'date_time' => 'required|date',
