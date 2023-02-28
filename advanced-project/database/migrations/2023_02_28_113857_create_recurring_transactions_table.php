@@ -17,7 +17,6 @@ return new class extends Migration
             $table->string('name');
             $table->string('description');
             $table->enum('type', ['income', 'expense']);
-            $table->boolean('is_paid');
             $table->integer('amount');
             $table->date('startDate');
             $table->date('endDate');

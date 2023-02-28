@@ -11,6 +11,7 @@ class FixedKey extends Model
     protected $fillable = [
         'name',
         'description',
+        'is_active',
     ];
     public function fixed_transactions()
 {
