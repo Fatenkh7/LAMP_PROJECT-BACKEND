@@ -54,32 +54,43 @@ class FixedTransactionController extends Controller
         }
     }
 
-    public function getByBatata(Request $request, $sort){
-        try{
-            $sortParam = null;
-            $fixed = FixedTransaction::all(); // get all movies from the database
-            if (!$sort) {
-                return response()->json(['status' => 200, 'data' => $fixed]);
-            } else {
-                if ($sort == "by-type") {
-                    $sortParam = 'type';
-                }
-                if ($sort == "by-category") {
-                    $sortParam = 'category';
-                }
-                if ($sort == "by-schedule") {
-                    $sortParam = 'schedule';
-                }
-                $sortedFixed = $fixed->sortBy($sortParam);
-                return response()->json(['status' => 200, 'data' => $sortedFixed]);
+    public function getBy(Request $request, $type, $category, $schedule) {
+        try {
+            $fixed = FixedTransaction::query();
+    
+            // Filter by type
+            if ($type != 'all') {
+                $fixed->where('type', $type);
             }
-        } catch(QueryException $e){
+    
+            // Filter by category
+            if ($category != 'all') {
+                $fixed->whereHas('category', function($q) use ($category) {
+                    $q->where('category', $category);
+                });
+            }            
+    
+            // Filter by schedule
+            if ($schedule != 'all') {
+                $fixed->where('schedule', $schedule);
+            }
+    
+            // Get the filtered fixed transactions
+            $filteredFixed = $fixed->get();
+    
+            return response()->json([
+                'status' => 200,
+                'data' => $filteredFixed
+            ]);
+        } catch(QueryException $e) {
             return response()->json([
                 'success' => false,
-                'message' => 'Error retrieving fixed transaction from database'
+                'message' => 'Error retrieving fixed transactions from database'
             ]);
         }
     }
+    
+    
     
     public function addfixedTrans(Request $request)
     {
@@ -117,12 +128,12 @@ class FixedTransactionController extends Controller
             $fixed_keys_id = $request->input('fixed_keys_id');
             $fixed_keys = FixedKey::find($fixed_keys_id);
 
-            $new_fixed_transaction->title = $request->input('title');
-            $new_fixed_transaction->description = $request->input('description');
-            $new_fixed_transaction->amount = $request->input('amount');
-            $new_fixed_transaction->date_time = $request->input('date_time');
-            $new_fixed_transaction->type = $request->input('type');
-            $new_fixed_transaction->schedule = $request->input('schedule');
+            $new_fixed_transaction->title = $title;
+            $new_fixed_transaction->description = $description;
+            $new_fixed_transaction->amount = $amount;
+            $new_fixed_transaction->date_time = $date_time;
+            $new_fixed_transaction->type = $type;
+            $new_fixed_transaction->schedule = $schedule;
             $new_fixed_transaction->admins()->associate($admins);
             $new_fixed_transaction->categories()->associate($categories);
             $new_fixed_transaction->currencies()->associate($currencies);
