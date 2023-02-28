@@ -11,6 +11,8 @@ use App\Http\Controllers\ProfitGoalController;
 use App\Http\Controllers\CurrencyController;
 use App\Http\Controllers\FixedExpenseController;
 use App\Http\Controllers\RecurringExpenseController;
+use App\Http\Controllers\FixedKeyController;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -79,3 +81,11 @@ Route::Get('/fixedtransaction', [CurrencyController::class, 'getAll']);
 Route::Get('/fixedtransaction/{id}', [CurrencyController::class, 'getById']);
 Route::Put('/fixedtransaction/{id}', [CurrencyController::class, 'addFixedTransaction']);
 Route::Delete('/fixedtransaction/{id}', [CurrencyController::class, 'addFixedTransaction']);
+
+// Fixed key 
+
+Route::Post('/fixedkey', [FixedKeyController::class, 'addFixedKey']);
+Route::Get('/fixedkey', [FixedKeyController::class, 'getFixedkey']);
+Route::Get('/fixedkey/{id}', [FixedKeyController::class, 'getByIDFixedkey']);   
+Route::Put('/fixedkey/{id}', [FixedKeyController::class, 'editFixedkey']);   
+Route::Delete('/fixedkey/{id}', [FixedKeyController::class, 'deleteFixedkey']);    
