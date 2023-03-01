@@ -11,6 +11,7 @@ use App\Http\Controllers\ProfitGoalController;
 use App\Http\Controllers\CurrencyController;
 use App\Http\Controllers\FixedExpenseController;
 use App\Http\Controllers\RecurringExpenseController;
+use App\Http\Controllers\RecurringTransactionController;
 use App\Http\Controllers\FixedKeyController;
 
 
@@ -75,6 +76,13 @@ Route::Get('/currency/{id}', [CurrencyController::class, 'getCurrencyById']);
 Route::Put('/currency/{id}', [CurrencyController::class, 'editCurrencyById']);
 Route::Delete('/currency/{id}', [CurrencyController::class, 'deleteCurrency']);
 
+// Recurring Transaction
+Route::Post('/recurringTransaction', [RecurringTransactionController::class, 'addRecurringTransaction']);
+Route::Put('/recurringTransaction/{id}', [RecurringTransactionController::class, 'editRecurringTransaction']);
+Route::Get('/recurringTransaction', [RecurringTransactionController::class, 'getAllRecurringTransactions']);
+Route::Get('/recurringTransaction/{id}', [RecurringTransactionController::class, 'getRecurringTransactionById']);
+
+
 //fixed transactions
 Route::Post('/fixedtransaction', [CurrencyController::class, 'addFixedTransaction']);
 Route::Get('/fixedtransaction', [CurrencyController::class, 'getAll']);
@@ -90,6 +98,7 @@ Route::Get('/fixedkey/{id}', [FixedKeyController::class, 'getByIDFixedkey']);
 Route::Put('/fixedkey/{id}', [FixedKeyController::class, 'editFixedkey']);   
 Route::Delete('/fixedkey/{id}', [FixedKeyController::class, 'deleteFixedkey']);    
 
+
 //fixed
 Route::Post('/fixedtransaction', [FixedTransactionController::class, 'addfixedTrans']);
 Route::Get('/fixedtransaction', [FixedTransactionController::class, 'getAll']);
@@ -99,3 +108,4 @@ Route::Delete('/fixedtransaction/deleteBy/{type}/{category}/{schedule}/{admin}/{
 Route::Get('/fixedtransaction/{id}', [FixedTransactionController::class, 'getById']);
 Route::Put('/fixedtransaction/{id}', [FixedTransactionController::class, 'editFixedById']);
 Route::Delete('/fixedtransaction/{id}', [FixedTransactionController::class, 'editFixedById']);
+

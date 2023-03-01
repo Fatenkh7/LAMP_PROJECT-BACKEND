@@ -9,13 +9,16 @@ class RecurringTransaction extends Model
 {
     use HasFactory;
     protected $fillable = [
-        'title',
+        'name',
         'description',
         'type',
         'amount',
         'start_date',
         'end_date',
+        'schedule'
     ];
+    public $timestamps = false;
+
     public function currencies()
     {
         return $this->belongsTo(Currency::class);
