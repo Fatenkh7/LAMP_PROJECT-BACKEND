@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
+
 class RecurringTransaction extends Model
 {
     use HasFactory;
@@ -21,6 +22,7 @@ class RecurringTransaction extends Model
     public static $allowedTypes = ['income', 'expense'];
     public static $allowedSchedule = ['yearly', 'monthly', 'weekly'];
     public static $allowedPaid = ['0', '1'];
+
     public $timestamps = false;
 
     public function currencies()
@@ -35,4 +37,6 @@ class RecurringTransaction extends Model
     {
         return $this->belongsTo(Category::class);
     }
+
 }
+
