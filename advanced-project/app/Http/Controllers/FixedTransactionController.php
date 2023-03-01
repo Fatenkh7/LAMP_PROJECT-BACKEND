@@ -7,6 +7,7 @@ use App\Models\FixedTransaction;
 use Illuminate\Database\QueryException;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\ValidationException;
+use App\Console\Kernel\generateMonthlyTransactions;
 
 
 use App\Models\Admin;
@@ -170,80 +171,6 @@ class FixedTransactionController extends Controller
             ], 400);
         }
     }
-
-    //     public function editBy (Request $request)
-    // {
-    //     try {
-    //         $validatedData = $request->validate([
-    //             'id' => 'required|exists:fixed_transactions,id',
-    //             'title' => 'required|string|max:35',
-    //             'description' => 'required|string|max:255',
-    //             'amount' => 'required|integer',
-    //             'type' => 'required|in:income,expense',
-    //             'schedule' => 'required|in:yearly,monthly,weekly',
-    //             'is_paid' => 'boolean',
-
-    //         ]);
-    //     } catch (\Illuminate\Validation\ValidationException $e) {
-    //         return response()->json([
-    //             'success' => false,
-    //             'message' => $e->getMessage(),
-    //             'errors' => $e->errors()
-    //         ], 422);
-    //     }
-
-    //     try {
-    //         $table = FixedTransaction::table('fixed_transactions')
-    //                     ->where('id', $request->input('id'));
-
-    //         if ($request->has('title')) {
-    //             $table->update(['title' => $request->input('title')]);
-    //         }
-
-    //         if ($request->has('description')) {
-    //             $table->update(['description' => $request->input('description')]);
-    //         }
-
-    //         if ($request->has('amount')) {
-    //             $table->update(['amount' => $request->input('amount')]);
-    //         }
-
-    //         if ($request->has('type')) {
-    //             $table->update(['type' => $request->input('type')]);
-    //         }
-
-    //         if ($request->has('schedule')) {
-    //             $table->update(['schedule' => $request->input('schedule')]);
-    //         }
-    //         if ($request->has('admins_id')) {
-    //             $table->update(['admins_id' => $request->input('admins_id')]);
-    //         }
-    //         if ($request->has('currencies_id')) {
-    //             $table->update(['currencies_id' => $request->input('currencies_id')]);
-    //         }
-    //         if ($request->has('fixed_keys_id')) {
-    //             $table->update(['fixed_keys_id' => $request->input('fixed_keys_id')]);
-    //         }
-    //         if ($request->has('categories_id')) {
-    //             $table->update(['categories_id' => $request->input('categories_id')]);
-    //         }
-    //         // add more conditions for other columns as needed
-
-    //         // Get the updated row
-    //         $updatedRow = FixedTransaction::table('fixed_transactions')->where('id', $request->input('id'))->first();
-
-    //         return response()->json([
-    //             'success' => true,
-    //             'data' => $updatedRow
-    //         ]);
-    //     } catch (\Exception $e) {
-    //         return response()->json([
-    //             'success' => false,
-    //             'message' => $e->getMessage()
-    //         ]);
-    //     }
-    // }
-
 
     public function editFixedById(Request $request, $id)
     {
