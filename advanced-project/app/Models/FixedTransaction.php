@@ -14,6 +14,7 @@ class FixedTransaction extends Model
         'description',
         'type',
         'amount',
+        'schedule',
         'is_paid',
         'date_time'
 
