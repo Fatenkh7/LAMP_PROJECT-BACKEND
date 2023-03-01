@@ -11,11 +11,13 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('fixed_keys', function (Blueprint $table) {
-            $table->id();
-            $table->string('name');
-            $table->string('description');
-        });
+            Schema::create('fixed_keys', function (Blueprint $table) {
+                $table->id();
+                $table->string('name');
+                $table->string('description');
+                $table->boolean('is_active');
+            });
+        
     }
 
     /**
@@ -23,6 +25,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('fixed_keys');
+        //
     }
 };

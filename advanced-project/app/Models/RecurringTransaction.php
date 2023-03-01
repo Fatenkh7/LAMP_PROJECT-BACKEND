@@ -13,7 +13,6 @@ class RecurringTransaction extends Model
         'description',
         'type',
         'amount',
-        'is_paid',
         'start_date',
         'end_date',
         'schedule'
