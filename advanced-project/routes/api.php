@@ -11,6 +11,8 @@ use App\Http\Controllers\ProfitGoalController;
 use App\Http\Controllers\CurrencyController;
 use App\Http\Controllers\FixedExpenseController;
 use App\Http\Controllers\RecurringExpenseController;
+use App\Http\Controllers\RecurringTransactionController;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -92,6 +94,13 @@ Route::Get('/currency', [CurrencyController::class, 'getAll']);
 Route::Get('/currency/{id}', [CurrencyController::class, 'getCurrencyById']);
 Route::Put('/currency/{id}', [CurrencyController::class, 'editCurrencyById']);
 Route::Delete('/currency/{id}', [CurrencyController::class, 'deleteCurrency']);
+
+// Recurring Transaction
+Route::Post('/recurringTransaction', [RecurringTransactionController::class, 'addRecurringTransaction']);
+Route::Put('/recurringTransaction/{id}', [RecurringTransactionController::class, 'editRecurringTransaction']);
+Route::Get('/recurringTransaction', [RecurringTransactionController::class, 'getAllRecurringTransactions']);
+Route::Get('/recurringTransaction/{id}', [RecurringTransactionController::class, 'getRecurringTransactionById']);
+
 
 // recurringexpenses
 // Route::Post('/recurringexpenses', [RecurringExpenseController::class, 'addRecurringexpenses']);
