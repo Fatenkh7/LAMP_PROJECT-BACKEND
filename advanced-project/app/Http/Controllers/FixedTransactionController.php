@@ -57,77 +57,77 @@ class FixedTransactionController extends Controller
     }
 
     public function getBy(Request $request)
-{
-    try {
-        $validatedData = $request->validate([
-            'type' => 'in:' . implode(',', FixedTransaction::$allowedTypes),
-            'categories_id' => 'exists:categories,id',
-            'schedule' => 'in:' . implode(',', FixedTransaction::$allowedSchedule),
-            'admins_id' => 'exists:admins,id',
-            'currencies_id' => 'exists:currencies,id',
-            'fixed_keys_id' => 'exists:fixed_keys,id',
-            'is_paid' => 'boolean',
-        ]);
-    } catch (\Illuminate\Validation\ValidationException $e) {
-        return response()->json([
-            'success' => false,
-            'message' => $e->getMessage(),
-            'errors' => $e->errors()
-        ], 422);
+    {
+        try {
+            $validatedData = $request->validate([
+                'type' => 'in:' . implode(',', FixedTransaction::$allowedTypes),
+                'categories_id' => 'exists:categories,id',
+                'schedule' => 'in:' . implode(',', FixedTransaction::$allowedSchedule),
+                'admins_id' => 'exists:admins,id',
+                'currencies_id' => 'exists:currencies,id',
+                'fixed_keys_id' => 'exists:fixed_keys,id',
+                'is_paid' => 'boolean',
+            ]);
+        } catch (\Illuminate\Validation\ValidationException $e) {
+            return response()->json([
+                'success' => false,
+                'message' => $e->getMessage(),
+                'errors' => $e->errors()
+            ], 422);
+        }
+
+        try {
+            $fixed = FixedTransaction::query();
+
+            // Filter by type
+            if ($request->has('type') && in_array($request->input('type'), FixedTransaction::$allowedTypes)) {
+                $fixed->where('type', $request->input('type'));
+            }
+
+            // Filter by category
+            if ($request->has('categories_id')) {
+                $fixed->where('categories_id', $request->input('categories_id'));
+            }
+
+            // Filter by schedule
+            if ($request->has('schedule') && in_array($request->input('schedule'), FixedTransaction::$allowedSchedule)) {
+                $fixed->where('schedule', $request->input('schedule'));
+            }
+
+            // Filter by admins
+            if ($request->has('admins_id')) {
+                $fixed->where('admins_id', $request->input('admins_id'));
+            }
+
+            // Filter by fixed keys
+            if ($request->has('fixed_keys_id')) {
+                $fixed->where('fixed_keys_id', $request->input('fixed_keys_id'));
+            }
+
+            // Filter by currencies
+            if ($request->has('currencies_id')) {
+                $fixed->where('currencies_id', $request->input('currencies_id'));
+            }
+
+            // Filter by paid
+            if ($request->has('is_paid')) {
+                $fixed->where('is_paid', $request->input('is_paid'));
+            }
+
+            // Get the filtered fixed transactions
+            $filteredFixed = $fixed->get();
+
+            return response()->json([
+                'success' => true,
+                'data' => $filteredFixed
+            ]);
+        } catch (\Exception $e) {
+            return response()->json([
+                'success' => false,
+                'message' => $e->getMessage()
+            ]);
+        }
     }
-
-    try {
-        $fixed = FixedTransaction::query();
-
-        // Filter by type
-        if ($request->has('type') && in_array($request->input('type'), FixedTransaction::$allowedTypes)) {
-            $fixed->where('type', $request->input('type'));
-        }
-
-        // Filter by category
-        if ($request->has('categories_id')) {
-            $fixed->where('categories_id', $request->input('categories_id'));
-        }
-
-        // Filter by schedule
-        if ($request->has('schedule') && in_array($request->input('schedule'), FixedTransaction::$allowedSchedule)) {
-            $fixed->where('schedule', $request->input('schedule'));
-        }
-
-        // Filter by admins
-        if ($request->has('admins_id')) {
-            $fixed->where('admins_id', $request->input('admins_id'));
-        }
-
-        // Filter by fixed keys
-        if ($request->has('fixed_keys_id')) {
-            $fixed->where('fixed_keys_id', $request->input('fixed_keys_id'));
-        }
-
-        // Filter by currencies
-        if ($request->has('currencies_id')) {
-            $fixed->where('currencies_id', $request->input('currencies_id'));
-        }
-
-        // Filter by paid
-        if ($request->has('is_paid')) {
-            $fixed->where('is_paid', $request->input('is_paid'));
-        }
-
-        // Get the filtered fixed transactions
-        $filteredFixed = $fixed->get();
-
-        return response()->json([
-            'success' => true,
-            'data' => $filteredFixed
-        ]);
-    } catch (\Exception $e) {
-        return response()->json([
-            'success' => false,
-            'message' => $e->getMessage()
-        ]);
-    }
-}
 
     public function addfixedTrans(Request $request)
     {
@@ -171,6 +171,80 @@ class FixedTransactionController extends Controller
         }
     }
 
+    //     public function editBy (Request $request)
+    // {
+    //     try {
+    //         $validatedData = $request->validate([
+    //             'id' => 'required|exists:fixed_transactions,id',
+    //             'title' => 'required|string|max:35',
+    //             'description' => 'required|string|max:255',
+    //             'amount' => 'required|integer',
+    //             'type' => 'required|in:income,expense',
+    //             'schedule' => 'required|in:yearly,monthly,weekly',
+    //             'is_paid' => 'boolean',
+
+    //         ]);
+    //     } catch (\Illuminate\Validation\ValidationException $e) {
+    //         return response()->json([
+    //             'success' => false,
+    //             'message' => $e->getMessage(),
+    //             'errors' => $e->errors()
+    //         ], 422);
+    //     }
+
+    //     try {
+    //         $table = FixedTransaction::table('fixed_transactions')
+    //                     ->where('id', $request->input('id'));
+
+    //         if ($request->has('title')) {
+    //             $table->update(['title' => $request->input('title')]);
+    //         }
+
+    //         if ($request->has('description')) {
+    //             $table->update(['description' => $request->input('description')]);
+    //         }
+
+    //         if ($request->has('amount')) {
+    //             $table->update(['amount' => $request->input('amount')]);
+    //         }
+
+    //         if ($request->has('type')) {
+    //             $table->update(['type' => $request->input('type')]);
+    //         }
+
+    //         if ($request->has('schedule')) {
+    //             $table->update(['schedule' => $request->input('schedule')]);
+    //         }
+    //         if ($request->has('admins_id')) {
+    //             $table->update(['admins_id' => $request->input('admins_id')]);
+    //         }
+    //         if ($request->has('currencies_id')) {
+    //             $table->update(['currencies_id' => $request->input('currencies_id')]);
+    //         }
+    //         if ($request->has('fixed_keys_id')) {
+    //             $table->update(['fixed_keys_id' => $request->input('fixed_keys_id')]);
+    //         }
+    //         if ($request->has('categories_id')) {
+    //             $table->update(['categories_id' => $request->input('categories_id')]);
+    //         }
+    //         // add more conditions for other columns as needed
+
+    //         // Get the updated row
+    //         $updatedRow = FixedTransaction::table('fixed_transactions')->where('id', $request->input('id'))->first();
+
+    //         return response()->json([
+    //             'success' => true,
+    //             'data' => $updatedRow
+    //         ]);
+    //     } catch (\Exception $e) {
+    //         return response()->json([
+    //             'success' => false,
+    //             'message' => $e->getMessage()
+    //         ]);
+    //     }
+    // }
+
+
     public function editFixedById(Request $request, $id)
     {
         try {
@@ -196,7 +270,6 @@ class FixedTransactionController extends Controller
                 'title' => 'required|string|max:35',
                 'description' => 'required|integer',
                 'amount' => 'required|integer',
-                'date_time' => 'required|date',
                 'type' => 'required|in:income,expense',
                 'schedule' => 'required|in:yearly,monthly,weekly',
                 'is_paid' => 'boolean',
@@ -213,7 +286,6 @@ class FixedTransactionController extends Controller
             $fixed_transaction->title = $request->input('title');
             $fixed_transaction->description = $request->input('description');
             $fixed_transaction->amount = $request->input('amount');
-            $fixed_transaction->date_time = $request->input('date_time');
             $fixed_transaction->type = $request->input('type');
             $fixed_transaction->schedule = $request->input('schedule');
             $fixed_transaction->is_paid = $request->input('is_paid');
@@ -239,51 +311,49 @@ class FixedTransactionController extends Controller
     }
 
 
-    public function editBy(Request $request, $type, $category, $schedule, $admin, $fixed_keys, $is_paid)
+    public function editBy(Request $request)
     {
         try {
             $fixed = FixedTransaction::query();
 
             // Filter by type
-            if ($type != 'all') {
-                $fixed->where('type', $type);
+            if ($request->has('type') && in_array($request->input('type'), FixedTransaction::$allowedTypes)) {
+                $fixed->where('type', $request->input('type'));
             }
 
             // Filter by category
-            if ($category != 'all') {
-                $fixed->whereHas('categories', function ($query) use ($category) {
-                    $query->where('id', $category);
-                });
+            if ($request->has('categories_id')) {
+                $fixed->where('categories_id', $request->input('categories_id'));
             }
 
             // Filter by schedule
-            if ($schedule != 'all') {
-                $fixed->where('schedule', $schedule);
+            if ($request->has('schedule') && in_array($request->input('schedule'), FixedTransaction::$allowedSchedule)) {
+                $fixed->where('schedule', $request->input('schedule'));
             }
 
-            //filter by admins
-            if ($admin != 'all') {
-                $fixed->whereHas('admins', function ($query) use ($admin) {
-                    $query->where('id', $admin);
-                });
+            // Filter by admins
+            if ($request->has('admins_id')) {
+                $fixed->where('admins_id', $request->input('admins_id'));
             }
 
-            //filter by fixed keys
-            if ($fixed_keys != 'all') {
-                $fixed->whereHas('fixed_keys', function ($query) use ($fixed_keys) {
-                    $query->where('id', $fixed_keys);
-                });
+            // Filter by fixed keys
+            if ($request->has('fixed_keys_id')) {
+                $fixed->where('fixed_keys_id', $request->input('fixed_keys_id'));
             }
 
-            //filter by paid
-            if ($is_paid != 'all') {
-                $fixed->where('is_paid', false);
+            // Filter by currencies
+            if ($request->has('currencies_id')) {
+                $fixed->where('currencies_id', $request->input('currencies_id'));
+            }
+
+            // Filter by paid
+            if ($request->has('is_paid')) {
+                $fixed->where('is_paid', $request->input('is_paid'));
             }
             $validator = Validator::make($request->all(), [
                 'title' => 'required|string|max:35',
                 'description' => 'required|string',
                 'amount' => 'required|numeric',
-                'date_time' => 'required|date',
                 'type' => 'required|in:income,expense',
                 'schedule' => 'required|in:yearly,monthly,weekly',
                 'is_paid' => 'boolean',
@@ -309,7 +379,6 @@ class FixedTransactionController extends Controller
             $fixed_transaction->title = $request->input('title');
             $fixed_transaction->description = $request->input('description');
             $fixed_transaction->amount = $request->input('amount');
-            $fixed_transaction->date_time = $request->input('date_time');
             $fixed_transaction->type = $request->input('type');
             $fixed_transaction->schedule = $request->input('schedule');
             $fixed_transaction->is_paid = $request->input('is_paid');
@@ -329,47 +398,45 @@ class FixedTransactionController extends Controller
     }
 
 
-    public function deleteBy(Request $request, $type, $category, $schedule, $admin, $fixed_keys, $is_paid)
+    public function deleteBy(Request $request)
     {
         try {
             $fixed = FixedTransaction::query();
 
             // Filter by type
-            if ($type != 'all') {
-                $fixed->where('type', $type);
+            if ($request->has('type') && in_array($request->input('type'), FixedTransaction::$allowedTypes)) {
+                $fixed->where('type', $request->input('type'));
             }
 
             // Filter by category
-            if ($category != 'all') {
-                $fixed->whereHas('categories', function ($query) use ($category) {
-                    $query->where('id', $category);
-                });
+            if ($request->has('categories_id')) {
+                $fixed->where('categories_id', $request->input('categories_id'));
             }
 
             // Filter by schedule
-            if ($schedule != 'all') {
-                $fixed->where('schedule', $schedule);
+            if ($request->has('schedule') && in_array($request->input('schedule'), FixedTransaction::$allowedSchedule)) {
+                $fixed->where('schedule', $request->input('schedule'));
             }
 
             // Filter by admins
-            if ($admin != 'all') {
-                $fixed->whereHas('admins', function ($query) use ($admin) {
-                    $query->where('id', $admin);
-                });
+            if ($request->has('admins_id')) {
+                $fixed->where('admins_id', $request->input('admins_id'));
             }
 
             // Filter by fixed keys
-            if ($fixed_keys != 'all') {
-                $fixed->whereHas('fixed_keys', function ($query) use ($fixed_keys) {
-                    $query->where('id', $fixed_keys);
-                });
+            if ($request->has('fixed_keys_id')) {
+                $fixed->where('fixed_keys_id', $request->input('fixed_keys_id'));
+            }
+
+            // Filter by currencies
+            if ($request->has('currencies_id')) {
+                $fixed->where('currencies_id', $request->input('currencies_id'));
             }
 
             // Filter by paid
-            if ($is_paid != 'all') {
-                $fixed->where('is_paid', false);
+            if ($request->has('is_paid')) {
+                $fixed->where('is_paid', $request->input('is_paid'));
             }
-
             // Delete the filtered fixed transactions
             $fixed->delete();
 
