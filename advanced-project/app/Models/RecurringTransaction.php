@@ -17,6 +17,10 @@ class RecurringTransaction extends Model
         'end_date',
         'schedule'
     ];
+    // Define the allowed types as a static variable
+    public static $allowedTypes = ['income', 'expense'];
+    public static $allowedSchedule = ['yearly', 'monthly', 'weekly'];
+    public static $allowedPaid = ['0', '1'];
     public $timestamps = false;
 
     public function currencies()

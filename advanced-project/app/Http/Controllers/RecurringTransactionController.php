@@ -2,9 +2,11 @@
 
 namespace App\Http\Controllers;
 
+// use Illuminate\Support\Facades\Hash;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Database\QueryException;
+use Illuminate\Validation\ValidationException;
 use App\Models\RecurringTransaction;
 use App\Models\Admin;
 use App\Models\Currency;
@@ -171,6 +173,143 @@ class RecurringTransactionController extends Controller
         }
         catch (\Exception $e) {
             return $e->getMessage();
+        }
+    }
+
+    public function getBy(Request $request)
+    {
+        try {
+            $validatedData = $request->validate([
+                'type' => 'in:' . implode(',', RecurringTransaction::$allowedTypes),
+                'categories_id' => 'exists:categories,id',
+                // 'schedule' => 'in:' . implode(',', RecurringTransaction::$allowedSchedule),
+                'admins_id' => 'exists:admins,id',
+                'currencies_id' => 'exists:currencies,id',
+                'is_paid' => 'boolean',
+            ]);
+        } catch (\Illuminate\Validation\ValidationException $e) {
+            return response()->json([
+                'success' => false,
+                'message' => $e->getMessage(),
+                'errors' => $e->errors()
+            ], 422);
+        }
+
+        try {
+            $recurring = RecurringTransaction::query();
+
+            // Filter by type
+            if ($request->has('type') && in_array($request->input('type'), RecurringTransaction::$allowedTypes)) {
+                $recurring->where('type', $request->input('type'));
+            }
+
+            // Filter by category
+            if ($request->has('categories_id')) {
+                $recurring->where('categories_id', $request->input('categories_id'));
+            }
+
+            // Filter by admins
+            if ($request->has('admins_id')) {
+                $recurring->where('admins_id', $request->input('admins_id'));
+            }
+
+            // Filter by currencies
+            if ($request->has('currencies_id')) {
+                $recurring->where('currencies_id', $request->input('currencies_id'));
+            }
+
+            // Filter by paid
+            if ($request->has('is_paid')) {
+                $recurring->where('is_paid', $request->input('is_paid'));
+            }
+
+            // Get the filtered recurring transactions
+            $filteredRecurring = $recurring->get();
+
+            return response()->json([
+                'success' => true,
+                'data' => $filteredRecurring
+            ]);
+        } catch (\Exception $e) {
+            return response()->json([
+                'success' => false,
+                'message' => $e->getMessage()
+            ]);
+        }
+    }
+
+    public function editBy(Request $request)
+    {
+        try {
+            $recurring = RecurringTransaction::query();
+
+            // Filter by type
+            if ($request->has('type') && in_array($request->input('type'), RecurringTransaction::$allowedTypes)) {
+                $recurring->where('type', $request->input('type'));
+            }
+
+            // Filter by category
+            if ($request->has('categories_id')) {
+                $recurring->where('categories_id', $request->input('categories_id'));
+            }
+
+            // Filter by admins
+            if ($request->has('admins_id')) {
+                $recurring->where('admins_id', $request->input('admins_id'));
+            }
+
+            // Filter by currencies
+            if ($request->has('currencies_id')) {
+                $recurring->where('currencies_id', $request->input('currencies_id'));
+            }
+
+            // Filter by paid
+            if ($request->has('is_paid')) {
+                $recurring->where('is_paid', $request->input('is_paid'));
+            }
+            $validator = Validator::make($request->all(), [
+                'name' => 'required|string|max:35',
+                'description' => 'required|string',
+                'amount' => 'required|numeric',
+                'type' => 'required|in:income,expense',
+                // 'schedule' => 'required|in:yearly,monthly,weekly',
+                'is_paid' => 'boolean',
+            ]);
+            if ($validator->fails()) {
+                return response()->json([
+                    'success' => false,
+                    'message' => 'Validation error',
+                    'errors' => $validator->errors()
+                ], 422);
+            }
+            // Find the fixed transaction to update
+            $recurring_transaction = RecurringTransaction::find($request->input('id'));
+            if (!$fixed_transaction) {
+                return response()->json([
+                    'success' => false,
+                    'message' => 'Fixed transaction not found',
+                ], 404);
+            }
+
+            // Update the fixed transaction
+            $recurring_transaction->name = $request->input('name');
+            $recurring_transaction->description = $request->input('description');
+            $recurring_transaction->amount = $request->input('amount');
+            $recurring_transaction->type = $request->input('type');
+            // $recurring_transaction->schedule = $request->input('schedule');
+            $recurring_transaction->is_paid = $request->input('is_paid');
+            $recurring_transaction->save();
+
+            return response()->json([
+                'success' => true,
+                'message' => 'Fixed transaction updated successfully',
+                'fixed_transaction' => $recurring_transaction,
+            ]);
+        } catch (QueryException $e) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Error updating fixed transaction in database'
+            ]);
         }
     }
 }
