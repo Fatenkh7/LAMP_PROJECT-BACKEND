@@ -53,6 +53,23 @@ class AdminController extends Controller
     // Get Admin By ID
     public function getAdminById(Request $request, $id) {
         try {
+            // Check if the id is valid
+            if (!is_numeric($id) | !$id) {
+                return response()->json([
+                    'success' => false,
+                    'message' => 'Invalid Admin ID'
+                ], 400);
+            }
+
+            // Check if Admin exists
+            $admin = Admin::find($id);
+            if (!$admin) {
+                return response()->json([
+                    'success' => false,
+                    'message' => 'Admin not found'
+                ], 404);
+            }
+
             $admin = Admin::find($id);
             return response()->json([
                 'message' => $admin
@@ -80,6 +97,23 @@ class AdminController extends Controller
     // Update Admin By ID
     public function editAdmin(Request $request, $id) {
         try {
+            // Check if the id is valid
+            if (!is_numeric($id) | !$id) {
+                return response()->json([
+                    'success' => false,
+                    'message' => 'Invalid Admin ID'
+                ], 400);
+            }
+
+            // Check if Admin exists
+            $admin = Admin::find($id);
+            if (!$admin) {
+                return response()->json([
+                    'success' => false,
+                    'message' => 'Admin not found'
+                ], 404);
+            }
+
             // Data validation 
             $data = $request->only('first_name', 'last_name', 'username', 'email', 'password');
             $validator = Validator::make($data, [
@@ -124,6 +158,23 @@ class AdminController extends Controller
     // Delete Admin By ID
     public function deleteAdmin(Request $request, $id) {
         try {
+            // Check if the id is valid
+            if (!is_numeric($id) | !$id) {
+                return response()->json([
+                    'success' => false,
+                    'message' => 'Invalid Admin ID'
+                ], 400);
+            }
+
+            // Check if Admin exists
+            $admin = Admin::find($id);
+            if (!$admin) {
+                return response()->json([
+                    'success' => false,
+                    'message' => 'Admin not found'
+                ], 404);
+            }
+
             $admin = Admin::find($id);
             $admin->delete();
             return response()->json([
