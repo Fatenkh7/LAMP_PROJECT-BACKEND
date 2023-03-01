@@ -30,6 +30,12 @@ class FixedTransaction extends Model
     {
         return $this->belongsTo(Category::class);
     }
+
+//     public function category()
+// {
+//     return $this->belongsTo(Category::class, 'categories_id');
+// }
+
     public function fixed_keys()
     {
         return $this->belongsTo(FixedKey::class);
