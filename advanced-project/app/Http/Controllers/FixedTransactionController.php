@@ -130,6 +130,7 @@ class FixedTransactionController extends Controller
             ]);
 
             $new_fixed_transaction = new FixedTransaction();
+            
             $new_fixed_transaction->title = $request->input('title');
             $new_fixed_transaction->description = $request->input('description');
             $new_fixed_transaction->amount = $request->input('amount');
