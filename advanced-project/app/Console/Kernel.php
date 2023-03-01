@@ -1,3 +1,5 @@
+<?php
+
 namespace App\Console;
 
 use Illuminate\Console\Scheduling\Schedule;
@@ -14,7 +16,7 @@ class Kernel extends ConsoleKernel
         // $schedule->command('inspire')->hourly();
         $schedule->call(function () {
             // Generate new monthly transactions
-            $transactions = generateMonthlyTransactions();
+            $transactions = $this->generateMonthlyTransactions();
             // Save transactions to the database
             FixedTransaction::insert($transactions);
         })->monthly();
@@ -29,9 +31,9 @@ class Kernel extends ConsoleKernel
 
         require base_path('routes/console.php');
     }
-}
 
-function generateMonthlyTransactions()
-{
-    // Your code for generating monthly transactions goes here
+    protected function generateMonthlyTransactions()
+    {
+        // Your code for generating monthly transactions goes here
+    }
 }
