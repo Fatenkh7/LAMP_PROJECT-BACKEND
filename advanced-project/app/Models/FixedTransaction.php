@@ -14,9 +14,17 @@ class FixedTransaction extends Model
         'description',
         'type',
         'amount',
+        'schedule',
         'is_paid',
         'date_time'
+
     ];
+    // Define the allowed types as a static variable
+    public static $allowedTypes = ['income', 'expense'];
+    public static $allowedSchedule = ['yearly', 'monthly', 'weekly'];
+    public static $allowedPaid = ['0', '1'];
+
+    // Rest of the model code ...
     public $timestamps = false;
     public function currencies()
     {
@@ -31,10 +39,10 @@ class FixedTransaction extends Model
         return $this->belongsTo(Category::class);
     }
 
-//     public function category()
-// {
-//     return $this->belongsTo(Category::class, 'categories_id');
-// }
+    //     public function category()
+    // {
+    //     return $this->belongsTo(Category::class, 'categories_id');
+    // }
 
     public function fixed_keys()
     {
