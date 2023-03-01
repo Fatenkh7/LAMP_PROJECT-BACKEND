@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\Category;
 use App\Models\Admin;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Database\QueryException;
 
 class CategoryController extends Controller
 {
@@ -58,12 +59,20 @@ class CategoryController extends Controller
     public function getById(Request $request, $id)
     {
         try {
-            $category = Category::find($id);
+            $report = Category::findOrFail($id);
             return response()->json([
-                'message' => $category,
+                'message' => $report
+            ]);
+        } catch (QueryException $e) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Error retrieving getting report from database'
             ]);
         } catch (\Exception $e) {
-            return $e->getMessage();
+            return response()->json([
+                'message' => 'Report not found',
+                'error' => $e->getMessage(),
+            ], 404);
         }
     }
 
