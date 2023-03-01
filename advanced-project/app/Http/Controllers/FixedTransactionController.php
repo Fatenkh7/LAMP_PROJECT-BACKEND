@@ -365,7 +365,6 @@ class FixedTransactionController extends Controller
                     'errors' => $validator->errors()
                 ], 422);
             }
-
             // Find the fixed transaction to update
             $fixed_transaction = FixedTransaction::find($request->input('id'));
             if (!$fixed_transaction) {
