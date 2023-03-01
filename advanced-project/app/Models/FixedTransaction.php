@@ -21,7 +21,7 @@ class FixedTransaction extends Model
     // Define the allowed types as a static variable
     public static $allowedTypes = ['income', 'expense'];
     public static $allowedSchedule = ['yearly', 'monthly', 'weekly'];
-    public static $allowedPaid = ['true', 'false'];
+    public static $allowedPaid = ['0', '1'];
 
     // Rest of the model code ...
     public $timestamps = false;

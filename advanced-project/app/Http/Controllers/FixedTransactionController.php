@@ -58,21 +58,31 @@ class FixedTransactionController extends Controller
 
     public function getBy(Request $request)
 {
-    $validatedData = $request->validate([
-        'type' => 'in:'.implode(',', FixedTransaction::$allowedTypes),
-        'categories_id' => 'exists:categories,id',
-        'schedule' => 'in:'.implode(',', FixedTransaction::$allowedSchedule),
-        'admins_id' => 'exists:admins,id',
-        'fixed_keys_id' => 'exists:fixed_keys,id',
-        'is_paid' => 'in:'.implode(',', FixedTransaction::$allowedPaid),
-    ]);
+    try {
+        $validatedData = $request->validate([
+            'type' => 'in:' . implode(',', FixedTransaction::$allowedTypes),
+            'categories_id' => 'exists:categories,id',
+            'schedule' => 'in:' . implode(',', FixedTransaction::$allowedSchedule),
+            'admins_id' => 'exists:admins,id',
+            'currencies_id' => 'exists:currencies,id',
+            'fixed_keys_id' => 'exists:fixed_keys,id',
+            'is_paid' => 'boolean',
+        ]);
+    } catch (\Illuminate\Validation\ValidationException $e) {
+        return response()->json([
+            'success' => false,
+            'message' => $e->getMessage(),
+            'errors' => $e->errors()
+        ], 422);
+    }
+
     try {
         $fixed = FixedTransaction::query();
 
         // Filter by type
         if ($request->has('type') && in_array($request->input('type'), FixedTransaction::$allowedTypes)) {
             $fixed->where('type', $request->input('type'));
-        }else
+        }
 
         // Filter by category
         if ($request->has('categories_id')) {
@@ -94,9 +104,14 @@ class FixedTransactionController extends Controller
             $fixed->where('fixed_keys_id', $request->input('fixed_keys_id'));
         }
 
+        // Filter by currencies
+        if ($request->has('currencies_id')) {
+            $fixed->where('currencies_id', $request->input('currencies_id'));
+        }
+
         // Filter by paid
         if ($request->has('is_paid')) {
-            $fixed->where('is_paid', $request->input('is_paid'), FixedTransaction::$allowedPaid);
+            $fixed->where('is_paid', $request->input('is_paid'));
         }
 
         // Get the filtered fixed transactions
@@ -113,9 +128,6 @@ class FixedTransactionController extends Controller
         ]);
     }
 }
-
-
-
 
     public function addfixedTrans(Request $request)
     {
