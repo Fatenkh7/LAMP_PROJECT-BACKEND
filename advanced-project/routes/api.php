@@ -107,6 +107,8 @@ Route::Get('/fixedtransaction', [FixedTransactionController::class, 'getAll']);
 // Route::get('/fixedtransaction', [FixedTransactionController::class, 'getBy']);
 Route::Get('/fixedtransaction', [FixedTransactionController::class, 'getBy']);
 Route::Put('/fixedtransaction', [FixedTransactionController::class, 'editBy']);
+Route::Delete('/fixedtransaction', [FixedTransactionController::class, 'deleteBy']);
+
 
 Route::Put('/fixedtransaction/updateBy/{type}/{category}/{schedule}/{admin}/{fixed_keys}/{is_paid}', [FixedTransactionController::class, 'editBy']);
 Route::Delete('/fixedtransaction/deleteBy/{type}/{category}/{schedule}/{admin}/{fixed_keys}/{is_paid}', [FixedTransactionController::class, 'deleteBy']);
