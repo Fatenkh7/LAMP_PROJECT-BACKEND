@@ -13,10 +13,6 @@ return [
     |
     */
 
-    'defaults' => [
-        'guard' => 'web',
-        'passwords' => 'admins',
-    ],
 
     /*
     |--------------------------------------------------------------------------
@@ -35,12 +31,7 @@ return [
     |
     */
 
-    'guards' => [
-        'web' => [
-            'driver' => 'session',
-            'provider' => 'admins',
-        ],
-    ],
+
 
     /*
     |--------------------------------------------------------------------------
@@ -89,7 +80,22 @@ return [
     | quickly generating a very large amount of password reset tokens.
     |
     */
+    'defaults' => [
+        'guard' => 'api',
+        'passwords' => 'admins',
+    ],
 
+    'guards' => [
+        'web' => [
+            'driver' => 'session',
+            'provider' => 'admins',
+        ],
+        'api' => [
+            'driver' => 'jwt',
+            'provider' => 'admins',
+            'hash' => false,
+        ],
+    ],
     'passwords' => [
         'admins' => [
             'provider' => 'admins',
@@ -113,21 +119,6 @@ return [
     'password_timeout' => 10800,
 
 
-    'defaults' => [
-        'guard' => 'api',
-        'passwords' => 'admins',
-    ],
-
-    'guards' => [
-        'web' => [
-            'driver' => 'session',
-            'provider' => 'admins',
-        ],
-        'api' => [
-            'driver' => 'jwt',
-            'provider' => 'admins',
-            'hash' => false,
-        ],
-    ],
+   
 
 ];
