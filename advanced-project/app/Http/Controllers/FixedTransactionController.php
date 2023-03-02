@@ -137,7 +137,7 @@ class FixedTransactionController extends Controller
                 'date_time' => 'required|date',
                 'type' => 'required|in:income,expense',
                 'schedule' => 'required|in:yearly,monthly,weekly',
-                'is_paid' => 'boolean',
+                'is_paid' => 'required|boolean',
                 'admins_id' => 'required|exists:admins,id',
                 'categories_id' => 'required|exists:categories,id',
                 'currencies_id' => 'required|exists:currencies,id',
