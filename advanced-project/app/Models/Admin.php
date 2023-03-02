@@ -11,7 +11,9 @@ use Tymon\JWTAuth\Contracts\JWTSubject;
 
 
 
+
 class Admin extends Authenticatable implements JWTSubject
+
 {
     use HasFactory;
 
