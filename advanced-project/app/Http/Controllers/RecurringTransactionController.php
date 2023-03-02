@@ -11,7 +11,6 @@ use App\Models\RecurringTransaction;
 use App\Models\Admin;
 use App\Models\Currency;
 use App\Models\Category;
-use App\Models\FixedKey;
 
 
 
@@ -286,7 +285,7 @@ class RecurringTransactionController extends Controller
             }
             // Find the fixed transaction to update
             $recurring_transaction = RecurringTransaction::find($request->input('id'));
-            if (!$fixed_transaction) {
+            if (!$recurring_transaction) {
                 return response()->json([
                     'success' => false,
                     'message' => 'Fixed transaction not found',
