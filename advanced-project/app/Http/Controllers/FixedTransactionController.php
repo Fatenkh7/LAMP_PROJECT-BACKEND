@@ -54,58 +54,70 @@ class FixedTransactionController extends Controller
         }
     }
 
-    public function getBy(Request $request, $type, $category, $schedule, $admin, $fixed_keys, $is_paid)
+    public function getBy(Request $request)
     {
+        try {
+            $validatedData = $request->validate([
+                'title' => 'in:' . implode(',', FixedTransaction::$allowedTypes),
+                'categories_id' => 'exists:categories,id',
+                'schedule' => 'in:' . implode(',', FixedTransaction::$allowedSchedule),
+                'admins_id' => 'exists:admins,id',
+                'currencies_id' => 'exists:currencies,id',
+                'fixed_keys_id' => 'exists:fixed_keys,id',
+                'is_paid' => 'boolean',
+            ]);
+        } catch (\Illuminate\Validation\ValidationException $e) {
+            return response()->json([
+                'success' => false,
+                'message' => $e->getMessage(),
+                'errors' => $e->errors()
+            ], 422);
+        }
+
         try {
             $fixed = FixedTransaction::query();
 
-            // Filter by type
-            if ($type != 'all') {
-                $fixed->where('type', $type);
+            // Filter by name
+            if ($request->has('title') && in_array($request->input('title'), FixedTransaction::$allowedTypes)) {
+                $fixed->where('title', $request->input('title'));
             }
 
             // Filter by category
-            if ($category != 'all') {
-                $fixed->whereHas('categories', function ($query) use ($category) {
-                    $query->where('id', $category);
-                });
+            if ($request->has('categories_id')) {
+                $fixed->where('categories_id', $request->input('categories_id'));
             }
 
-            // Filter by schedule
-            if ($schedule != 'all') {
-                $fixed->where('schedule', $schedule);
+            // Filter by admins
+            if ($request->has('admins_id')) {
+                $fixed->where('admins_id', $request->input('admins_id'));
             }
 
-            //filter by admins
-            if ($admin != 'all') {
-                $fixed->whereHas('admins', function ($query) use ($admin) {
-                    $query->where('id', $admin);
-                });
+            // Filter by currencies
+            if ($request->has('currencies_id')) {
+                $fixed->where('currencies_id', $request->input('currencies_id'));
             }
 
-            //filter by fixed keys
-            if ($fixed_keys != 'all') {
-                $fixed->whereHas('fixed_keys', function ($query) use ($fixed_keys) {
-                    $query->where('id', $fixed_keys);
-                });
+            // Filter by fixed keys
+            if ($request->has('fixed_keys_id')) {
+                $fixed->where('fixed_keys_id', $request->input('fixed_keys_id'));
             }
 
-            //filter by paid
-            if ($is_paid != 'all') {
-                $fixed->where('is_paid', false);
+            // Filter by paid
+            if ($request->has('is_paid')) {
+                $fixed->where('is_paid', $request->input('is_paid'));
             }
 
             // Get the filtered fixed transactions
             $filteredFixed = $fixed->get();
 
             return response()->json([
-                'status' => 200,
+                'success' => true,
                 'data' => $filteredFixed
             ]);
-        } catch (QueryException $e) {
+        } catch (\Exception $e) {
             return response()->json([
                 'success' => false,
-                'message' => 'Error retrieving fixed transactions from database'
+                'message' => $e->getMessage()
             ]);
         }
     }

@@ -17,7 +17,13 @@ class FixedTransaction extends Model
         'is_paid',
         'date_time'
     ];
+    // Define the allowed types as a static variable
+    public static $allowedTypes = ['income', 'expense'];
+    public static $allowedSchedule = ['yearly', 'monthly', 'weekly'];
+    public static $allowedPaid = ['0', '1'];
+    
     public $timestamps = false;
+
     public function currencies()
     {
         return $this->belongsTo(Currency::class);
