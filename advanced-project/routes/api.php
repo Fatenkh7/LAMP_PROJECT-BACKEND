@@ -76,10 +76,12 @@ Route::Delete('/currency/{id}', [CurrencyController::class, 'deleteCurrency']);
 // Recurring Transaction
 Route::Post('/recurringTransaction', [RecurringTransactionController::class, 'addRecurringTransaction']);
 Route::Put('/recurringTransaction/{id}', [RecurringTransactionController::class, 'editRecurringTransaction']);
+Route::Put('/recurringTransaction', [RecurringTransactionController::class, 'editBy']);
 Route::Get('/recurringTransaction', [RecurringTransactionController::class, 'getAllRecurringTransactions']);
 Route::Get('/recurringTransaction/{id}', [RecurringTransactionController::class, 'getRecurringTransactionById']);
 Route::Get('/recurringTransaction', [RecurringTransactionController::class, 'getBy']);
-Route::Put('/recurringTransaction', [RecurringTransactionController::class, 'editBy']);
+Route::Delete('/recurringTransaction/{id}', [RecurringTransactionController::class, 'deleteById']);
+Route::Delete('/recurringTransaction', [RecurringTransactionController::class, 'deleteBy']);
 
 
 // Fixed key 

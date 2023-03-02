@@ -181,7 +181,7 @@ class RecurringTransactionController extends Controller
     {
         try {
             $validatedData = $request->validate([
-                'type' => 'in:' . implode(',', RecurringTransaction::$allowedTypes),
+                'name' => 'in:' . implode(',', RecurringTransaction::$allowedTypes),
                 'categories_id' => 'exists:categories,id',
                 // 'schedule' => 'in:' . implode(',', RecurringTransaction::$allowedSchedule),
                 'admins_id' => 'exists:admins,id',
@@ -199,9 +199,9 @@ class RecurringTransactionController extends Controller
         try {
             $recurring = RecurringTransaction::query();
 
-            // Filter by type
-            if ($request->has('type') && in_array($request->input('type'), RecurringTransaction::$allowedTypes)) {
-                $recurring->where('type', $request->input('type'));
+            // Filter by name
+            if ($request->has('name') && in_array($request->input('name'), RecurringTransaction::$allowedTypes)) {
+                $recurring->where('name', $request->input('name'));
             }
 
             // Filter by category
@@ -245,8 +245,8 @@ class RecurringTransactionController extends Controller
             $recurring = RecurringTransaction::query();
 
             // Filter by type
-            if ($request->has('type') && in_array($request->input('type'), RecurringTransaction::$allowedTypes)) {
-                $recurring->where('type', $request->input('type'));
+            if ($request->has('name') && in_array($request->input('name'), RecurringTransaction::$allowedTypes)) {
+                $recurring->where('name', $request->input('name'));
             }
 
             // Filter by category
@@ -311,6 +311,97 @@ class RecurringTransactionController extends Controller
                 'success' => false,
                 'message' => 'Error updating fixed transaction in database'
             ]);
+        }
+    }
+
+    public function deleteBy(Request $request)
+    {
+        try {
+            $validatedData = $request->validate([
+                'name' => 'in:' . implode(',', RecurringTransaction::$allowedTypes),
+                'categories_id' => 'exists:categories,id',
+                // 'schedule' => 'in:' . implode(',', RecurringTransaction::$allowedSchedule),
+                'admins_id' => 'exists:admins,id',
+                'currencies_id' => 'exists:currencies,id',
+                'is_paid' => 'boolean',
+            ]);
+        } catch (\Illuminate\Validation\ValidationException $e) {
+            return response()->json([
+                'success' => false,
+                'message' => $e->getMessage(),
+                'errors' => $e->errors()
+            ], 422);
+        }
+
+        try {
+            $recurring = RecurringTransaction::query();
+
+            // Filter by name
+            if ($request->has('name') && in_array($request->input('name'), RecurringTransaction::$allowedTypes)) {
+                $recurring->where('name', $request->input('name'));
+            }
+
+            // Filter by category
+            if ($request->has('categories_id')) {
+                $recurring->where('categories_id', $request->input('categories_id'));
+            }
+
+            // Filter by admins
+            if ($request->has('admins_id')) {
+                $recurring->where('admins_id', $request->input('admins_id'));
+            }
+
+            // Filter by currencies
+            if ($request->has('currencies_id')) {
+                $recurring->where('currencies_id', $request->input('currencies_id'));
+            }
+
+            // Filter by paid
+            if ($request->has('is_paid')) {
+                $recurring->where('is_paid', $request->input('is_paid'));
+            }
+
+            // Get the filtered recurring transactions
+            $filteredRecurring = $recurring->delete();
+
+            return response()->json([
+                'success' => true,
+                'data' => 'Recurring transaction deleted successfully'
+            ]);
+        } catch (\Exception $e) {
+            return response()->json([
+                'success' => false,
+                'message' => $e->getMessage()
+            ]);
+        }
+    }
+
+    public function deleteById(Request $request, $id)
+    {
+        try {
+            $recurring = RecurringTransaction::find($id);
+            if (!$recurring) {
+                return response()->json([
+                    'success' => false,
+                    'message' => 'recurring transaction not found'
+                ], 404);
+            }
+            $recurring->delete();
+            return response()->json([
+                'success' => true,
+                'message' => 'recurring transaction deleted successfully',
+            ]);
+        } catch (QueryException $e) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Error deleting recurring transaction from database'
+            ]);
+        } catch (\Exception $e) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Error deleting recurring transaction',
+                'error' => $e->getMessage()
+            ], 500);
         }
     }
 }
