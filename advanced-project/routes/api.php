@@ -90,7 +90,7 @@ Route::Delete('/recurringTransaction', [RecurringTransactionController::class, '
 Route::Post('/fixedtransaction', [CurrencyController::class, 'addFixedTransaction']);
 Route::Get('/fixedtransaction', [CurrencyController::class, 'getAll']);
 Route::Get('/fixedtransaction', [CurrencyController::class, 'getBy']);
-// Route::Get('/fixedtransaction/{id}', [CurrencyController::class, 'getById']);
+Route::Get('/fixedtransaction/{id}', [CurrencyController::class, 'getById']);
 Route::Put('/fixedtransaction/{id}', [CurrencyController::class, 'addFixedTransaction']);
 Route::Delete('/fixedtransaction/{id}', [CurrencyController::class, 'addFixedTransaction']);
 
