@@ -13,6 +13,7 @@ use App\Http\Controllers\FixedExpenseController;
 use App\Http\Controllers\RecurringExpenseController;
 use App\Http\Controllers\RecurringTransactionController;
 use App\Http\Controllers\FixedKeyController;
+Use App\Http\Controllers\AuthController;
 
 
 /*
@@ -109,3 +110,12 @@ Route::Get('/fixedtransaction/{id}', [FixedTransactionController::class, 'getByI
 Route::Put('/fixedtransaction/{id}', [FixedTransactionController::class, 'editFixedById']);
 Route::Delete('/fixedtransaction/{id}', [FixedTransactionController::class, 'editFixedById']);
 
+
+
+Route::group([
+    'middleware' => 'api',
+    'prefix' => 'auth'
+], function ($router) {
+    Route::Post('/login', [AuthController::class, 'login']);
+    Route::Post('/logout', [AuthController::class, 'logout']);   
+});
