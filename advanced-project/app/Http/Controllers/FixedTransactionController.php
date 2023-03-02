@@ -24,11 +24,11 @@ class FixedTransactionController extends Controller
         } catch (QueryException $e) {
             return response()->json([
                 'success' => false,
-                'message' => 'Error retrieving fixed transaction from database'
+                'message' => 'Error getting fixed_transaction from database'
             ]);
         } catch (\Exception $e) {
             return response()->json([
-                'message' => 'Error retrieving fixed transaction',
+                'message' => 'Error retrieving fixed_transactions',
                 'error' => $e->getMessage(),
             ], 500);
         }
