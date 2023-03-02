@@ -88,4 +88,15 @@ Route::Post('/fixedkey', [FixedKeyController::class, 'addFixedKey']);
 Route::Get('/fixedkey', [FixedKeyController::class, 'getFixedkey']);
 Route::Get('/fixedkey/{id}', [FixedKeyController::class, 'getByIDFixedkey']);   
 Route::Put('/fixedkey/{id}', [FixedKeyController::class, 'editFixedkey']);   
-Route::Delete('/fixedkey/{id}', [FixedKeyController::class, 'deleteFixedkey']);    
+Route::Delete('/fixedkey/{id}', [FixedKeyController::class, 'deleteFixedkey']);  
+
+Route::group([
+    'middleware' => 'api',
+    'prefix' => 'admin'
+], function ($router) {
+    Route::post('/login', [AdminController::class, 'login']);
+    Route::post('/register', [AdminController::class, 'register']);
+    Route::post('/logout', [AdminController::class, 'logout']);
+    Route::post('/refresh', [AdminController::class, 'refresh']);
+    Route::get('/user-profile', [AdminController::class, 'userProfile']);    
+});

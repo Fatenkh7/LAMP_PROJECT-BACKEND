@@ -26,6 +26,7 @@ class CurrencyController extends Controller
     }
 
     public function getCurrencyById(Request $request, $id)
+     
     {
         try {
             $currency = Currency::find($id);
