@@ -58,7 +58,7 @@ class FixedTransactionController extends Controller
     {
         try {
             $validatedData = $request->validate([
-                'title' => 'in:' . implode(',', FixedTransaction::$allowedTypes),
+                'title' => 'required|string|max:35',
 
                 'type' => 'in:' . implode(',', FixedTransaction::$allowedTypes),
 

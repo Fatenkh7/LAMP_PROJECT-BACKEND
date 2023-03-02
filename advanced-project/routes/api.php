@@ -95,6 +95,7 @@ Route::Delete('/fixedkey/{id}', [FixedKeyController::class, 'deleteFixedkey']);
 
 
 //fixed
+
 Route::Post('/fixedtransaction', [FixedTransactionController::class, 'addfixedTrans']);
 Route::Get('/fixedtransaction/all', [FixedTransactionController::class, 'getAll']);
 Route::Get('/fixedtransaction/id/{id}', [FixedTransactionController::class, 'getById']);
