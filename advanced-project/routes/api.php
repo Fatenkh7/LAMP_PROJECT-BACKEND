@@ -9,6 +9,7 @@ use App\Http\Controllers\ProfitGoalController;
 use App\Http\Controllers\CurrencyController;
 use App\Http\Controllers\FixedTransactionController;
 use App\Http\Controllers\RecurringTransactionController;
+use App\Http\Controllers\FixedTransactionController;
 use App\Http\Controllers\FixedKeyController;
 
 
@@ -82,6 +83,16 @@ Route::Get('/recurringTransaction/{id}', [RecurringTransactionController::class,
 Route::Get('/recurringTransaction', [RecurringTransactionController::class, 'getBy']);
 Route::Delete('/recurringTransaction/{id}', [RecurringTransactionController::class, 'deleteById']);
 Route::Delete('/recurringTransaction', [RecurringTransactionController::class, 'deleteBy']);
+
+
+
+//fixed transactions
+Route::Post('/fixedtransaction', [CurrencyController::class, 'addFixedTransaction']);
+Route::Get('/fixedtransaction', [CurrencyController::class, 'getAll']);
+Route::Get('/fixedtransaction', [CurrencyController::class, 'getBy']);
+// Route::Get('/fixedtransaction/{id}', [CurrencyController::class, 'getById']);
+Route::Put('/fixedtransaction/{id}', [CurrencyController::class, 'addFixedTransaction']);
+Route::Delete('/fixedtransaction/{id}', [CurrencyController::class, 'addFixedTransaction']);
 
 
 // Fixed key 

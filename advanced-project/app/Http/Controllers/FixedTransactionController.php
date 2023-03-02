@@ -58,7 +58,10 @@ class FixedTransactionController extends Controller
     {
         try {
             $validatedData = $request->validate([
+                'title' => 'in:' . implode(',', FixedTransaction::$allowedTypes),
+
                 'type' => 'in:' . implode(',', FixedTransaction::$allowedTypes),
+
                 'categories_id' => 'exists:categories,id',
                 'schedule' => 'in:' . implode(',', FixedTransaction::$allowedSchedule),
                 'admins_id' => 'exists:admins,id',
@@ -77,16 +80,21 @@ class FixedTransactionController extends Controller
         try {
             $fixed = FixedTransaction::query();
 
+            // Filter by name
+            if ($request->has('title') && in_array($request->input('title'), FixedTransaction::$allowedTypes)) {
+                $fixed->where('title', $request->input('title'));
+
             // Filter by type
             if ($request->has('type') && in_array($request->input('type'), FixedTransaction::$allowedTypes)) {
                 $fixed->where('type', $request->input('type'));
+
             }
 
             // Filter by category
             if ($request->has('categories_id')) {
                 $fixed->where('categories_id', $request->input('categories_id'));
             }
-
+                
             // Filter by schedule
             if ($request->has('schedule') && in_array($request->input('schedule'), FixedTransaction::$allowedSchedule)) {
                 $fixed->where('schedule', $request->input('schedule'));

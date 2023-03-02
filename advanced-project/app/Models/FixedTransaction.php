@@ -24,8 +24,12 @@ class FixedTransaction extends Model
     public static $allowedSchedule = ['yearly', 'monthly', 'weekly'];
     public static $allowedPaid = ['0', '1'];
 
+    
+
+
     // Rest of the model code ...
     public $timestamps = false;
+
     public function currencies()
     {
         return $this->belongsTo(Currency::class);
