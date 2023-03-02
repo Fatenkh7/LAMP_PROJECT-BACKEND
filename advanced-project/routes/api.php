@@ -100,7 +100,9 @@ Route::Get('/fixedtransaction', [FixedTransactionController::class, 'getAll']);
 Route::Get('/fixedtransaction/{id}', [FixedTransactionController::class, 'getById']);
 Route::Get('/fixedtransaction', [FixedTransactionController::class, 'getBy']);
 Route::Put('/fixedtransaction/{id}', [FixedTransactionController::class, 'editFixedById']);
-
+Route::Put('/fixedtransaction', [FixedTransactionController::class, 'editBy']);
+Route::Delete('/fixedtransaction', [FixedTransactionController::class, 'deleteBy']);
+Route::Delete('/fixedtransaction/{id}', [FixedTransactionController::class, 'editFixedById']);
 
 
 
@@ -113,6 +115,3 @@ Route::group([
 
 });
 
-Route::Put('/fixedtransaction', [FixedTransactionController::class, 'editBy']);
-Route::Delete('/fixedtransaction', [FixedTransactionController::class, 'deleteBy']);
-Route::Delete('/fixedtransaction/{id}', [FixedTransactionController::class, 'editFixedById']);
