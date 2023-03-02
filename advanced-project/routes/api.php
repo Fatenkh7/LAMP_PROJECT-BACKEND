@@ -7,10 +7,10 @@ use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\ReportController;
 use App\Http\Controllers\ProfitGoalController;
 use App\Http\Controllers\CurrencyController;
-use App\Http\Controllers\FixedTransactionController;
 use App\Http\Controllers\RecurringTransactionController;
 use App\Http\Controllers\FixedTransactionController;
 use App\Http\Controllers\FixedKeyController;
+Use App\Http\Controllers\AuthController;
 
 
 /*
@@ -110,6 +110,19 @@ Route::Get('/fixedtransaction', [FixedTransactionController::class, 'getAll']);
 Route::Get('/fixedtransaction/{id}', [FixedTransactionController::class, 'getById']);
 Route::Get('/fixedtransaction', [FixedTransactionController::class, 'getBy']);
 Route::Put('/fixedtransaction/{id}', [FixedTransactionController::class, 'editFixedById']);
+
+
+
+
+Route::group([
+    'middleware' => 'api',
+    'prefix' => 'admin'
+], function ($router) {
+    Route::Post('/login', [AuthController::class, 'login']);
+    Route::Post('/logout', [AuthController::class, 'logout']);   
+
+});
+
 Route::Put('/fixedtransaction', [FixedTransactionController::class, 'editBy']);
 Route::Delete('/fixedtransaction', [FixedTransactionController::class, 'deleteBy']);
 Route::Delete('/fixedtransaction/{id}', [FixedTransactionController::class, 'editFixedById']);
