@@ -6,10 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\FixedTransaction;
 use Illuminate\Database\QueryException;
 use Illuminate\Support\Facades\Validator;
-use Illuminate\Validation\ValidationException;
-use Illuminate\Contracts\Foundation\Application;
-use Illuminate\Support\Facades\App;
-use Illuminate\Foundation\Console\Kernel;
+use Carbon\Carbon;
 use App\Models\Admin;
 use App\Models\Currency;
 use App\Models\Category;
@@ -17,7 +14,7 @@ use App\Models\FixedKey;
 
 class FixedTransactionController extends Controller
 {
-       public function getAll(Request $request)
+    public function getAll(Request $request)
     {
         try {
             $fixed_transaction = FixedTransaction::all();
@@ -140,7 +137,7 @@ class FixedTransactionController extends Controller
                 'date_time' => 'required|date',
                 'type' => 'required|in:income,expense',
                 'schedule' => 'required|in:yearly,monthly,weekly',
-                'is_paid' => 'boolean',
+                'is_paid' => 'required|boolean',
                 'admins_id' => 'required|exists:admins,id',
                 'categories_id' => 'required|exists:categories,id',
                 'currencies_id' => 'required|exists:currencies,id',
