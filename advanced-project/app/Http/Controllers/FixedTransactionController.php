@@ -17,7 +17,7 @@ class FixedTransactionController extends Controller
     public function getAll(Request $request)
     {
         try {
-            $fixed_transaction = FixedTransaction::all();
+            $fixed_transaction = FixedTransaction::paginate(5);
             return response()->json([
                 'message' => $fixed_transaction
             ]);
@@ -53,87 +53,72 @@ class FixedTransactionController extends Controller
             ], 404);
         }
     }
+public function getBy(Request $request)
+{
+    $validatedData = $request->validate([
+        'type' => 'in:' . implode(',', FixedTransaction::$allowedTypes),
+        'categories_id' => 'exists:categories,id',
+        'schedule' => 'in:' . implode(',', FixedTransaction::$allowedSchedule),
+        'admins_id' => 'exists:admins,id',
+        'currencies_id' => 'exists:currencies,id',
+        'fixed_keys_id' => 'exists:fixed_keys,id',
+        'is_paid' => 'boolean',
+    ]);
 
-    public function getBy(Request $request)
-    {
-        try {
-            $validatedData = $request->validate([
-                'title' => 'required|string|max:35',
+    $fixed = FixedTransaction::query();
 
-                'type' => 'in:' . implode(',', FixedTransaction::$allowedTypes),
-
-                'categories_id' => 'exists:categories,id',
-                'schedule' => 'in:' . implode(',', FixedTransaction::$allowedSchedule),
-                'admins_id' => 'exists:admins,id',
-                'currencies_id' => 'exists:currencies,id',
-                'fixed_keys_id' => 'exists:fixed_keys,id',
-                'is_paid' => 'boolean',
-            ]);
-        } catch (\Illuminate\Validation\ValidationException $e) {
-            return response()->json([
-                'success' => false,
-                'message' => $e->getMessage(),
-                'errors' => $e->errors()
-            ], 422);
-        }
-
-        try {
-            $fixed = FixedTransaction::query();
-
-            // Filter by name
-            if ($request->has('title') && in_array($request->input('title'), FixedTransaction::$allowedTypes)) {
-                $fixed->where('title', $request->input('title'));
-
-            // Filter by type
-            if ($request->has('type') && in_array($request->input('type'), FixedTransaction::$allowedTypes)) {
-                $fixed->where('type', $request->input('type'));
-
-            }
-
-            // Filter by category
-            if ($request->has('categories_id')) {
-                $fixed->where('categories_id', $request->input('categories_id'));
-            }
-                
-            // Filter by schedule
-            if ($request->has('schedule') && in_array($request->input('schedule'), FixedTransaction::$allowedSchedule)) {
-                $fixed->where('schedule', $request->input('schedule'));
-            }
-
-            // Filter by admins
-            if ($request->has('admins_id')) {
-                $fixed->where('admins_id', $request->input('admins_id'));
-            }
-
-            // Filter by fixed keys
-            if ($request->has('fixed_keys_id')) {
-                $fixed->where('fixed_keys_id', $request->input('fixed_keys_id'));
-            }
-
-            // Filter by currencies
-            if ($request->has('currencies_id')) {
-                $fixed->where('currencies_id', $request->input('currencies_id'));
-            }
-
-            // Filter by paid
-            if ($request->has('is_paid')) {
-                $fixed->where('is_paid', $request->input('is_paid'));
-            }
-
-            // Get the filtered fixed transactions
-            $filteredFixed = $fixed->get();
-
-            return response()->json([
-                'success' => true,
-                'data' => $filteredFixed
-            ]);
-        }} catch (\Exception $e) {
-            return response()->json([
-                'success' => false,
-                'message' => $e->getMessage()
-            ]);
-        }
+    // Filter by type
+    if ($request->has('type') && in_array($request->input('type'), FixedTransaction::$allowedTypes)) {
+        $fixed->where('type', $request->input('type'));
     }
+
+    // Filter by category
+    if ($request->has('categories_id')) {
+        $fixed->where('categories_id', $request->input('categories_id'));
+    }
+        
+    // Filter by schedule
+    if ($request->has('schedule') && in_array($request->input('schedule'), FixedTransaction::$allowedSchedule)) {
+        $fixed->where('schedule', $request->input('schedule'));
+    }
+
+    // Filter by admins
+    if ($request->has('admins_id')) {
+        $fixed->where('admins_id', $request->input('admins_id'));
+    }
+
+    // Filter by fixed keys
+    if ($request->has('fixed_keys_id')) {
+        $fixed->where('fixed_keys_id', $request->input('fixed_keys_id'));
+    }
+
+    // Filter by currencies
+    if ($request->has('currencies_id')) {
+        $fixed->where('currencies_id', $request->input('currencies_id'));
+    }
+
+    // Filter by paid
+    if ($request->has('is_paid')) {
+        $fixed->where('is_paid', $request->input('is_paid'));
+    }
+
+    $perPage = $request->get('perPage', 5);
+    $page = $request->get('page', 1);
+
+    try {
+        $filteredFixed= $fixed->paginate($perPage, ['*'], 'page', $page);
+        return response()->json([
+            'status' => 'success',
+            'data' => $filteredFixed->toArray(),
+        ]);
+    } catch (\Exception $e) {
+        return response()->json([
+            'status' => 'error',
+            'message' => $e->getMessage()
+        ]);
+    }
+}
+
 
     public function addfixedTrans(Request $request)
     {
@@ -160,7 +145,7 @@ class FixedTransactionController extends Controller
             $new_fixed_transaction->date_time = $request->input('date_time');
             $new_fixed_transaction->type = $request->input('type');
             $new_fixed_transaction->schedule = $request->input('schedule');
-            $new_fixed_transaction->is_paid = false;
+            $new_fixed_transaction->is_paid = $request->input('is_paid');
             $new_fixed_transaction->admins()->associate(Admin::find($request->input('admins_id')));
             $new_fixed_transaction->categories()->associate(Category::find($request->input('categories_id')));
             $new_fixed_transaction->currencies()->associate(Currency::find($request->input('currencies_id')));

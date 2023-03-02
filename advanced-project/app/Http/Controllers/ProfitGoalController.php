@@ -15,7 +15,7 @@ class ProfitGoalController extends Controller
     public function getAll(Request $request)
     {
         try {
-            $ProfitGoal = ProfitGoal::all();
+            $ProfitGoal = ProfitGoal::paginate(5);
             return response()->json([
                 'message' => $ProfitGoal
             ]);
@@ -56,7 +56,7 @@ class ProfitGoalController extends Controller
     public function getByTitle(Request $request, $title)
     {
         try {
-            $ProfitGoal = ProfitGoal::where('goal_title', $title)->get();
+            $ProfitGoal = ProfitGoal::where('goal_title', $title)->paginate(5);
             if ($ProfitGoal->isEmpty()) {
                 return response()->json([
                     'success' => false,

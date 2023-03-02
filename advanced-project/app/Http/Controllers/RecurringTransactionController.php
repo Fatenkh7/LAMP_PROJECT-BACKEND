@@ -138,7 +138,7 @@ class RecurringTransactionController extends Controller
 
     public function getAllRecurringTransactions(Request $request) {
         try {
-            $recurringTransaction = RecurringTransaction::all();
+            $recurringTransaction = RecurringTransaction::paginate(5);
             return response()->json([
                 'message' => $recurringTransaction
             ]); 
@@ -181,9 +181,8 @@ class RecurringTransactionController extends Controller
     {
         try {
             $validatedData = $request->validate([
-                'name' => 'in:' . implode(',', RecurringTransaction::$allowedTypes),
                 'categories_id' => 'exists:categories,id',
-                // 'schedule' => 'in:' . implode(',', RecurringTransaction::$allowedSchedule),
+                'type' => 'in:' . implode(',', RecurringTransaction::$allowedTypes),
                 'admins_id' => 'exists:admins,id',
                 'currencies_id' => 'exists:currencies,id',
                 'is_paid' => 'boolean',
@@ -200,8 +199,8 @@ class RecurringTransactionController extends Controller
             $recurring = RecurringTransaction::query();
 
             // Filter by name
-            if ($request->has('name') && in_array($request->input('name'), RecurringTransaction::$allowedTypes)) {
-                $recurring->where('name', $request->input('name'));
+            if ($request->has('type') && in_array($request->input('type'), RecurringTransaction::$allowedTypes)) {
+                $recurring->where('type', $request->input('type'));
             }
 
             // Filter by category
@@ -225,7 +224,7 @@ class RecurringTransactionController extends Controller
             }
 
             // Get the filtered recurring transactions
-            $filteredRecurring = $recurring->get();
+            $filteredRecurring = $recurring->paginate(5);
 
             return response()->json([
                 'success' => true,

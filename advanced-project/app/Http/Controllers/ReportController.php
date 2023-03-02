@@ -15,7 +15,7 @@ class ReportController extends Controller
     public function getAll(Request $request)
     {
         try {
-            $report = Report::all();
+            $report = Report::paginate(5);
             return response()->json([
                 'message' => $report
             ]);
@@ -55,7 +55,7 @@ class ReportController extends Controller
     public function getByType(Request $request, $type)
     {
         try {
-            $report = Report::where('type_report', $type)->get();
+            $report = Report::where('type_report', $type)->paginate(5);
             if ($report->isEmpty()) {
                 return response()->json([
                     'success' => false,
