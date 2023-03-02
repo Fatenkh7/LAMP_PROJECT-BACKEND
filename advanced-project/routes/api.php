@@ -82,13 +82,6 @@ Route::Get('/recurringTransaction', [RecurringTransactionController::class, 'get
 Route::Put('/recurringTransaction', [RecurringTransactionController::class, 'editBy']);
 
 
-//fixed transactions
-Route::Post('/fixedtransaction', [CurrencyController::class, 'addFixedTransaction']);
-Route::Get('/fixedtransaction', [CurrencyController::class, 'getAll']);
-Route::Get('/fixedtransaction/{id}', [CurrencyController::class, 'getById']);
-Route::Put('/fixedtransaction/{id}', [CurrencyController::class, 'addFixedTransaction']);
-Route::Delete('/fixedtransaction/{id}', [CurrencyController::class, 'addFixedTransaction']);
-
 // Fixed key 
 
 Route::Post('/fixedkey', [FixedKeyController::class, 'addFixedKey']);
@@ -101,19 +94,9 @@ Route::Delete('/fixedkey/{id}', [FixedKeyController::class, 'deleteFixedkey']);
 //fixed
 Route::Post('/fixedtransaction', [FixedTransactionController::class, 'addfixedTrans']);
 Route::Get('/fixedtransaction', [FixedTransactionController::class, 'getAll']);
-// Route::Get('/fixedtransaction/getBy/type/{type}', [FixedTransactionController::class, 'getBy']);
-// Route::Get('/fixedtransaction/getBy/categoty/{category}', [FixedTransactionController::class, 'getBy']);
-// Route::Get('/fixedtransaction/getBy/admin/{admin}', [FixedTransactionController::class, 'getBy']);
-// Route::Get('/fixedtransaction/getBy/key/{fixed_keys}', [FixedTransactionController::class, 'getBy']);
-// Route::Get('/fixedtransaction/getBy/notpaid/{is_paid}', [FixedTransactionController::class, 'getBy']);
-// Route::get('/fixedtransaction', [FixedTransactionController::class, 'getBy']);
+Route::Get('/fixedtransaction/{id}', [FixedTransactionController::class, 'getById']);
 Route::Get('/fixedtransaction', [FixedTransactionController::class, 'getBy']);
+Route::Put('/fixedtransaction/{id}', [FixedTransactionController::class, 'editFixedById']);
 Route::Put('/fixedtransaction', [FixedTransactionController::class, 'editBy']);
 Route::Delete('/fixedtransaction', [FixedTransactionController::class, 'deleteBy']);
-
-
-Route::Put('/fixedtransaction/updateBy/{type}/{category}/{schedule}/{admin}/{fixed_keys}/{is_paid}', [FixedTransactionController::class, 'editBy']);
-Route::Delete('/fixedtransaction/deleteBy/{type}/{category}/{schedule}/{admin}/{fixed_keys}/{is_paid}', [FixedTransactionController::class, 'deleteBy']);
-Route::Get('/fixedtransaction/{id}', [FixedTransactionController::class, 'getById']);
-Route::Put('/fixedtransaction/{id}', [FixedTransactionController::class, 'editFixedById']);
 Route::Delete('/fixedtransaction/{id}', [FixedTransactionController::class, 'editFixedById']);
