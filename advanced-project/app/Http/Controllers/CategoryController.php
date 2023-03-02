@@ -45,7 +45,7 @@ class CategoryController extends Controller
     public function getAll(Request $request)
     {
         try {
-            $category = Category::all();
+            $category = Category::paginate(5);
             return response()->json([
                 'message' => $category
             ]);
@@ -105,7 +105,7 @@ class CategoryController extends Controller
             }
 
             // Check if the category exists
-            $category = Category::where('category', $name)->get();
+            $category = Category::where('category', $name)->paginate(5);
             if ($category->isEmpty()) {
                 return response()->json([
                     'success' => false,

@@ -13,7 +13,7 @@ class CurrencyController extends Controller
     public function getAll()
     {
         try {
-            $currencies = Currency::all();
+            $currencies = Currency::paginate(5);
             return response()->json([
                 'message' => $currencies
             ]);
