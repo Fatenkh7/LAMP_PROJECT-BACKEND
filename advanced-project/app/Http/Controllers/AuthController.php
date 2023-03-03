@@ -13,7 +13,7 @@ class AuthController extends Controller
      * @return void
      */
     public function __construct() {
-        $this->middleware('auth:api', ['except' => ['login']]);
+        $this->middleware('auth:api', ['except' => ['login','register']]);
     }
     /**
      * Get a JWT via given credentials.
@@ -38,24 +38,26 @@ class AuthController extends Controller
      *
      * @return \Illuminate\Http\JsonResponse
      */
-    // public function register(Request $request) {
-    //     $validator = Validator::make($request->all(), [
-    //         'name' => 'required|string|between:2,100',
-    //         'email' => 'required|string|email|max:100|unique:users',
-    //         'password' => 'required|string|confirmed|min:6',
-    //     ]);
-    //     if($validator->fails()){
-    //         return response()->json($validator->errors()->toJson(), 400);
-    //     }
-    //     $user = Admin::create(array_merge(
-    //                 $validator->validated(),
-    //                 ['password' => bcrypt($request->password)]
-    //             ));
-    //     return response()->json([
-    //         'message' => 'Admin successfully registered',
-    //         'user' => $user
-    //     ], 201);
-    // }
+    public function register(Request $request) {
+        $validator = Validator::make($request->all(), [
+            'first_name'=>'required|string',
+            'last_name'=>'required|string',
+            'username' => 'required|string|between:2,100|unique:admins',
+            'email' => 'required|string|email|max:100|unique:admins',
+            'password' => 'required|string|min:6',
+        ]);
+        if($validator->fails()){
+            return response()->json($validator->errors()->toJson(), 400);
+        }
+        $admin = Admin::create(array_merge(
+                    $validator->validated(),
+                    ['password' => bcrypt($request->password)]
+                ));
+        return response()->json([
+            'message' => 'Admin successfully registered',
+            'admin' => $admin
+        ], 201);
+    }
 
     /**
      * Log the user out (Invalidate the token).
@@ -93,7 +95,7 @@ class AuthController extends Controller
         return response()->json([
             'access_token' => $token,
             'token_type' => 'bearer',
-            'expires_in' => 24*24* 60,
+            'expires_in' => auth()->factory()->getTTL() * 60,
             'user' => auth()->user()
         ]);
     }
