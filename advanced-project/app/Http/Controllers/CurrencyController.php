@@ -80,12 +80,12 @@ class CurrencyController extends Controller
         try {
             $validatedData = $request->validate([
                 'currency' => ['required', Rule::unique('currencies', 'currency')->ignore($id)],
-                'rate' => ['required|integer'],
+                'rate' => 'required|integer',
             ]);
 
             $currency = Currency::find($id);
             $currency->fill($validatedData);
-            $currency->save();
+            $currency->update();
 
             return response()->json([
                 'message' => 'Currency updated successfully',
