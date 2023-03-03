@@ -45,4 +45,9 @@ class Handler extends ExceptionHandler
             //
         });
     }
+
+    public function render ($request, Throwable $exception) {
+        // return formatted error response 
+        return response()->json(['error'=>$exception->getMessage()], 500);
+    }
 }
