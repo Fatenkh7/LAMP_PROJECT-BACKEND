@@ -28,15 +28,15 @@ class FixedKeyController extends Controller
         $Fixedkey = new FixedKey;
 
         $Fixedkey->name = $request->input('name');
-        $Fixedkey->description = $request-> input('description');
-        $Fixedkey->is_active = $request-> input('is_active');
+        $Fixedkey->description = $request->input('description');
+        $Fixedkey->is_active = $request->input('is_active');
 
 
 
         $Fixedkey->save();
 
         return response()->json([
-            'message' => 'fixed key create succs'
+            'message' => 'fixed key created successfully',
         ]);}
         catch(\Exception $e){
             return $e -> getMessage();
@@ -102,7 +102,7 @@ class FixedKeyController extends Controller
         $FixedKey->delete();
 
         return response()->json([
-            'message'=>'delete succs'
+            'message'=>'delete successfully'
         ]);
     }
     catch(\Exception $e){

@@ -35,7 +35,7 @@ class ReportController extends Controller
     public function getById(Request $request, $id)
     {
         try {
-            $report = Report::findOrFail($id);
+            $report = Report::where('id',$id)->with(['admins','categories'])->get();
             return response()->json([
                 'message' => $report
             ]);
