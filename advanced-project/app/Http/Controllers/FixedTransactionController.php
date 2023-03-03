@@ -37,7 +37,7 @@ class FixedTransactionController extends Controller
     public function getById(Request $request, $id)
     {
         try {
-            $fixed_transaction = FixedTransaction::where('id',$id)->with(['admins','categories','currencies','fixed_keys'])->get();
+            $fixed_transaction = FixedTransaction::where('id', $id)->with(['admins', 'categories', 'currencies', 'fixed_keys'])->get();
             return response()->json([
                 'message' => $fixed_transaction
             ]);
@@ -53,71 +53,71 @@ class FixedTransactionController extends Controller
             ], 404);
         }
     }
-public function getBy(Request $request)
-{
-    $validatedData = $request->validate([
-        'type' => 'in:' . implode(',', FixedTransaction::$allowedTypes),
-        'categories_id' => 'exists:categories,id',
-        'schedule' => 'in:' . implode(',', FixedTransaction::$allowedSchedule),
-        'admins_id' => 'exists:admins,id',
-        'currencies_id' => 'exists:currencies,id',
-        'fixed_keys_id' => 'exists:fixed_keys,id',
-        'is_paid' => 'boolean',
-    ]);
-
-    $fixed = FixedTransaction::query();
-
-    // Filter by type
-    if ($request->has('type') && in_array($request->input('type'), FixedTransaction::$allowedTypes)) {
-        $fixed->where('type', $request->input('type'));
-    }
-
-    // Filter by category
-    if ($request->has('categories_id')) {
-        $fixed->where('categories_id', $request->input('categories_id'));
-    }
-        
-    // Filter by schedule
-    if ($request->has('schedule') && in_array($request->input('schedule'), FixedTransaction::$allowedSchedule)) {
-        $fixed->where('schedule', $request->input('schedule'));
-    }
-
-    // Filter by admins
-    if ($request->has('admins_id')) {
-        $fixed->where('admins_id', $request->input('admins_id'));
-    }
-
-    // Filter by fixed keys
-    if ($request->has('fixed_keys_id')) {
-        $fixed->where('fixed_keys_id', $request->input('fixed_keys_id'));
-    }
-
-    // Filter by currencies
-    if ($request->has('currencies_id')) {
-        $fixed->where('currencies_id', $request->input('currencies_id'));
-    }
-
-    // Filter by paid
-    if ($request->has('is_paid')) {
-        $fixed->where('is_paid', $request->input('is_paid'));
-    }
-
-    $perPage = $request->get('perPage', 5);
-    $page = $request->get('page', 1);
-
-    try {
-        $filteredFixed= $fixed->paginate($perPage, ['*'], 'page', $page);
-        return response()->json([
-            'status' => 'success',
-            'data' => $filteredFixed->toArray(),
+    public function getBy(Request $request)
+    {
+        $validatedData = $request->validate([
+            'type' => 'in:' . implode(',', FixedTransaction::$allowedTypes),
+            'categories_id' => 'exists:categories,id',
+            'schedule' => 'in:' . implode(',', FixedTransaction::$allowedSchedule),
+            'admins_id' => 'exists:admins,id',
+            'currencies_id' => 'exists:currencies,id',
+            'fixed_keys_id' => 'exists:fixed_keys,id',
+            'is_paid' => 'boolean',
         ]);
-    } catch (\Exception $e) {
-        return response()->json([
-            'status' => 'error',
-            'message' => $e->getMessage()
-        ]);
+
+        $fixed = FixedTransaction::query();
+
+        // Filter by type
+        if ($request->has('type') && in_array($request->input('type'), FixedTransaction::$allowedTypes)) {
+            $fixed->where('type', $request->input('type'));
+        }
+
+        // Filter by category
+        if ($request->has('categories_id')) {
+            $fixed->where('categories_id', $request->input('categories_id'));
+        }
+
+        // Filter by schedule
+        if ($request->has('schedule') && in_array($request->input('schedule'), FixedTransaction::$allowedSchedule)) {
+            $fixed->where('schedule', $request->input('schedule'));
+        }
+
+        // Filter by admins
+        if ($request->has('admins_id')) {
+            $fixed->where('admins_id', $request->input('admins_id'));
+        }
+
+        // Filter by fixed keys
+        if ($request->has('fixed_keys_id')) {
+            $fixed->where('fixed_keys_id', $request->input('fixed_keys_id'));
+        }
+
+        // Filter by currencies
+        if ($request->has('currencies_id')) {
+            $fixed->where('currencies_id', $request->input('currencies_id'));
+        }
+
+        // Filter by paid
+        if ($request->has('is_paid')) {
+            $fixed->where('is_paid', $request->input('is_paid'));
+        }
+
+        $perPage = $request->get('perPage', 5);
+        $page = $request->get('page', 1);
+
+        try {
+            $filteredFixed = $fixed->paginate($perPage, ['*'], 'page', $page);
+            return response()->json([
+                'status' => 'success',
+                'data' => $filteredFixed,
+            ]);
+        } catch (\Exception $e) {
+            return response()->json([
+                'status' => 'error',
+                'message' => $e->getMessage()
+            ]);
+        }
     }
-}
 
 
     public function addfixedTrans(Request $request)

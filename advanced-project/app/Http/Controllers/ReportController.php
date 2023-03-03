@@ -157,7 +157,7 @@ class ReportController extends Controller
             // Update the report
             $report->report = $request->input('report');
             $report->type_report = $request->input('type_report');
-            $report->save();
+            $report->update();
 
             return response()->json([
                 'success' => true,

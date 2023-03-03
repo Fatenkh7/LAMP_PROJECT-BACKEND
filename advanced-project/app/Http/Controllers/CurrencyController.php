@@ -129,6 +129,7 @@ class CurrencyController extends Controller
             $validator = Validator::make($data, [
                 'currency'=>'required|string|unique:currencies',
                 'rate'=>'required|integer',
+
             ]);
             if($validator->fails()) {
                 $errors = $validator->errors()->toArray();
@@ -147,6 +148,7 @@ class CurrencyController extends Controller
             $currencies->update();
             // $inputs = $request->except('_method');
             // $admin->update($inputs);
+
 
             return response()->json([
                 'message' => 'Currency updated successfully',
