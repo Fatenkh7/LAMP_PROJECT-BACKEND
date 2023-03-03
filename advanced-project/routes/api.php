@@ -24,9 +24,25 @@ Use App\Http\Controllers\AuthController;
 |
 */
 
-Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-    return $request->user();
+// Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
+    //     return $request->user();
+    // });
+    Route::group([
+        'middleware' => 'api',
+    'prefix' => 'admin'
+], function ($router) {
+    Route::Post('/login', [AuthController::class, 'login']);
+    Route::Post('/logout', [AuthController::class, 'logout']);   
+    // Route::Get('/admin', [AdminController::class, 'getAllAdmins']);
+    
 });
+
+// Route::middleware('auth:admin')->group(function () {
+// });
+
+// Route::get('/user', function (Request $request) {
+//     return $request->user();
+// });
 
 
 // Admin routes
@@ -103,16 +119,12 @@ Route::Get('/fixedtransaction/all', [FixedTransactionController::class, 'getAll'
 Route::Get('/fixedtransaction/id/{id}', [FixedTransactionController::class, 'getById']);
 Route::Put('/fixedtransaction/id/{id}', [FixedTransactionController::class, 'editFixedById']);
 Route::Delete('/fixedtransaction', [FixedTransactionController::class, 'deleteBy']);
-Route::Delete('/fixedtransaction/id/{id}', [FixedTransactionController::class, 'editFixedById']);
+Route::Delete('/fixedtransaction/id/{id}', [FixedTransactionController::class, 'deleteById']);
 
 
 
-Route::group([
-    'middleware' => 'api',
-    'prefix' => 'admin'
-], function ($router) {
-    Route::Post('/login', [AuthController::class, 'login']);
-    Route::Post('/logout', [AuthController::class, 'logout']);   
 
-});
+
+
+
 

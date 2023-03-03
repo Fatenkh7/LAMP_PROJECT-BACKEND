@@ -37,7 +37,7 @@ class FixedTransactionController extends Controller
     public function getById(Request $request, $id)
     {
         try {
-            $fixed_transaction = FixedTransaction::findOrFail($id);
+            $fixed_transaction = FixedTransaction::where('id',$id)->with(['admins','categories','currencies','fixed_keys'])->get();
             return response()->json([
                 'message' => $fixed_transaction
             ]);
@@ -185,7 +185,7 @@ public function getBy(Request $request)
             // Validate the request inputs
             $validator = Validator::make($request->all(), [
                 'title' => 'required|string|max:35',
-                'description' => 'required|integer',
+                'description' => 'required|string',
                 'amount' => 'required|integer',
                 'type' => 'required|in:income,expense',
                 'schedule' => 'required|in:yearly,monthly,weekly',
@@ -283,7 +283,7 @@ public function getBy(Request $request)
                 ], 422);
             }
             // Find the fixed transaction to update
-            $fixed_transaction = FixedTransaction::find($request->input('id'));
+            $fixed_transaction = $fixed::find($request->input('id'));
             if (!$fixed_transaction) {
                 return response()->json([
                     'success' => false,
