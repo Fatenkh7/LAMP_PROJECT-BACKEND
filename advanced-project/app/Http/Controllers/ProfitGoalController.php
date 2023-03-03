@@ -175,7 +175,7 @@ class ProfitGoalController extends Controller
             $profit_goal->goal_amount = $request->input('goal_amount');
             $profit_goal->start_date = $request->input('start_date');
             $profit_goal->start_date = $request->input('end_date');
-            $profit_goal->save();
+            $profit_goal->update();
 
             return response()->json([
                 'success' => true,
