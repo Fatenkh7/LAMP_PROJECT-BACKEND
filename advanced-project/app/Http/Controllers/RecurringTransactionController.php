@@ -238,80 +238,80 @@ class RecurringTransactionController extends Controller
         }
     }
 
-    public function editBy(Request $request)
-    {
-        try {
-            $recurring = RecurringTransaction::query();
+    // public function editBy(Request $request)
+    // {
+    //     try {
+    //         $recurring = RecurringTransaction::query();
 
-            // Filter by type
-            if ($request->has('name') && in_array($request->input('name'), RecurringTransaction::$allowedTypes)) {
-                $recurring->where('name', $request->input('name'));
-            }
+    //         // Filter by type
+    //         if ($request->has('name') && in_array($request->input('name'), RecurringTransaction::$allowedTypes)) {
+    //             $recurring->where('name', $request->input('name'));
+    //         }
 
-            // Filter by category
-            if ($request->has('categories_id')) {
-                $recurring->where('categories_id', $request->input('categories_id'));
-            }
+    //         // Filter by category
+    //         if ($request->has('categories_id')) {
+    //             $recurring->where('categories_id', $request->input('categories_id'));
+    //         }
 
-            // Filter by admins
-            if ($request->has('admins_id')) {
-                $recurring->where('admins_id', $request->input('admins_id'));
-            }
+    //         // Filter by admins
+    //         if ($request->has('admins_id')) {
+    //             $recurring->where('admins_id', $request->input('admins_id'));
+    //         }
 
-            // Filter by currencies
-            if ($request->has('currencies_id')) {
-                $recurring->where('currencies_id', $request->input('currencies_id'));
-            }
+    //         // Filter by currencies
+    //         if ($request->has('currencies_id')) {
+    //             $recurring->where('currencies_id', $request->input('currencies_id'));
+    //         }
 
-            // Filter by paid
-            if ($request->has('is_paid')) {
-                $recurring->where('is_paid', $request->input('is_paid'));
-            }
-            $validator = Validator::make($request->all(), [
-                'name' => 'required|string|max:35',
-                'description' => 'required|string',
-                'amount' => 'required|numeric',
-                'type' => 'required|in:income,expense',
-                // 'schedule' => 'required|in:yearly,monthly,weekly',
-                'is_paid' => 'boolean',
-            ]);
-            if ($validator->fails()) {
-                return response()->json([
-                    'success' => false,
-                    'message' => 'Validation error',
-                    'errors' => $validator->errors()
-                ], 422);
-            }
-            // Find the fixed transaction to update
-            $recurring_transaction = RecurringTransaction::find($request->input('id'));
-            if (!$recurring_transaction) {
-                return response()->json([
-                    'success' => false,
-                    'message' => 'Fixed transaction not found',
-                ], 404);
-            }
+    //         // Filter by paid
+    //         if ($request->has('is_paid')) {
+    //             $recurring->where('is_paid', $request->input('is_paid'));
+    //         }
+    //         $validator = Validator::make($request->all(), [
+    //             'name' => 'required|string|max:35',
+    //             'description' => 'required|string',
+    //             'amount' => 'required|numeric',
+    //             'type' => 'required|in:income,expense',
+    //             // 'schedule' => 'required|in:yearly,monthly,weekly',
+    //             'is_paid' => 'boolean',
+    //         ]);
+    //         if ($validator->fails()) {
+    //             return response()->json([
+    //                 'success' => false,
+    //                 'message' => 'Validation error',
+    //                 'errors' => $validator->errors()
+    //             ], 422);
+    //         }
+    //         // Find the fixed transaction to update
+    //         $recurring_transaction = RecurringTransaction::find($request->input('id'));
+    //         if (!$recurring_transaction) {
+    //             return response()->json([
+    //                 'success' => false,
+    //                 'message' => 'Fixed transaction not found',
+    //             ], 404);
+    //         }
 
-            // Update the fixed transaction
-            $recurring_transaction->name = $request->input('name');
-            $recurring_transaction->description = $request->input('description');
-            $recurring_transaction->amount = $request->input('amount');
-            $recurring_transaction->type = $request->input('type');
-            // $recurring_transaction->schedule = $request->input('schedule');
-            $recurring_transaction->is_paid = $request->input('is_paid');
-            $recurring_transaction->save();
+    //         // Update the fixed transaction
+    //         $recurring_transaction->name = $request->input('name');
+    //         $recurring_transaction->description = $request->input('description');
+    //         $recurring_transaction->amount = $request->input('amount');
+    //         $recurring_transaction->type = $request->input('type');
+    //         // $recurring_transaction->schedule = $request->input('schedule');
+    //         $recurring_transaction->is_paid = $request->input('is_paid');
+    //         $recurring_transaction->save();
 
-            return response()->json([
-                'success' => true,
-                'message' => 'Fixed transaction updated successfully',
-                'fixed_transaction' => $recurring_transaction,
-            ]);
-        } catch (QueryException $e) {
-            return response()->json([
-                'success' => false,
-                'message' => 'Error updating fixed transaction in database'
-            ]);
-        }
-    }
+    //         return response()->json([
+    //             'success' => true,
+    //             'message' => 'Fixed transaction updated successfully',
+    //             'fixed_transaction' => $recurring_transaction,
+    //         ]);
+    //     } catch (QueryException $e) {
+    //         return response()->json([
+    //             'success' => false,
+    //             'message' => 'Error updating fixed transaction in database'
+    //         ]);
+    //     }
+    // }
 
     public function deleteBy(Request $request)
     {

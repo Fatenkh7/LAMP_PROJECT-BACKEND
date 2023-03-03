@@ -228,90 +228,91 @@ class FixedTransactionController extends Controller
     }
 
 
-    public function editBy(Request $request)
-    {
-        try {
-            $fixed = FixedTransaction::query();
+    // public function editBy(Request $request)
+    // {
+    //     try {
+    //         $fixed = FixedTransaction::query();
 
-            // Filter by type
-            if ($request->has('type') && in_array(FixedTransaction::$allowedTypes, $request->input('type'))) {
-                $fixed->where('type', $request->input('type'));
-            }
+    //         // Filter by type
+    //         if ($request->has('type') && in_array($request->input('type'), FixedTransaction::$allowedTypes)) {
+    //             $fixed->where('type', $request->input('type'));
+    //         }
 
-            // Filter by category
-            if ($request->has('categories_id')) {
-                $fixed->where('categories_id', $request->input('categories_id'));
-            }
+    //         // Filter by category
+    //         if ($request->has('categories_id')) {
+    //             $fixed->where('categories_id', $request->input('categories_id'));
+    //         }
 
-            // Filter by schedule
-            if ($request->has('schedule') && in_array($request->input('schedule'), FixedTransaction::$allowedSchedule)) {
-                $fixed->where('schedule', $request->input('schedule'));
-            }
+    //         // Filter by schedule
+    //         if ($request->has('schedule') && in_array($request->input('schedule'), FixedTransaction::$allowedSchedule)) {
+    //             $fixed->where('schedule', $request->input('schedule'));
+    //         }
 
-            // Filter by admins
-            if ($request->has('admins_id')) {
-                $fixed->where('admins_id', $request->input('admins_id'));
-            }
+    //         // Filter by admins
+    //         if ($request->has('admins_id')) {
+    //             $fixed->where('admins_id', $request->input('admins_id'));
+    //         }
 
-            // Filter by fixed keys
-            if ($request->has('fixed_keys_id')) {
-                $fixed->where('fixed_keys_id', $request->input('fixed_keys_id'));
-            }
+    //         // Filter by fixed keys
+    //         if ($request->has('fixed_keys_id')) {
+    //             $fixed->where('fixed_keys_id', $request->input('fixed_keys_id'));
+    //         }
 
-            // Filter by currencies
-            if ($request->has('currencies_id')) {
-                $fixed->where('currencies_id', $request->input('currencies_id'));
-            }
+    //         // Filter by currencies
+    //         if ($request->has('currencies_id')) {
+    //             $fixed->where('currencies_id', $request->input('currencies_id'));
+    //         }
 
-            // Filter by paid
-            if ($request->has('is_paid')) {
-                $fixed->where('is_paid', $request->input('is_paid'));
-            }
-            $validator = Validator::make($request->all(), [
-                'title' => 'required|string|max:35',
-                'description' => 'required|string',
-                'amount' => 'required|numeric',
-                'type' => 'required|in:income,expense',
-                'schedule' => 'required|in:yearly,monthly,weekly',
-                'is_paid' => 'boolean',
-            ]);
-            if ($validator->fails()) {
-                return response()->json([
-                    'success' => false,
-                    'message' => 'Validation error',
-                    'errors' => $validator->errors()
-                ], 422);
-            }
-            // Find the fixed transaction to update
-            $fixed_transaction = $fixed->find($request->input('id'));
-            if (!$fixed_transaction) {
-                return response()->json([
-                    'success' => false,
-                    'message' => 'Fixed transaction not found',
-                ], 404);
-            }
+    //         // Filter by paid
+    //         if ($request->has('is_paid')) {
+    //             $fixed->where('is_paid', $request->input('is_paid'));
+    //         }
+    //         $validator = Validator::make($request->all(), [
+    //             'title' => 'required|string|max:35',
+    //             'description' => 'required|string',
+    //             'amount' => 'required|numeric',
+    //             'type' => 'required|in:income,expense',
+    //             'schedule' => 'required|in:yearly,monthly,weekly',
+    //             'is_paid' => 'boolean',
+    //         ]);
+    //         if ($validator->fails()) {
+    //             return response()->json([
+    //                 'success' => false,
+    //                 'message' => 'Validation error',
+    //                 'errors' => $validator->errors()
+    //             ], 422);
+    //         }
+    //         // Find the fixed transaction to update
+    //         $fixed_transaction = $fixed::find($request->input('id'));
+    //         if (!$fixed_transaction) {
+    //             return response()->json([
+    //                 'success' => false,
+    //                 'message' => 'Fixed transaction not found',
+    //             ], 404);
+    //         }
 
-            // Update the fixed transaction
-            $fixed_transaction->title = $request->input('title');
-            $fixed_transaction->description = $request->input('description');
-            $fixed_transaction->amount = $request->input('amount');
-            $fixed_transaction->type = $request->input('type');
-            $fixed_transaction->schedule = $request->input('schedule');
-            $fixed_transaction->is_paid = $request->input('is_paid');
-            $fixed_transaction->save();
+    //         // Update the fixed transaction
+    //         $fixed_transaction->title = $request->input('title');
+    //         $fixed_transaction->description = $request->input('description');
+    //         $fixed_transaction->amount = $request->input('amount');
+    //         $fixed_transaction->type = $request->input('type');
+    //         $fixed_transaction->schedule = $request->input('schedule');
+    //         $fixed_transaction->is_paid = $request->input('is_paid');
+    //         $fixed_transaction->save();
 
-            return response()->json([
-                'success' => true,
-                'message' => 'Fixed transaction updated successfully',
-                'fixed_transaction' => $fixed_transaction,
-            ]);
-        } catch (QueryException $e) {
-            return response()->json([
-                'success' => false,
-                'message' => 'Error updating fixed transaction in database'
-            ]);
-        }
-    }
+    //         return response()->json([
+    //             'success' => true,
+    //             'message' => 'Fixed transaction updated successfully',
+    //             'fixed_transaction' => $fixed_transaction,
+    //         ]);
+    //     } catch (QueryException $e) {
+    //         return response()->json([
+    //             'success' => false,
+    //             'message' => 'Error updating fixed transaction in database'
+    //         ]);
+    //     }
+    // }
+
 
     public function deleteBy(Request $request)
     {
