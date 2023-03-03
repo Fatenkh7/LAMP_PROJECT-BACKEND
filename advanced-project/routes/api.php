@@ -36,12 +36,11 @@ Use App\Http\Controllers\AuthController;
     
 // });
 
-Route::group([
-    'middleware' => 'api',
-    'prefix' => 'auth'
-], function ($router) {
-    Route::post('/login', [AuthController::class, 'login']);
-    Route::post('/register', [AuthController::class, 'register']);
+
+Route::post('/login', [AuthController::class, 'login']);
+Route::post('/register', [AuthController::class, 'register']);
+
+Route::middleware(['authorize'])->group(function () {
     Route::post('/logout', [AuthController::class, 'logout']);
     Route::post('/refresh', [AuthController::class, 'refresh']);
     Route::get('/user-profile', [AuthController::class, 'userProfile']); 
@@ -121,8 +120,9 @@ Route::group([
     Route::Put('/fixedtransaction/id/{id}', [FixedTransactionController::class, 'editFixedById']);
     Route::Delete('/fixedtransaction', [FixedTransactionController::class, 'deleteBy']);
     Route::Delete('/fixedtransaction/id/{id}', [FixedTransactionController::class, 'deleteById']);
-    
+
 });
+    
 
 // Route::middleware(['authorize'])->group(function () {
 //     // put your protected routes here
