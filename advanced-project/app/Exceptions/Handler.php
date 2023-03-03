@@ -46,8 +46,20 @@ class Handler extends ExceptionHandler
         });
     }
 
-    public function render ($request, Throwable $exception) {
-        // return formatted error response 
-        return response()->json(['error'=>$exception->getMessage()], 500);
+    public function render($request, Throwable $exception)
+    {
+
+        // handle 404 Not Found errors
+        if ($exception instanceof NotFoundHttpException) {
+        return response()->json(['error' => 'Resource not found'], 404);
+    }
+
+    // handle 400 Bad Request errors
+    if ($exception instanceof HttpException && $exception->getStatusCode() == 400) {
+        return response()->json(['error' => 'Bad request'], 400);
+    }
+
+    // handle other errors
+    return response()->json(['error' => $exception->getMessage()], 500);
     }
 }
