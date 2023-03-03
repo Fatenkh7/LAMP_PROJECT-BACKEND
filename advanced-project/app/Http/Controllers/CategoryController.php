@@ -76,7 +76,7 @@ class CategoryController extends Controller
                 ], 404);
             }
 
-            $category = Category::find($id);
+            $category = Category::where('id',$id)->with(['admins'])->get();
             return response()->json([
                 'message' => $category
             ]);
@@ -97,7 +97,7 @@ class CategoryController extends Controller
     {
         try {
             // Check if the name is valid
-            if (!is_string($name) | !$name) {
+            if (!is_string($name) || !$name) {
                 return response()->json([
                     'success' => false,
                     'message' => 'Invalid Category name'
@@ -129,7 +129,7 @@ class CategoryController extends Controller
     {
         try {
             // Check if the id is valid
-            if (!is_numeric($id) | !$id) {
+            if (!is_numeric($id) || !$id) {
                 return response()->json([
                     'success' => false,
                     'message' => 'Invalid Category ID'
@@ -213,7 +213,7 @@ class CategoryController extends Controller
     {
         try {
             // Check if the id is valid
-            if (!is_numeric($id) | !$id) {
+            if (!is_numeric($id) || !$id) {
                 return response()->json([
                     'success' => false,
                     'message' => 'Invalid Category ID'
