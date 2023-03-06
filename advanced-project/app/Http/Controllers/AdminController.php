@@ -19,6 +19,7 @@ class AdminController extends Controller
                 'first_name'=>'required|string|min:3|max:255',
                 'last_name'=>'required|string|min:3|max:255',
                 'username'=>'required|unique:admins|min:3|max:255',
+                'is_super'=>'required|boolean',
                 'email'=>'required|string|email|max:255|unique:admins',
                 'password'=>'required|min:8',
             ]);
@@ -31,12 +32,14 @@ class AdminController extends Controller
             $firstname = $request->input('first_name');
             $lastname = $request->input('last_name');
             $username = $request->input('username');
+            $is_super = $request->input('is_super');
             $email = $request->input('email');
             $password = $request->input('password');
 
             $admin->first_name = $firstname;
             $admin->last_name = $lastname;
             $admin->username = $username;
+            $admin->is_super = $is_super;
             $admin->email = $email;
             $admin->password = Hash::make($password);
 
@@ -120,6 +123,7 @@ class AdminController extends Controller
                 'first_name'=>'required|string|min:3|max:255',
                 'last_name'=>'required|string|min:3|max:255',
                 'username'=>'required|unique:admins|min:3|max:255',
+                'is_super'=>'required|boolean',
                 'email'=>'required|string|email|max:255|unique:admins',
                 'password'=>'required|min:8',
             ]);
@@ -132,12 +136,14 @@ class AdminController extends Controller
             $firstname = $request->input('first_name');
             $lastname = $request->input('last_name');
             $username = $request->input('username');
+            $is_super = $request->input('is_super');
             $email = $request->input('email');
             $password = $request->input('password');
 
             $admin->first_name = $firstname;
             $admin->last_name = $lastname;
             $admin->username = $username;
+            $admin->is_super=$is_super;
             $admin->email = $email;
             $admin->password = Hash::make($password);
 
