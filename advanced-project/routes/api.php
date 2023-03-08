@@ -37,13 +37,13 @@ Use App\Http\Controllers\AuthController;
 // });
 
 
-Route::post('/login', [AuthController::class, 'login']);
-Route::post('/register', [AuthController::class, 'register']);
+Route:: Post('/login', [AuthController::class, 'login']);
+Route::Post('/register', [AuthController::class, 'register']);
 
 Route::middleware(['authorize'])->group(function () {
-    Route::post('/logout', [AuthController::class, 'logout']);
-    Route::post('/refresh', [AuthController::class, 'refresh']);
-    Route::get('/user-profile', [AuthController::class, 'userProfile']); 
+    Route::Post('/logout', [AuthController::class, 'logout']);
+    Route::Post('/refresh', [AuthController::class, 'refresh']);
+    Route::Get('/user-profile', [AuthController::class, 'userProfile']); 
     
     // Admin routes
     Route::Get('/admin/{id}', [AdminController::class, 'getAdminById']);

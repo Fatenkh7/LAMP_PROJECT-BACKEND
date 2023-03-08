@@ -87,7 +87,7 @@ class ProfitGoalController extends Controller
             $this->validate($request, [
                 'goal_title' => 'required|string|max:35',
                 'goal_amount' => 'required|integer',
-                'goal_description' => 'required|string|min:70|max:255',
+                'goal_description' => 'required|string|max:255',
                 'admins_id' => 'required|exists:admins,id',
                 'currencies_id' => 'required|exists:currencies,id',
                 'start_date' => 'required|date',

@@ -14,7 +14,7 @@ class AdminController extends Controller
 
         try {
             // Data validation 
-            $data = $request->only('first_name', 'last_name', 'username', 'email', 'password');
+            $data = $request->only('first_name', 'last_name', 'username', 'email', 'password','is_super');
             $validator = Validator::make($data, [
                 'first_name'=>'required|string|min:3|max:255',
                 'last_name'=>'required|string|min:3|max:255',
