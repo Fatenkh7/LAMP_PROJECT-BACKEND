@@ -10,6 +10,7 @@ use App\Http\Controllers\CurrencyController;
 use App\Http\Controllers\RecurringTransactionController;
 use App\Http\Controllers\FixedTransactionController;
 use App\Http\Controllers\FixedKeyController;
+use App\Http\Controllers\BalanceController;
 Use App\Http\Controllers\AuthController;
 
 
@@ -121,8 +122,12 @@ Route::middleware(['authorize'])->group(function () {
     Route::Delete('/fixedtransaction', [FixedTransactionController::class, 'deleteBy']);
     Route::Delete('/fixedtransaction/id/{id}', [FixedTransactionController::class, 'deleteById']);
 
+    //balance
+    Route::Get('/balance', [BalanceController::class, 'balance']); 
+    Route::Get('/balance/fixed', [BalanceController::class, 'calculateTheFixing']);
+    Route::Get('/balance/recurring', [BalanceController::class, 'calculateTheRecurring']);
+
 });
-    
 
 // Route::middleware(['authorize'])->group(function () {
 //     // put your protected routes here
