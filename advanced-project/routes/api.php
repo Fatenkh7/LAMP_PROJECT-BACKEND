@@ -50,7 +50,7 @@ Route::middleware(['authorize'])->group(function () {
     Route::Get('/admin/{id}', [AdminController::class, 'getAdminById']);
     Route::Get('/admin', [AdminController::class, 'getAllAdmins']);
     Route::Post('/admin', [AdminController::class, 'addAdmin']);
-    Route::Put('/admin/{id}', [AdminController::class, 'editAdmin']);
+    Route::Patch('/admin/{id}', [AdminController::class, 'editAdmin']);
     Route::Delete('/admin/{id}', [AdminController::class, 'deleteAdmin']);
 
     //Categories
@@ -58,8 +58,8 @@ Route::middleware(['authorize'])->group(function () {
     Route::Get('/category', [CategoryController::class, 'getAll']);
     Route::Get('/category/name/{name}', [CategoryController::class, 'getByCategory']);
     Route::Get('/category/{id}', [CategoryController::class, 'getById']);
-    Route::Put('/category/id/{id}', [CategoryController::class, 'editById']);
-    Route::Put('/category/name/{name}', [CategoryController::class, 'editByName']);
+    Route::Patch('/category/id/{id}', [CategoryController::class, 'editById']);
+    Route::Patch('/category/name/{name}', [CategoryController::class, 'editByName']);
     Route::Delete('/category/id/{id}', [CategoryController::class, 'deleteCategoryById']);
     Route::Delete('/category/name/{name}', [CategoryController::class, 'deleteCategoryByName']);
 
@@ -69,7 +69,7 @@ Route::middleware(['authorize'])->group(function () {
     Route::Get('/report/{id}', [ReportController::class, 'getById']);
     Route::Get('/report/type/{type}', [ReportController::class, 'getByType']);
     Route::Post('/report', [ReportController::class, 'addReport']);
-    Route::Put('/report/{id}', [ReportController::class, 'editReport']);
+    Route::Patch('/report/{id}', [ReportController::class, 'editReport']);
     Route::Delete('/report/{id}', [ReportController::class, 'deleteById']);
     Route::Delete('/report/type/{type}', [ReportController::class, 'deleteByType']);
 
@@ -78,23 +78,16 @@ Route::middleware(['authorize'])->group(function () {
     Route::Get('/profit/{id}', [ProfitGoalController::class, 'getById']);
     Route::Get('/profit/title/{title}', [ProfitGoalController::class, 'getByTitle']);
     Route::Post('/profit', [ProfitGoalController::class, 'addProfitGoal']);
-    Route::Put('/profit/id/{id}', [ProfitGoalController::class, 'editprofitById']);
-    Route::Put('/profit/title/{title}', [ProfitGoalController::class, 'editprofitByTitle']);
+    Route::Patch('/profit/id/{id}', [ProfitGoalController::class, 'editprofitById']);
+    Route::Patch('/profit/title/{title}', [ProfitGoalController::class, 'editprofitByTitle']);
     Route::Delete('/profit/{id}', [ProfitGoalController::class, 'deleteById']);
     Route::Delete('/profit/title/{title}', [ProfitGoalController::class, 'deleteByTitle']);
 
 
-    //currencies
-    Route::Post('/currency', [CurrencyController::class, 'addCurrency']);
-    Route::Get('/currency', [CurrencyController::class, 'getAll']);
-    Route::Get('/currency/{id}', [CurrencyController::class, 'getCurrencyById']);
-    Route::Put('/currency/{id}', [CurrencyController::class, 'editCurrencyById']);
-    Route::Delete('/currency/{id}', [CurrencyController::class, 'deleteCurrency']);
-
     // Recurring Transaction
     Route::Post('/recurringTransaction', [RecurringTransactionController::class, 'addRecurringTransaction']);
-    Route::Put('/recurringTransaction/{id}', [RecurringTransactionController::class, 'editRecurringTransaction']);
-    Route::Put('/recurringTransaction', [RecurringTransactionController::class, 'editBy']);
+    Route::Patch('/recurringTransaction/{id}', [RecurringTransactionController::class, 'editRecurringTransaction']);
+    Route::Patch('/recurringTransaction', [RecurringTransactionController::class, 'editBy']);
     Route::Get('/recurringTransaction', [RecurringTransactionController::class, 'getAllRecurringTransactions']);
     Route::Get('/recurringTransaction/{id}', [RecurringTransactionController::class, 'getRecurringTransactionById']);
     Route::Get('/recurringTransaction', [RecurringTransactionController::class, 'getBy']);
@@ -107,7 +100,7 @@ Route::middleware(['authorize'])->group(function () {
     Route::Post('/fixedkey', [FixedKeyController::class, 'addFixedKey']);
     Route::Get('/fixedkey', [FixedKeyController::class, 'getFixedkey']);
     Route::Get('/fixedkey/{id}', [FixedKeyController::class, 'getByIDFixedkey']);
-    Route::Put('/fixedkey/{id}', [FixedKeyController::class, 'editFixedkey']);
+    Route::Patch('/fixedkey/{id}', [FixedKeyController::class, 'editFixedkey']);
     Route::Delete('/fixedkey/{id}', [FixedKeyController::class, 'deleteFixedkey']);
 
 
@@ -115,10 +108,10 @@ Route::middleware(['authorize'])->group(function () {
 
     Route::Post('/fixedtransaction', [FixedTransactionController::class, 'addfixedTrans']);
     Route::Get('/fixedtransaction', [FixedTransactionController::class, 'getBy']);
-    Route::Put('/fixedtransaction', [FixedTransactionController::class, 'editBy']);
+    Route::Patch('/fixedtransaction', [FixedTransactionController::class, 'editBy']);
     Route::Get('/fixedtransaction/all', [FixedTransactionController::class, 'getAll']);
     Route::Get('/fixedtransaction/id/{id}', [FixedTransactionController::class, 'getById']);
-    Route::Put('/fixedtransaction/id/{id}', [FixedTransactionController::class, 'editFixedById']);
+    Route::Patch('/fixedtransaction/id/{id}', [FixedTransactionController::class, 'editFixedById']);
     Route::Delete('/fixedtransaction', [FixedTransactionController::class, 'deleteBy']);
     Route::Delete('/fixedtransaction/id/{id}', [FixedTransactionController::class, 'deleteById']);
 
@@ -128,9 +121,15 @@ Route::middleware(['authorize'])->group(function () {
     Route::Get('/balance/recurring', [BalanceController::class, 'calculateTheRecurring']);
 
 });
+    //currencies
+    Route::Post('/currency', [CurrencyController::class, 'addCurrency']);
+    Route::Get('/currency', [CurrencyController::class, 'getAll']);
+    Route::Get('/currency/{id}', [CurrencyController::class, 'getCurrencyById']);
+    Route::Patch('/currency/{id}', [CurrencyController::class, 'editCurrencyById']);
+    Route::Delete('/currency/{id}', [CurrencyController::class, 'deleteCurrency']);
 
 // Route::middleware(['authorize'])->group(function () {
-//     // put your protected routes here
+//     // Patch your protected routes here
 //     Route::Get('/admin', [AdminController::class, 'getAllAdmins']);
 
 // });

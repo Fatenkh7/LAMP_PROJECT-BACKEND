@@ -108,58 +108,66 @@ class CurrencyController extends Controller
     public function editCurrencyById(Request $request, $id) {
         try {
             // Check if the id is valid
-            if (!is_numeric($id) | !$id) {
+            if (!is_numeric($id) || !$id) {
                 return response()->json([
                     'success' => false,
                     'message' => 'Invalid Currency ID'
                 ], 400);
             }
-
-            // Check if Admin exists
-            $currencies = Currency::find($id);
-            if (!$currencies) {
+    
+            // Check if Currency exists
+            $currency = Currency::find($id);
+            if (!$currency) {
                 return response()->json([
                     'success' => false,
                     'message' => 'Currency not found'
                 ], 404);
             }
-
+    
             // Data validation 
-            $data = $request->only('currency','rate');
+            $data = $request->only('currency', 'rate');
             $validator = Validator::make($data, [
-                'currency'=>'required|string|unique:currencies',
-                'rate'=>'required|integer',
-
+                'currency' => [
+                    'sometimes',
+                    'required',
+                    'string',
+                    Rule::unique('currencies')->ignore($currency->id)
+                ],
+                'rate' => 'sometimes|required|integer',
             ]);
-            if($validator->fails()) {
-                $errors = $validator->errors()->toArray();
-                return $errors;
+    
+            if ($validator->fails()) {
+                return response()->json([
+                    'success' => false,
+                    'errors' => $validator->errors()
+                ], 422);
             }
-
-            $currencies = Currency::find($id);
-            $currency = $request->input('currency');
-            $rate = $request->input('rate');
-            
-
-            $currencies->currency = $currency;
-            $currencies->rate = $rate;
-            
-
-            $currencies->update();
-            // $inputs = $request->except('_method');
-            // $admin->update($inputs);
-
-
+    
+            if ($request->has('currency')) {
+                $currency->currency = $request->input('currency');
+            }
+    
+            if ($request->has('rate')) {
+                $currency->rate = $request->input('rate');
+            }
+    
+            $currency->save();
+    
             return response()->json([
+                'success' => true,
                 'message' => 'Currency updated successfully',
-                'Currency' => $currencies,
+                'currency' => $currency,
             ]);
         }
         catch (\Exception $e) {
-            return $e->getMessage();
+            return response()->json([
+                'success' => false,
+                'message' => 'An error occurred while updating currency',
+                'error' => $e->getMessage()
+            ], 500);
         }
     }
-
+    
     public function deleteCurrency(Request $request, $id)
     {
         try {
