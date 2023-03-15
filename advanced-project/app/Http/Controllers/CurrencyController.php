@@ -14,7 +14,7 @@ class CurrencyController extends Controller
     public function getAll()
     {
         try {
-            $currencies = Currency::paginate(5);
+            $currencies = Currency::all();
             return response()->json([
                 'message' => $currencies
             ]);
