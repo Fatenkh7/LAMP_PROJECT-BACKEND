@@ -45,7 +45,7 @@ class CategoryController extends Controller
     public function getAll(Request $request)
     {
         try {
-            $category = Category::paginate(5);
+            $category = Category::all();
             return response()->json([
                 'message' => $category
             ]);

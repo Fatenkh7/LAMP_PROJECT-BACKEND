@@ -46,7 +46,7 @@ class FixedKeyController extends Controller
 
         try{
 
-        $FixedKey =FixedKey::paginate(5);
+        $FixedKey =FixedKey::all();
 
         return response()->json([
             'message'=>$FixedKey

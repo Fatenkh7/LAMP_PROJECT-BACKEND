@@ -17,7 +17,7 @@ class FixedTransactionController extends Controller
     public function getAll(Request $request)
     {
         try {
-            $fixed_transaction = FixedTransaction::paginate(5);
+            $fixed_transaction = FixedTransaction::all();
             return response()->json([
                 'message' => $fixed_transaction
             ]);
@@ -189,7 +189,11 @@ class FixedTransactionController extends Controller
                 'amount' => 'required|integer',
                 'type' => 'required|in:income,expense',
                 'schedule' => 'required|in:yearly,monthly,weekly',
+                'date_time' => 'required|date',
                 'is_paid' => 'boolean',
+                'categories_id' => 'required|exists:categories,id',
+                'currencies_id' => 'required|exists:currencies,id',
+                'fixed_keys_id' => 'required|exists:fixed_keys,id',
             ]);
             if ($validator->fails()) {
                 return response()->json([
@@ -205,7 +209,11 @@ class FixedTransactionController extends Controller
             $fixed_transaction->amount = $request->input('amount');
             $fixed_transaction->type = $request->input('type');
             $fixed_transaction->schedule = $request->input('schedule');
+            $fixed_transaction->date_time = $request->input('date_time');
             $fixed_transaction->is_paid = $request->input('is_paid');
+            $fixed_transaction->categories()->associate(Category::find($request->input('categories_id')));
+            $fixed_transaction->currencies()->associate(Currency::find($request->input('currencies_id')));
+            $fixed_transaction->fixed_keys()->associate(FixedKey::find($request->input('fixed_keys_id')));
             $fixed_transaction->save();
 
             return response()->json([

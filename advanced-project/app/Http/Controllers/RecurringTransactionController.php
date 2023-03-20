@@ -93,7 +93,7 @@ class RecurringTransactionController extends Controller
             }
 
             // Validate the request inputs
-            $data = $request->only('name', 'description', 'amount', 'start_date', 'end_date', 'type', 'is_paid');
+            $data = $request->only('name', 'description', 'amount', 'start_date', 'end_date', 'type', 'is_paid','categories_id','currencies_id','fixed_keys_id');
             $validator = Validator::make($data, [
                 'name'=>'required|string|max:255',
                 'description'=>'required|string|max:255',
@@ -102,6 +102,8 @@ class RecurringTransactionController extends Controller
                 'end_date'=>'required|date|after_or_equal:start_date',
                 'type'=>'required|in:income,expense',
                 'is_paid'=>'required|boolean',
+                'categories_id' => 'required|exists:categories,id',
+                'currencies_id' => 'required|exists:currencies,id',
             ]);
             if ($validator->fails()) {
                 $error = $validator->errors()->toArray();
@@ -124,7 +126,8 @@ class RecurringTransactionController extends Controller
             $recurringTransaction->end_date = $end_date;
             $recurringTransaction->type = $type;
             $recurringTransaction->is_paid = $is_paid;
-
+            $recurringTransaction->categories()->associate(Category::find($request->input('categories_id')));
+            $recurringTransaction->currencies()->associate(Currency::find($request->input('currencies_id')));
             $recurringTransaction->update();
             return response()->json([
                 'message' => 'Recurring Transaction udpated successfully',

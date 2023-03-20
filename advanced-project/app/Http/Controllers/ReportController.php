@@ -145,6 +145,7 @@ class ReportController extends Controller
             $validator = Validator::make($request->all(), [
                 'report' => 'required|string|max:255',
                 'type_report' => 'required|required|in:yearly,monthly,weekly',
+                'categories_id' => 'required|exists:categories,id',
             ]);
             if ($validator->fails()) {
                 return response()->json([
@@ -157,6 +158,7 @@ class ReportController extends Controller
             // Update the report
             $report->report = $request->input('report');
             $report->type_report = $request->input('type_report');
+            $report->categories()->associate(Category::find($request->input('categories_id')));
             $report->update();
 
             return response()->json([
