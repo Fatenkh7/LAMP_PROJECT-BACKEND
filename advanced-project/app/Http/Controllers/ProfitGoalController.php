@@ -160,6 +160,7 @@ class ProfitGoalController extends Controller
                 'goal_title' => 'required|string|max:35',
                 'goal_amount' => 'required|integer',
                 'start_date' => 'required|date',
+                'currencies_id'=>'required|exists:currencies_id',
                 'end_date' => 'required|date|after_or_equal:start_date',
             ]);
             if ($validator->fails()) {
@@ -173,6 +174,7 @@ class ProfitGoalController extends Controller
             // Update the profit_goal
             $profit_goal->goal_title = $request->input('goal_title');
             $profit_goal->goal_amount = $request->input('goal_amount');
+            $profit_goal->currencies()->associate(Currency::find($request->input('currencies_id')));
             $profit_goal->start_date = $request->input('start_date');
             $profit_goal->start_date = $request->input('end_date');
             $profit_goal->update();
