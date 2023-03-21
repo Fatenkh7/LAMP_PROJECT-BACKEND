@@ -17,7 +17,7 @@ class FixedTransactionController extends Controller
     public function getAll(Request $request)
     {
         try {
-            $fixed_transaction = FixedTransaction::all();
+            $fixed_transaction = FixedTransaction::with(['admins', 'categories', 'currencies', 'fixed_keys'])->get();;
             return response()->json([
                 'message' => $fixed_transaction
             ]);

@@ -11,7 +11,7 @@ use App\Http\Controllers\RecurringTransactionController;
 use App\Http\Controllers\FixedTransactionController;
 use App\Http\Controllers\FixedKeyController;
 use App\Http\Controllers\BalanceController;
-Use App\Http\Controllers\AuthController;
+use App\Http\Controllers\AuthController;
 
 
 /*
@@ -34,27 +34,17 @@ Use App\Http\Controllers\AuthController;
 // ], function ($router) {
 //     Route::Post('/login', [AuthController::class, 'login']);
 //     Route::Post('/logout', [AuthController::class, 'logout']);   
-    
+
 // });
 
 
-Route:: Post('/login', [AuthController::class, 'login']);
+Route::Post('/login', [AuthController::class, 'login']);
 Route::Post('/register', [AuthController::class, 'register']);
 
 Route::middleware(['authorize'])->group(function () {
     Route::Post('/logout', [AuthController::class, 'logout']);
     Route::Post('/refresh', [AuthController::class, 'refresh']);
-    Route::Get('/user-profile', [AuthController::class, 'userProfile']); 
-    
-    // Admin routes
-    Route::Get('/admin/{id}', [AdminController::class, 'getAdminById']);
-    Route::Get('/admin', [AdminController::class, 'getAllAdmins']);
-    Route::Post('/admin', [AdminController::class, 'addAdmin']);
-    Route::Patch('/admin/{id}', [AdminController::class, 'editAdmin']);
-    Route::Delete('/admin/{id}', [AdminController::class, 'deleteAdmin']);
-
-
-
+    Route::Get('/user-profile', [AuthController::class, 'userProfile']);
 
 
     //profit goals routes
@@ -80,13 +70,6 @@ Route::middleware(['authorize'])->group(function () {
 
 
 
-    //balance
-    Route::Get('/balance', [BalanceController::class, 'balance']); 
-    Route::Get('/balance/fixed', [BalanceController::class, 'calculateTheFixing']);
-    Route::Get('/balance/recurring', [BalanceController::class, 'calculateTheRecurring']);
-
-});
-
     //Categories
     Route::Post('/category', [CategoryController::class, 'addcategory']);
     Route::Get('/category', [CategoryController::class, 'getAll']);
@@ -104,18 +87,18 @@ Route::middleware(['authorize'])->group(function () {
     Route::Delete('/currency/{id}', [CurrencyController::class, 'deleteCurrency']);
 
 
-       //fixed
+    //fixed
 
-       Route::Post('/fixedtransaction', [FixedTransactionController::class, 'addfixedTrans']);
-       Route::Get('/fixedtransaction', [FixedTransactionController::class, 'getBy']);
-       Route::Patch('/fixedtransaction', [FixedTransactionController::class, 'editBy']);
-       Route::Get('/fixedtransaction/all', [FixedTransactionController::class, 'getAll']);
-       Route::Get('/fixedtransaction/id/{id}', [FixedTransactionController::class, 'getById']);
-       Route::Patch('/fixedtransaction/id/{id}', [FixedTransactionController::class, 'editFixedById']);
-       Route::Delete('/fixedtransaction', [FixedTransactionController::class, 'deleteBy']);
-       Route::Delete('/fixedtransaction/id/{id}', [FixedTransactionController::class, 'deleteById']);
+    Route::Post('/fixedtransaction', [FixedTransactionController::class, 'addfixedTrans']);
+    Route::Get('/fixedtransaction', [FixedTransactionController::class, 'getBy']);
+    Route::Patch('/fixedtransaction', [FixedTransactionController::class, 'editBy']);
+    Route::Get('/fixedtransaction/all', [FixedTransactionController::class, 'getAll']);
+    Route::Get('/fixedtransaction/id/{id}', [FixedTransactionController::class, 'getById']);
+    Route::Patch('/fixedtransaction/id/{id}', [FixedTransactionController::class, 'editFixedById']);
+    Route::Delete('/fixedtransaction', [FixedTransactionController::class, 'deleteBy']);
+    Route::Delete('/fixedtransaction/id/{id}', [FixedTransactionController::class, 'deleteById']);
 
-           // Fixed key 
+    // Fixed key 
 
     Route::Post('/fixedkey', [FixedKeyController::class, 'addFixedKey']);
     Route::Get('/fixedkey', [FixedKeyController::class, 'getFixedkey']);
@@ -124,15 +107,29 @@ Route::middleware(['authorize'])->group(function () {
     Route::Delete('/fixedkey/{id}', [FixedKeyController::class, 'deleteFixedkey']);
 
 
-        //report routes
-        Route::Get('/report', [ReportController::class, 'getAll']);
-        Route::Get('/report/{id}', [ReportController::class, 'getById']);
-        Route::Get('/report/type/{type}', [ReportController::class, 'getByType']);
-        Route::Post('/report', [ReportController::class, 'addReport']);
-        Route::Patch('/report/{id}', [ReportController::class, 'editReport']);
-        Route::Delete('/report/{id}', [ReportController::class, 'deleteById']);
-        Route::Delete('/report/type/{type}', [ReportController::class, 'deleteByType']);
-        
+    //report routes
+    Route::Get('/report', [ReportController::class, 'getAll']);
+    Route::Get('/report/{id}', [ReportController::class, 'getById']);
+    Route::Get('/report/type/{type}', [ReportController::class, 'getByType']);
+    Route::Post('/report', [ReportController::class, 'addReport']);
+    Route::Patch('/report/{id}', [ReportController::class, 'editReport']);
+    Route::Delete('/report/{id}', [ReportController::class, 'deleteById']);
+    Route::Delete('/report/type/{type}', [ReportController::class, 'deleteByType']);
+
+
+    // Admin routes
+    Route::Get('/admin/{id}', [AdminController::class, 'getAdminById']);
+    Route::Get('/admin', [AdminController::class, 'getAllAdmins']);
+    Route::Post('/admin', [AdminController::class, 'addAdmin']);
+    Route::Patch('/admin/{id}', [AdminController::class, 'editAdmin']);
+    Route::Delete('/admin/{id}', [AdminController::class, 'deleteAdmin']);
+
+    //balance
+    Route::Get('/balance', [BalanceController::class, 'balance']);
+    Route::Get('/balance/fixed', [BalanceController::class, 'calculateTheFixing']);
+    Route::Get('/balance/recurring', [BalanceController::class, 'calculateTheRecurring']);
+});
+
 // Route::middleware(['authorize'])->group(function () {
 //     // Patch your protected routes here
 //     Route::Get('/admin', [AdminController::class, 'getAllAdmins']);
@@ -145,4 +142,3 @@ Route::middleware(['authorize'])->group(function () {
 // Route::get('/user', function (Request $request) {
 //     return $request->user();
 // });
-

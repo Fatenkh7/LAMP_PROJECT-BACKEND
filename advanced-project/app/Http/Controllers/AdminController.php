@@ -87,7 +87,7 @@ class AdminController extends Controller
     // Get all Admins
     public function getAllAdmins(Request $request) {
         try {
-            $admin = Admin::paginate(5);
+            $admin = Admin::all();
             return response()->json([
                 'message' => $admin
             ]);
