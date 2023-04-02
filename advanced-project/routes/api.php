@@ -78,6 +78,8 @@ Route::Post('/recurringTransaction', [RecurringTransactionController::class, 'ad
 Route::Put('/recurringTransaction/{id}', [RecurringTransactionController::class, 'editRecurringTransaction']);
 Route::Get('/recurringTransaction', [RecurringTransactionController::class, 'getAllRecurringTransactions']);
 Route::Get('/recurringTransaction/{id}', [RecurringTransactionController::class, 'getRecurringTransactionById']);
+Route::Get('/recurringTransaction', [RecurringTransactionController::class, 'getBy']);
+Route::Put('/recurringTransaction', [RecurringTransactionController::class, 'editBy']);
 
 
 //fixed transactions
