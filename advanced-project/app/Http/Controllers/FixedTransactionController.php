@@ -7,9 +7,9 @@ use App\Models\FixedTransaction;
 use Illuminate\Database\QueryException;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\ValidationException;
-use App\Console\Kernel\generateMonthlyTransactions;
-
-
+use Illuminate\Contracts\Foundation\Application;
+use Illuminate\Support\Facades\App;
+use Illuminate\Foundation\Console\Kernel;
 use App\Models\Admin;
 use App\Models\Currency;
 use App\Models\Category;
@@ -17,7 +17,7 @@ use App\Models\FixedKey;
 
 class FixedTransactionController extends Controller
 {
-    public function getAll(Request $request)
+       public function getAll(Request $request)
     {
         try {
             $fixed_transaction = FixedTransaction::all();

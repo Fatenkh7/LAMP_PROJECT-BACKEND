@@ -100,3 +100,4 @@ Route::Put('/fixedtransaction/{id}', [FixedTransactionController::class, 'editFi
 Route::Put('/fixedtransaction', [FixedTransactionController::class, 'editBy']);
 Route::Delete('/fixedtransaction', [FixedTransactionController::class, 'deleteBy']);
 Route::Delete('/fixedtransaction/{id}', [FixedTransactionController::class, 'editFixedById']);
+Route::Get('/fixedtransaction/generate', [FixedTransactionController::class, 'generateMonthlyTransactions']);
